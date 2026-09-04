@@ -85,7 +85,7 @@ const PORTFOLIO_DATA = {
     organization: "Avionic Consulting Solution",
     author: "Dev Dadhich (Founder's Office Intern)",
     status: "Implemented",
-    problem: "Recruitment operations lacked centralized tracking across 8+ recruiters, causing 40% latency in candidate onboarding and opaque client SLA visibility.",
+    problem: "Recruitment operations lacked centralized tracking across 12+ recruiters, causing 40% latency in candidate onboarding and opaque client SLA visibility.",
     objectives: [
       "Unify candidate pipeline and client engagement records into a single relational system.",
       "Automate email alerts and SLA status changes via Google Apps Script.",
