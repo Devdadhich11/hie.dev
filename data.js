@@ -127,7 +127,7 @@ const PORTFOLIO_DATA = {
       title: "Avionic Workflow & CRM Digital Product",
       type: "Product Management",
       role: "APM Track",
-      image: "event.png",
+      image: "avionic.jpeg",
       summary: "Designed and built internal CRM and operational workflow automation tool during Founder's Office internship.",
       problem: "Manual spreadsheet management led to lead drop-offs, recruiter misallocations, and delayed client deliverables.",
       solution: "Authored comprehensive PRDs, mapped As-Is/To-Be workflows, constructed low-code AppSheet interface with Google Apps Script triggers.",
