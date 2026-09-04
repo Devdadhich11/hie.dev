@@ -131,7 +131,7 @@ const PORTFOLIO_DATA = {
       summary: "Designed and built internal CRM and operational workflow automation tool during Founder's Office internship.",
       problem: "Manual spreadsheet management led to lead drop-offs, recruiter misallocations, and delayed client deliverables.",
       solution: "Authored comprehensive PRDs, mapped As-Is/To-Be workflows, constructed low-code AppSheet interface with Google Apps Script triggers.",
-      impact: "Reduced operational turnaround latency by 35% and streamlined 5+ client accounts.",
+      impact: "Reduced operational turnaround latency by 75% and streamlined 10+ client accounts.",
       link: "https://drive.google.com/file/d/1Pwgnd-tumXcqIikDnFAi8jpuXr9QzxB1/view?usp=sharing",
       tags: ["AppSheet", "PRD", "Workflow Automation", "Stakeholder Lead"]
     },
