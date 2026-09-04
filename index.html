@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Dev Dadhich — Aspiring Associate Product Manager & Business Analyst Portfolio. PGDM (IT & Marketing) + BCA student with Founder's Office internship experience in PRDs, workflow automation, Power BI analytics, and process optimization." />
+  <title>Dev Dadhich — Aspiring Associate Product Manager & Business Analyst</title>
+
+  <!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- Minimalist Custom CSS -->
+  <link rel="stylesheet" href="assets/css/custom.css">
+</head>
+<body class="min-h-screen antialiased selection:bg-zinc-800 selection:text-white">
+
+  <!-- Preloader Screen (DD expanding to Dev Dadhich) -->
+  <div id="preloader">
+    <div class="preloader-initials">DD</div>
+    <div class="preloader-name">DEV DADHICH</div>
+  </div>
+
+  <!-- Minimal Navigation without Numerics -->
+  <nav class="nav-minimal fixed top-0 w-full z-50 py-4 px-6">
+    <div class="max-w-6xl mx-auto flex justify-between items-center">
+      
+      <!-- Brand Name -->
+      <a href="#home" class="font-mono text-xs font-bold tracking-wider text-main flex items-center gap-2">
+        <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+        DEV DADHICH <span class="text-dim">// ASPIRING APM & BA</span>
+      </a>
+
+      <!-- Desktop navigation links -->
+      <div class="hidden md:flex items-center gap-6 font-mono text-xs font-bold text-sub nav-links">
+        <a href="#about" data-section="about" class="hover:text-main transition-colors">OVERVIEW</a>
+        <a href="#competencies" data-section="competencies" class="hover:text-main transition-colors">PILLARS</a>
+        <a href="#prd-lab" data-section="prd-lab" class="hover:text-main transition-colors">PRD LAB</a>
+        <a href="#projects" data-section="projects" class="hover:text-main transition-colors">CASES</a>
+        <a href="#experience" data-section="experience" class="hover:text-main transition-colors">TRACK</a>
+        <a href="#education" data-section="education" class="hover:text-main transition-colors">EDUCATION</a>
+        <a href="#contact" data-section="contact" class="hover:text-main transition-colors">CONTACT</a>
+      </div>
+
+      <!-- Theme & High Contrast Action Buttons -->
+      <div class="flex items-center gap-3">
+        <button id="mobile-menu-toggle" class="mobile-menu-toggle md:hidden" aria-label="Open navigation menu" aria-expanded="false">
+          <i data-lucide="menu"></i>
+        </button>
+        <button id="theme-toggle" class="p-2 rounded border border-zinc-700/80 text-sub hover:text-main transition-colors" aria-label="Toggle Theme">
+          <i id="theme-icon" data-lucide="sun" class="w-4 h-4"></i>
+        </button>
+
+        <a href="https://drive.google.com/file/d/1rrjePFZku7kJnmqR25umfb6zX3B901c9/view?usp=sharing" download class="hidden sm:inline-flex px-4 py-2 rounded font-mono text-xs font-extrabold btn-solid shadow-sm transition-all">
+          GET CV .PDF
+        </a>
+      </div>
+    </div>
+    <div id="mobile-menu" class="mobile-menu md:hidden" aria-hidden="true">
+      <div class="mobile-menu-links nav-links">
+        <a href="#about" data-section="about">01 / OVERVIEW</a>
+        <a href="#competencies" data-section="competencies">02 / PILLARS</a>
+        <a href="#prd-lab" data-section="prd-lab">03 / PRD LAB</a>
+        <a href="#projects" data-section="projects">04 / CASES</a>
+        <a href="#experience" data-section="experience">05 / TRACK</a>
+        <a href="#education" data-section="education">06 / EDUCATION</a>
+        <a href="#contact" data-section="contact">07 / CONTACT</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section id="home" class="pt-32 pb-16 px-6 max-w-6xl mx-auto">
+    
+    <!-- Minimalist Role Perspective Switcher -->
+    <div class="mb-10 reveal-on-scroll">
+      <div class="role-switcher-container">
+        <button id="role-btn-apm" class="role-switcher-btn active font-mono">APM MODE</button>
+        <button id="role-btn-ba" class="role-switcher-btn font-mono">BUSINESS ANALYST MODE</button>
+      </div>
+    </div>
+
+    <!-- Editorial Header Grid with Profile Photograph -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center border-b border-zinc-800/80 pb-12">
+      
+      <div class="lg:col-span-8 space-y-4 reveal-on-scroll">
+        <div class="section-tag">[ TARGETING APM & BUSINESS ANALYST ROLES // 2025 ]</div>
+        <h1 class="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-main">
+          Dev Dadhich
+        </h1>
+        <h2 id="hero-role-title" class="text-xl sm:text-2xl md:text-3xl font-bold text-sub">
+          Aspiring Associate Product Manager
+        </h2>
+        <p id="hero-role-tagline" class="font-mono text-xs md:text-sm text-sub font-semibold max-w-2xl leading-relaxed">
+          Targeting APM roles: Bridging product strategy, technical requirements (PRDs), and workflow automation.
+        </p>
+
+        <div class="pt-2 flex flex-wrap gap-3">
+          <a href="#contact" class="px-5 py-2.5 rounded btn-solid font-mono text-xs font-extrabold shadow-sm">
+            LET'S CONNECT
+          </a>
+          <a href="#projects" class="px-5 py-2.5 rounded btn-outline font-mono text-xs font-extrabold">
+            EXPLORE CASES/PROJECTS
+          </a>
+        </div>
+      </div>
+
+      <!-- Profile Photo Card -->
+      <div class="lg:col-span-4 reveal-on-scroll">
+        <div class="hero-photo-frame p-2 max-w-xs mx-auto lg:ml-auto">
+          <div class="h-72 w-full rounded-xl overflow-hidden bg-zinc-900">
+            <img src="assets/Images/dev.png" 
+                 onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&auto=format&fit=crop&q=80';"
+                 alt="Dev Dadhich" 
+                 class="w-full h-full object-cover" />
+          </div>
+          <div class="p-3 text-center">
+            <div class="font-bold text-xs text-main">Dev Dadhich</div>
+            <div class="font-mono text-[11px] text-dim font-medium">PGDM (IT & Marketing) • BCA</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Overview Grid -->
+    <div id="about" class="grid grid-cols-1 md:grid-cols-12 gap-8 py-12 border-b border-zinc-800/80">
+      
+      <div class="md:col-span-4 space-y-4 reveal-on-scroll">
+        <span class="section-tag">[ CREDENTIALS & BACKGROUND ]</span>
+        <div class="space-y-2 text-xs font-mono text-sub">
+          <div><strong class="text-main">Degree:</strong> PGDM (IT & Marketing)</div>
+          <div><strong class="text-main">Undergrad:</strong> BCA (Computer Application)</div>
+          <div><strong class="text-main">Experience:</strong> Ex-Founder's Office Intern @ Avionic Consulting</div>
+          <div><strong class="text-main">Focus:</strong> PRDs, Power BI, AppSheet, SQL</div>
+        </div>
+      </div>
+
+      <div class="md:col-span-8 space-y-6 reveal-on-scroll">
+        <span class="section-tag">[ EXECUTIVE SUMMARY ]</span>
+        <p id="hero-bio-text" class="text-sm md:text-base text-sub leading-relaxed font-semibold">
+          <!-- Populated from data.js -->
+        </p>
+
+        <!-- Focus Bullets -->
+        <div class="space-y-2 pt-2">
+          <span class="section-tag">CORE COMPETENCIES FOCUS</span>
+          <div id="role-focus-bullets" class="space-y-1">
+            <!-- Populated from data.js -->
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Hero Stats Strip with Scroll-Triggered Animated Number Counter -->
+    <div id="hero-stats-grid" class="grid grid-cols-2 md:grid-cols-4 gap-4 py-8 border-b border-zinc-800/80 reveal-on-scroll">
+      <!-- Populated via JS -->
+    </div>
+
+  </section>
+
+  <!-- Competency Pillars Section -->
+  <section id="competencies" class="py-16 px-6 max-w-6xl mx-auto">
+    <div class="mb-10 space-y-2 reveal-on-scroll">
+      <span class="section-tag">[ COMPETENCY PILLARS ]</span>
+      <h2 class="text-2xl md:text-3xl font-extrabold text-main">Core Strategy & Technical Foundation</h2>
+    </div>
+
+    <div id="competencies-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+      <!-- Populated via JS -->
+    </div>
+
+    <!-- 3-Line Infinite Marquee under Competencies -->
+    <div id="marquee-section" class="reveal-on-scroll">
+      <!-- Populated via JS -->
+    </div>
+  </section>
+
+  <!-- PRD & Analytics Lab Section (100% Equal Height Twin Cards) -->
+  <section id="prd-lab" class="py-16 px-6 max-w-6xl mx-auto border-t border-zinc-800/80">
+    <div class="mb-10 space-y-2 reveal-on-scroll">
+      <span class="section-tag">[ INTERACTIVE LAB ]</span>
+      <h2 class="text-2xl md:text-3xl font-extrabold text-main">PRD Architecture & Analytics Simulation</h2>
+      <p class="text-xs md:text-sm font-semibold text-sub">Sample Product Requirement Specification document and live Power BI energy chart.</p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+      
+      <!-- PRD Document Card (Twin Card 1 - Full Equal Height) -->
+      <div class="lg:col-span-6 minimal-card p-6 reveal-on-scroll flex flex-col justify-between">
+        <div>
+          <div class="flex justify-between items-center mb-4 pb-3 border-b border-zinc-800 font-mono text-xs">
+            <span class="text-main font-bold">PRD // RECRUITMENT CRM TOOL</span>
+            <span class="tag-badge">v2.1 Implemented</span>
+          </div>
+
+          <!-- PRD Navigation -->
+          <div class="flex gap-2 mb-4 font-mono text-xs">
+            <button class="prd-nav-tab px-3 py-1 rounded bg-zinc-800 text-white font-bold" data-view="overview">OVERVIEW</button>
+            <button class="prd-nav-tab px-3 py-1 rounded text-dim hover:text-main font-bold" data-view="stories">USER STORIES</button>
+            <button class="prd-nav-tab px-3 py-1 rounded text-dim hover:text-main font-bold" data-view="tech">STACK</button>
+            <button class="prd-nav-tab px-3 py-1 rounded text-dim hover:text-main font-bold" data-view="metrics">KPIS</button>
+          </div>
+
+          <div id="prd-doc-body" class="min-h-[260px] flex flex-col justify-between">
+            <!-- Rendered via JS -->
+          </div>
+        </div>
+
+        <div class="pt-4 border-t border-zinc-800/60 font-mono text-[11px] text-dim flex justify-between">
+          <span>Avionic Consulting Solution</span>
+          <span>Founder's Office Intern</span>
+        </div>
+      </div>
+
+      <!-- Chart Simulation Card (Twin Card 2 - Full Equal Height) -->
+      <div class="lg:col-span-6 minimal-card p-6 reveal-on-scroll flex flex-col justify-between">
+        <div>
+          <div class="flex justify-between items-center mb-4 pb-3 border-b border-zinc-800 font-mono text-xs">
+            <span class="text-main font-bold">RWMS // RECRUITMENT OPERATIONS</span>
+            <span class="text-dim font-bold">Chart.js Live</span>
+          </div>
+
+          <div class="chart-plot-wrap relative h-[260px] w-full">
+            <canvas id="minimal-chart-canvas"></canvas>
+          </div>
+        </div>
+
+        <div class="pt-4 border-t border-zinc-800/60 font-mono text-[11px] text-dim flex justify-between">
+          <span>Avionic Consulting Solution</span>
+          <span>Pipeline & SLA View</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Featured Case Studies & Documentation (Peak Minimalist Editorial Index Layout) -->
+  <section id="projects" class="py-16 px-6 max-w-6xl mx-auto border-t border-zinc-800/80">
+    
+    <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4 reveal-on-scroll">
+      <div>
+        <span class="section-tag">[ SELECTED CASE STUDIES ]</span>
+        <h2 class="text-2xl md:text-3xl font-extrabold text-main mt-1"> Featured Work & Documentation</h2>
+        <p class="text-xs md:text-sm font-semibold text-sub mt-1 max-w-xl">A clear archive of product, analytics, strategy, and build work. Each project follows the same path: context, decisions, and outcomes.</p>
+      </div>
+
+      <!-- Filter Pills -->
+      <div class="projects-filters flex flex-wrap gap-2 font-mono text-xs">
+        <button class="filter-pill px-3 py-1 rounded bg-zinc-800 text-white font-bold" data-filter="all">ALL</button>
+        <button class="filter-pill px-3 py-1 rounded text-dim hover:text-main font-bold" data-filter="product">PRODUCT / PRD</button>
+        <button class="filter-pill px-3 py-1 rounded text-dim hover:text-main font-bold" data-filter="analytics">ANALYTICS</button>
+        <button class="filter-pill px-3 py-1 rounded text-dim hover:text-main font-bold" data-filter="strategy">STRATEGY</button>
+      </div>
+    </div>
+
+    <div class="projects-summary reveal-on-scroll">
+      <div><span class="projects-summary-value">08</span><span class="projects-summary-label">PROJECTS SHIPPED</span></div>
+      <div><span class="projects-summary-value">04</span><span class="projects-summary-label">WORK MODES</span></div>
+      <div><span class="projects-summary-value">01</span><span class="projects-summary-label">OPERATING PRINCIPLE</span><span class="projects-summary-note">Make the complex useful.</span></div>
+    </div>
+
+    <!-- Organized Project Grid -->
+    <div id="projects-grid" class="projects-grid">
+      <!-- Populated via JS -->
+    </div>
+  </section>
+
+  <!-- Experience & Leadership Timeline -->
+  <section id="experience" class="py-16 px-6 max-w-6xl mx-auto border-t border-zinc-800/80">
+    <div class="mb-10 space-y-2 reveal-on-scroll">
+      <span class="section-tag">[ PROFESSIONAL TRACK ]</span>
+      <h2 class="text-2xl md:text-3xl font-extrabold text-main">Experience & Leadership</h2>
+    </div>
+
+    <div id="timeline-container" class="space-y-8 max-w-3xl">
+      <!-- Populated via JS -->
+    </div>
+  </section>
+
+  <!-- Academic Matrix & Verified Clickable Certifications -->
+  <section id="education" class="py-16 px-6 max-w-6xl mx-auto border-t border-zinc-800/80">
+    <div class="mb-10 space-y-2 reveal-on-scroll">
+      <span class="section-tag">[ ACADEMICS & CREDENTIALS ]</span>
+      <h2 class="text-2xl md:text-3xl font-extrabold text-main">Education & Verified Certifications</h2>
+      <p class="text-xs md:text-sm font-semibold text-sub">Click any certification card to open its official verification page.</p>
+    </div>
+
+    <div class="space-y-10">
+      <div>
+        <span class="section-tag mb-4 block">[ DEGREE PROGRESSION ]</span>
+        <div id="edu-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <!-- Populated via JS -->
+        </div>
+      </div>
+
+      <div>
+        <span class="section-tag mb-4 block">[ VERIFIED CERTIFICATIONS — CLICK TO VERIFY ]</span>
+        <div id="cert-grid" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <!-- Populated via JS (Clickable cards) -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact & Footer -->
+  <section id="contact" class="py-20 px-6 max-w-6xl mx-auto border-t border-zinc-800/80">
+    <div class="space-y-6 text-center max-w-2xl mx-auto reveal-on-scroll">
+      <span class="section-tag">[ CONTACT ]</span>
+      <h2 class="text-3xl md:text-5xl font-extrabold text-main">Let's Build Impact</h2>
+      <p class="text-xs md:text-sm font-semibold text-sub font-mono">
+        Seeking Associate Product Manager (APM), Business Analyst, and Product Operations opportunities.
+      </p>
+
+      <!-- High Contrast Contact Buttons in Both Light & Dark Modes -->
+      <div class="pt-4 flex flex-wrap justify-center gap-4">
+        <a href="mailto:dadhich2004dev@gmail.com" class="px-6 py-3.5 rounded font-mono font-extrabold text-xs btn-solid shadow-sm transition-all flex items-center gap-2">
+          <i data-lucide="mail" class="w-4 h-4"></i> EMAIL: DADHICH2004DEV@GMAIL.COM
+        </a>
+        <a href="https://linkedin.com/in/devdadhich/" target="_blank" class="px-6 py-3.5 rounded font-mono font-extrabold text-xs btn-outline transition-all flex items-center gap-2">
+          <i data-lucide="linkedin" class="w-4 h-4"></i> LINKEDIN PROFILE
+        </a>
+      </div>
+
+      <div class="pt-8 flex justify-center gap-6 font-mono text-xs font-bold text-dim">
+        <a href="https://github.com/Devdadhich11" target="_blank" class="hover:text-main">GitHub</a>
+        <a href="https://linktr.ee/hie.dev" target="_blank" class="hover:text-main">Linktree</a>
+        <a href="https://x.com/hie.dev" target="_blank" class="hover:text-main">Twitter/X</a>
+        <a href="https://www.instagram.com/hie.dev/" target="_blank" class="hover:text-main">Instagram</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="py-8 border-t border-zinc-800/80 text-center font-mono text-xs text-dim font-semibold">
+    Dev Dadhich © 2025 • Designed for APM & Business Analyst Excellence
+  </footer>
+
+  <!-- Case Study Modal with Spring Scale Animation & Blurred Backdrop -->
+  <div id="case-modal" class="fixed inset-0 z-50 hidden modal-minimal-overlay flex items-center justify-center p-4">
+    <div class="minimal-card modal-dialog-content max-w-2xl w-full p-6 md:p-8 max-h-[85vh] overflow-y-auto shadow-2xl" id="case-modal-body">
+      <!-- Populated dynamically via app.js -->
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
