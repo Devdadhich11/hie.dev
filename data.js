@@ -107,6 +107,21 @@ const PORTFOLIO_DATA = {
   },
 
   projects: [
+        {
+      id: "avionic-crm-product",
+      num: "01",
+      title: "Avionic Workflow & CRM Digital Product",
+      type: "Product Management",
+      role: "APM Track",
+      image: "avionic.jpeg",
+      summary: "Designed and built internal CRM and operational workflow automation tool during Founder's Office internship.",
+      problem: "Manual spreadsheet management led to lead drop-offs, recruiter misallocations, and delayed client deliverables.",
+      solution: "Authored comprehensive PRDs, mapped As-Is/To-Be workflows, constructed low-code AppSheet interface with Google Apps Script triggers.",
+      impact: "Reduced operational turnaround latency by 75% and streamlined 10+ client accounts.",
+      link: "https://drive.google.com/file/d/1Pwgnd-tumXcqIikDnFAi8jpuXr9QzxB1/view?usp=sharing",
+      tags: ["AppSheet", "PRD", "Workflow Automation", "Stakeholder Lead"]
+    },
+    
     {
       id: "power-plant-analytics",
       num: "02",
@@ -121,23 +136,24 @@ const PORTFOLIO_DATA = {
       link: "https://linkedin.com/in/devdadhich/",
       tags: ["Power BI", "DAX", "SQL", "Data Modeling"]
     },
+
     {
-      id: "avionic-crm-product",
-      num: "01",
-      title: "Avionic Workflow & CRM Digital Product",
-      type: "Product Management",
-      role: "APM Track",
-      image: "avionic.jpeg",
-      summary: "Designed and built internal CRM and operational workflow automation tool during Founder's Office internship.",
-      problem: "Manual spreadsheet management led to lead drop-offs, recruiter misallocations, and delayed client deliverables.",
-      solution: "Authored comprehensive PRDs, mapped As-Is/To-Be workflows, constructed low-code AppSheet interface with Google Apps Script triggers.",
-      impact: "Reduced operational turnaround latency by 75% and streamlined 10+ client accounts.",
-      link: "https://drive.google.com/file/d/1Pwgnd-tumXcqIikDnFAi8jpuXr9QzxB1/view?usp=sharing",
-      tags: ["AppSheet", "PRD", "Workflow Automation", "Stakeholder Lead"]
-    },
+    id: "bookstore-sql-project",
+    num: "03",
+    title: "PageTurner Bookstore - SQL Database & Business Analysis",
+    type: "SQL / Business Analytics",
+    role: "Business Analyst / Data Analyst",
+    image: "bookstore.png",
+    summary: "Built a relational bookstore database and performed SQL-based analysis of books, authors, customers, sales, revenue, and referrals.",
+    problem: "Bookstore data needed to be structured across related entities so that sales, customer behavior, and business performance could be analyzed effectively.",
+    solution: "Designed and populated a relational MySQL database, established table relationships, implemented triggers and views, and performed business-focused SQL analysis using joins, aggregations, and date-based analysis.",
+    impact: "Created a structured database and analytical queries that enable insights into sales performance, customer behavior, author and genre revenue, and monthly and quarterly trends.",
+    link: "https://github.com/Devdadhich11/Bookstore-SQL",
+    tags: ["SQL", "MySQL", "Business Analytics", "Data Analysis"]
+},
     {
       id: "vyndo-market-strategy",
-      num: "03",
+      num: "04",
       title: "Vyndo - Brand Development & Growth Strategy",
       type: "Market Strategy",
       role: "APM / Product Strategist",
@@ -151,7 +167,7 @@ const PORTFOLIO_DATA = {
     },
     {
       id: "ravivari-retail-study",
-      num: "04",
+      num: "05",
       title: "Marketing Strategies in Unorganized Markets",
       type: "Business Research",
       role: "Business Analyst Track",
@@ -165,7 +181,7 @@ const PORTFOLIO_DATA = {
     },
     {
       id: "drishti-brand-web",
-      num: "05",
+      num: "06",
       title: "Drishti — Visual Storytelling Studio Web App",
       type: "Web Development",
       role: "Web Developer & UI Designer",
@@ -179,7 +195,7 @@ const PORTFOLIO_DATA = {
     },
     {
       id: "eventsphere-app",
-      num: "06",
+      num: "07",
       title: "EventSphere — Campus Event Management Platform",
       type: "Web Application",
       role: "Frontend Developer",
@@ -193,7 +209,7 @@ const PORTFOLIO_DATA = {
     },
     {
       id: "pinkcity-parichay",
-      num: "07",
+      num: "08",
       title: "Pink City Parichay — Jaipur Tourism Portal",
       type: "Web Application",
       role: "Product Developer",
