@@ -10,6 +10,8 @@ document.addEventListener('DOMContentLoaded', () => {
   let currentRole = 'apm';
   let chartInstance = null;
   let ecomChartInstance = null;
+  let rwmsChart1Instance = null;
+  let rwmsChart2Instance = null;
   let hasCountedStats = false;
 
   initPreloader();
@@ -415,6 +417,124 @@ document.addEventListener('DOMContentLoaded', () => {
     chartInstance.update();
     if (document.getElementById('ecom-line-chart-canvas')) {
       initEcomLineChart();
+    }
+    if (document.getElementById('rwms-funnel-chart-canvas')) {
+      initRwmsCharts();
+    }
+  }
+
+  function initRwmsCharts() {
+    const canvas1 = document.getElementById('rwms-funnel-chart-canvas');
+    const canvas2 = document.getElementById('rwms-impact-chart-canvas');
+    if (typeof Chart === 'undefined') return;
+    const isDark = document.documentElement.getAttribute('data-theme') !== 'light';
+
+    if (rwmsChart1Instance) {
+      rwmsChart1Instance.destroy();
+      rwmsChart1Instance = null;
+    }
+    if (rwmsChart2Instance) {
+      rwmsChart2Instance.destroy();
+      rwmsChart2Instance = null;
+    }
+
+    if (canvas1) {
+      rwmsChart1Instance = new Chart(canvas1, {
+        type: 'bar',
+        data: {
+          labels: ["Sourcing", "Screening", "Shortlisted", "Interview", "Offer", "Onboarded"],
+          datasets: [
+            {
+              label: 'Candidates Handled',
+              data: [420, 280, 160, 85, 36, 28],
+              backgroundColor: isDark ? 'rgba(52, 211, 153, 0.85)' : 'rgba(16, 185, 129, 0.85)',
+              borderRadius: 4
+            },
+            {
+              label: 'Conversion Rate (%)',
+              data: [100, 66.6, 38.0, 20.2, 8.5, 6.6],
+              backgroundColor: isDark ? 'rgba(96, 165, 250, 0.45)' : 'rgba(37, 99, 235, 0.45)',
+              borderRadius: 4
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              labels: {
+                color: isDark ? '#f4f4f5' : '#09090b',
+                font: { family: 'JetBrains Mono', size: 10, weight: 'bold' }
+              }
+            },
+            tooltip: {
+              callbacks: {
+                label: function(ctx) {
+                  return ctx.datasetIndex === 0 
+                    ? ` ${ctx.dataset.label}: ${ctx.raw} candidates`
+                    : ` ${ctx.dataset.label}: ${ctx.raw}% of pipeline`;
+                }
+              }
+            }
+          },
+          scales: {
+            x: {
+              grid: { color: isDark ? '#27272a' : '#e4e4e7' },
+              ticks: { color: isDark ? '#a1a1aa' : '#52525b', font: { family: 'JetBrains Mono', size: 9, weight: 'bold' } }
+            },
+            y: {
+              grid: { color: isDark ? '#27272a' : '#e4e4e7' },
+              ticks: { color: isDark ? '#a1a1aa' : '#52525b', font: { family: 'JetBrains Mono', size: 9, weight: 'bold' } }
+            }
+          }
+        }
+      });
+    }
+
+    if (canvas2) {
+      rwmsChart2Instance = new Chart(canvas2, {
+        type: 'bar',
+        data: {
+          labels: ["Daily Reporting (min)", "Data Error Rate (%)", "Status Lag (hrs)", "Visibility Index (%)"],
+          datasets: [
+            {
+              label: 'Legacy Excel Spreadsheets',
+              data: [60, 35, 48, 15],
+              backgroundColor: isDark ? 'rgba(248, 113, 113, 0.85)' : 'rgba(220, 38, 38, 0.85)',
+              borderRadius: 4
+            },
+            {
+              label: 'RWMS AppSheet Ecosystem',
+              data: [5, 1, 1, 100],
+              backgroundColor: isDark ? 'rgba(52, 211, 153, 0.85)' : 'rgba(16, 185, 129, 0.85)',
+              borderRadius: 4
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              labels: {
+                color: isDark ? '#f4f4f5' : '#09090b',
+                font: { family: 'JetBrains Mono', size: 10, weight: 'bold' }
+              }
+            }
+          },
+          scales: {
+            x: {
+              grid: { color: isDark ? '#27272a' : '#e4e4e7' },
+              ticks: { color: isDark ? '#a1a1aa' : '#52525b', font: { family: 'JetBrains Mono', size: 9, weight: 'bold' } }
+            },
+            y: {
+              grid: { color: isDark ? '#27272a' : '#e4e4e7' },
+              ticks: { color: isDark ? '#a1a1aa' : '#52525b', font: { family: 'JetBrains Mono', size: 9, weight: 'bold' } }
+            }
+          }
+        }
+      });
     }
   }
 
@@ -1167,6 +1287,318 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
         </div>
       `;
+    } else if (id === 'avionic-crm-product') {
+      body.classList.add('modal-dialog-wide');
+      body.innerHTML = `
+        <div class="case-study rwms-case-study">
+          <!-- Header (Title Left, Image Right - Standard project overlay architecture) -->
+          <header class="case-study-header">
+            <div class="case-study-heading">
+              <div class="case-study-kicker">
+                <span>CASE ${item.num} / ${totalProjects}</span>
+                <span>${item.type}</span>
+              </div>
+              <h2 class="case-study-title">${item.title}</h2>
+              <p class="case-study-role">${item.role}</p>
+              <p class="text-xs md:text-sm font-semibold text-sub mt-2 leading-relaxed max-w-lg">
+                Executive Case Study: Transforming fragmented recruitment spreadsheets into a centralized operational workflow platform across 10+ client accounts.
+              </p>
+            </div>
+            <div class="case-study-image">
+              <img src="avionic.jpeg" onerror="this.onerror=null; this.src='avionic.jpeg';" alt="${item.title}" />
+            </div>
+            <button onclick="closeCaseModal()" class="case-study-close" aria-label="Close case study">&times;</button>
+          </header>
+
+          <!-- SECTION 1: EXECUTIVE SCORECARD -->
+          <section class="rwms-cs-section my-6">
+            <div class="rwms-cs-meta-grid">
+              <div class="rwms-cs-meta-pill">
+                <span class="rwms-cs-meta-label">LEGACY FREQUENCY</span>
+                <span class="rwms-cs-meta-val text-red-400">9–10 Files</span>
+                <span class="font-mono text-[10px] text-red-400 font-bold mt-1">🔴 Scattered Files</span>
+              </div>
+              <div class="rwms-cs-meta-pill">
+                <span class="rwms-cs-meta-label">ACTIVE TEAM</span>
+                <span class="rwms-cs-meta-val">12+ Recruiters</span>
+                <span class="font-mono text-[10px] text-emerald-400 font-bold mt-1">⚡ Full Adoption</span>
+              </div>
+              <div class="rwms-cs-meta-pill">
+                <span class="rwms-cs-meta-label">CLIENT ACCOUNTS</span>
+                <span class="rwms-cs-meta-val">10+ Accounts</span>
+                <span class="font-mono text-[10px] text-blue-400 font-bold mt-1">💼 Multi-Tenant</span>
+              </div>
+              <div class="rwms-cs-meta-pill">
+                <span class="rwms-cs-meta-label">TIME SAVED</span>
+                <span class="rwms-cs-meta-val text-emerald-400">~1 hr/day</span>
+                <span class="font-mono text-[10px] text-emerald-400 font-bold mt-1">⚡ Reporting Overhead Cut</span>
+              </div>
+            </div>
+          </section>
+
+          <!-- SECTION 2: VISUAL SYSTEM TRANSFORMATION -->
+          <section class="rwms-cs-section">
+            <div class="rwms-cs-sec-header">
+              <span class="rwms-cs-tag">[ OPERATIONAL BOTTLENECK & SOLUTION ]</span>
+              <h2 class="rwms-cs-sec-title">Operational Transformation: Excel Chaos ➔ RWMS Platform</h2>
+            </div>
+
+            <!-- Visual Fragmentation & Solution Split -->
+            <div class="rwms-cs-transform-box">
+              <div class="transform-side old-side">
+                <span class="transform-title text-red-400">OLD SPREADSHEET CHAOS</span>
+                <h4 class="font-extrabold text-sm text-main mb-1">9–10 Fragmented Excel Files</h4>
+                <div class="rwms-cs-excel-chaos-grid my-2">
+                  <div class="rwms-excel-chip"><i data-lucide="file-spreadsheet" class="w-3.5 h-3.5 flex-shrink-0"></i> Client_A.xlsx</div>
+                  <div class="rwms-excel-chip"><i data-lucide="file-spreadsheet" class="w-3.5 h-3.5 flex-shrink-0"></i> Sourcing_v2.xlsx</div>
+                  <div class="rwms-excel-chip"><i data-lucide="file-spreadsheet" class="w-3.5 h-3.5 flex-shrink-0"></i> Followup_OLD.xlsx</div>
+                </div>
+                <div class="rwms-cs-progress-compare">
+                  <div class="rwms-progress-row">
+                    <div class="rwms-progress-meta"><span class="text-red-400">Data Integrity</span><span class="text-red-400">25%</span></div>
+                    <div class="rwms-progress-bar-bg"><div class="rwms-progress-bar-fill fill-red" style="width: 25%;"></div></div>
+                  </div>
+                  <div class="rwms-progress-row">
+                    <div class="rwms-progress-meta"><span class="text-zinc-400">Reporting Time</span><span class="text-zinc-400">60 min/day</span></div>
+                    <div class="rwms-progress-bar-bg"><div class="rwms-progress-bar-fill fill-red" style="width: 90%;"></div></div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="transform-arrow">➔</div>
+
+              <div class="transform-side new-side">
+                <span class="transform-title text-emerald-400">NEW CENTRALIZED RWMS</span>
+                <h4 class="font-extrabold text-sm text-main mb-1">AppSheet Operational Ecosystem</h4>
+                <div class="rwms-cs-progress-compare mb-3">
+                  <div class="rwms-progress-row">
+                    <div class="rwms-progress-meta"><span class="text-emerald-400">Data Integrity</span><span class="text-emerald-400">99%</span></div>
+                    <div class="rwms-progress-bar-bg"><div class="rwms-progress-bar-fill fill-emerald" style="width: 99%;"></div></div>
+                  </div>
+                  <div class="rwms-progress-row">
+                    <div class="rwms-progress-meta"><span class="text-emerald-400">Reporting Time</span><span class="text-emerald-400">5 min/day (-92%)</span></div>
+                    <div class="rwms-progress-bar-bg"><div class="rwms-progress-bar-fill fill-emerald" style="width: 10%;"></div></div>
+                  </div>
+                </div>
+                <div class="module-chips">
+                  <span class="module-chip">Candidate DB</span>
+                  <span class="module-chip">Pipeline</span>
+                  <span class="module-chip">Scheduler</span>
+                  <span class="module-chip">Recruiter View</span>
+                  <span class="module-chip">Client Workspace</span>
+                  <span class="module-chip">Reporting</span>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- SECTION 3: WORKING GRAPH 1 — PIPELINE FUNNEL CHART -->
+          <section class="rwms-cs-section">
+            <div class="rwms-cs-sec-header">
+              <span class="rwms-cs-tag">[ CANDIDATE THROUGHPUT ANALYTICS ]</span>
+              <h2 class="rwms-cs-sec-title">Recruitment Pipeline Funnel & Stage Conversion</h2>
+            </div>
+
+            <!-- Visual Kanban Stage Stepper -->
+            <div class="rwms-cs-kanban-grid mb-3">
+              <div class="kanban-col">
+                <span class="kanban-col-title">SOURCING</span>
+                <span class="kanban-count-badge bg-zinc-800 text-zinc-200 border border-zinc-700">420 Recs</span>
+              </div>
+              <div class="kanban-col">
+                <span class="kanban-col-title">SCREENING</span>
+                <span class="kanban-count-badge bg-blue-950/60 text-blue-400 border border-blue-800/40">280 Pass</span>
+              </div>
+              <div class="kanban-col">
+                <span class="kanban-col-title">SHORTLIST</span>
+                <span class="kanban-count-badge bg-emerald-950/60 text-emerald-400 border border-emerald-800/40">160 Select</span>
+              </div>
+              <div class="kanban-col">
+                <span class="kanban-col-title">INTERVIEW</span>
+                <span class="kanban-count-badge bg-amber-950/60 text-amber-400 border border-amber-800/40">85 Sched</span>
+              </div>
+              <div class="kanban-col">
+                <span class="kanban-col-title">OFFER</span>
+                <span class="kanban-count-badge bg-purple-950/60 text-purple-400 border border-purple-800/40">36 Issued</span>
+              </div>
+              <div class="kanban-col">
+                <span class="kanban-col-title">ONBOARDED</span>
+                <span class="kanban-count-badge bg-emerald-900/60 text-emerald-300 border border-emerald-600/40">28 Hired</span>
+              </div>
+            </div>
+
+            <!-- CHART 1: RECRUITMENT PIPELINE FUNNEL CHART -->
+            <div class="rwms-cs-chart-box">
+              <div class="flex items-center justify-between mb-2">
+                <span class="font-mono text-xs font-bold text-emerald-400 flex items-center gap-1.5">
+                  <i data-lucide="bar-chart-2" class="w-4 h-4"></i> CHART 1: CANDIDATE PIPELINE FUNNEL & THROUGHPUT
+                </span>
+                <span class="font-mono text-[10px] text-dim font-bold">400+ Candidates Handled</span>
+              </div>
+              <div class="rwms-chart-wrap">
+                <canvas id="rwms-funnel-chart-canvas"></canvas>
+              </div>
+            </div>
+          </section>
+
+          <!-- SECTION 4: WORKING GRAPH 2 — OPERATIONAL EFFICIENCY IMPACT CHART -->
+          <section class="rwms-cs-section">
+            <div class="rwms-cs-sec-header">
+              <span class="rwms-cs-tag">[ MEASURED OPERATIONAL GAINS ]</span>
+              <h2 class="rwms-cs-sec-title">Operational Efficiency & Impact Comparison</h2>
+            </div>
+
+            <!-- CHART 2: OPERATIONAL IMPACT COMPARISON -->
+            <div class="rwms-cs-chart-box mb-4">
+              <div class="flex items-center justify-between mb-2">
+                <span class="font-mono text-xs font-bold text-emerald-400 flex items-center gap-1.5">
+                  <i data-lucide="trending-up" class="w-4 h-4"></i> CHART 2: SPREADSHEET SYSTEM VS. RWMS APPSHEET ECOSYSTEM
+                </span>
+                <span class="font-mono text-[10px] text-dim font-bold">Empirical Results</span>
+              </div>
+              <div class="rwms-chart-wrap">
+                <canvas id="rwms-impact-chart-canvas"></canvas>
+              </div>
+            </div>
+
+            <!-- Highlight Impact Card -->
+            <div class="rwms-cs-impact-highlight">
+              <i data-lucide="zap" class="w-5 h-5 text-emerald-400 flex-shrink-0"></i>
+              <span><strong>Key Operational Win:</strong> ~1 hour / day of reporting work eliminated per recruiter, saving ~240 hours/year across the team.</span>
+            </div>
+          </section>
+
+          <!-- SECTION 5: VISUAL 10 KPI DASHBOARD MATRIX -->
+          <section class="rwms-cs-section">
+            <div class="rwms-cs-sec-header mb-2">
+              <span class="rwms-cs-tag">[ MANAGERIAL DASHBOARD ]</span>
+              <h2 class="rwms-cs-sec-title">10 Core Monitored Metrics</h2>
+            </div>
+
+            <div class="rwms-cs-kpi-matrix-grid">
+              <div class="kpi-matrix-card">
+                <div class="kpi-glow-dot"></div>
+                <span class="kpi-matrix-name">1. Active Candidates</span>
+                <span class="kpi-matrix-val">420</span>
+                <span class="kpi-trend-tag">↑ Live Sync</span>
+              </div>
+              <div class="kpi-matrix-card">
+                <div class="kpi-glow-dot"></div>
+                <span class="kpi-matrix-name">2. Stage Duration</span>
+                <span class="kpi-matrix-val">2.4 Days</span>
+                <span class="kpi-trend-tag">↓ -45% Lag</span>
+              </div>
+              <div class="kpi-matrix-card">
+                <div class="kpi-glow-dot"></div>
+                <span class="kpi-matrix-name">3. Drop-off Rate</span>
+                <span class="kpi-matrix-val">14%</span>
+                <span class="kpi-trend-tag">↓ Improved</span>
+              </div>
+              <div class="kpi-matrix-card">
+                <div class="kpi-glow-dot"></div>
+                <span class="kpi-matrix-name">4. Daily Submissions</span>
+                <span class="kpi-matrix-val">18 / day</span>
+                <span class="kpi-trend-tag">↑ +35% Volume</span>
+              </div>
+              <div class="kpi-matrix-card">
+                <div class="kpi-glow-dot"></div>
+                <span class="kpi-matrix-name">5. Attendance Rate</span>
+                <span class="kpi-matrix-val">92%</span>
+                <span class="kpi-trend-tag">↑ +18% Sched</span>
+              </div>
+              <div class="kpi-matrix-card">
+                <div class="kpi-glow-dot"></div>
+                <span class="kpi-matrix-name">6. Offer Acceptance</span>
+                <span class="kpi-matrix-val">84%</span>
+                <span class="kpi-trend-tag">↑ Target Met</span>
+              </div>
+              <div class="kpi-matrix-card">
+                <div class="kpi-glow-dot"></div>
+                <span class="kpi-matrix-name">7. Time to Fill</span>
+                <span class="kpi-matrix-val">14 Days</span>
+                <span class="kpi-trend-tag">↓ -40% Time</span>
+              </div>
+              <div class="kpi-matrix-card">
+                <div class="kpi-glow-dot"></div>
+                <span class="kpi-matrix-name">8. Recruiter Activity</span>
+                <span class="kpi-matrix-val">96 / 100</span>
+                <span class="kpi-trend-tag">⚡ Optimal</span>
+              </div>
+              <div class="kpi-matrix-card">
+                <div class="kpi-glow-dot"></div>
+                <span class="kpi-matrix-name">9. Client SLA</span>
+                <span class="kpi-matrix-val">94%</span>
+                <span class="kpi-trend-tag">✓ Passed</span>
+              </div>
+              <div class="kpi-matrix-card">
+                <div class="kpi-glow-dot"></div>
+                <span class="kpi-matrix-name">10. Report Turnaround</span>
+                <span class="kpi-matrix-val">Real-Time</span>
+                <span class="kpi-trend-tag">⚡ Instant</span>
+              </div>
+            </div>
+          </section>
+
+          <!-- SECTION 6: GRAPHIC BUSINESS RULES ENGINE -->
+          <section class="rwms-cs-section">
+            <div class="rwms-cs-sec-header">
+              <span class="rwms-cs-tag">[ AUTOMATED BUSINESS RULES ]</span>
+              <h2 class="rwms-cs-sec-title">Embedded System Rules</h2>
+            </div>
+
+            <div class="rwms-cs-rules-grid">
+              <div class="rule-card">
+                <div>
+                  <span class="rule-tag">RULE 01</span>
+                  <h3 class="rule-title">Submission Threshold</h3>
+                  <p class="text-xs text-sub leading-relaxed mb-3">Requires ≥ 3 qualified candidates before client submission.</p>
+                </div>
+                <div class="rule-visual flex items-center justify-center gap-1">
+                  <span>Threshold ≥ 3</span>
+                  <span class="text-emerald-400">👤👤👤</span>
+                </div>
+              </div>
+
+              <div class="rule-card">
+                <div>
+                  <span class="rule-tag">RULE 02</span>
+                  <h3 class="rule-title">Recency Priority</h3>
+                  <p class="text-xs text-sub leading-relaxed mb-3">Prioritizes fresh applications over stale pipeline entries.</p>
+                </div>
+                <div class="rule-visual flex items-center justify-center gap-1">
+                  <span class="text-emerald-400">⚡ Priority:</span>
+                  <span>NEW > OLD</span>
+                </div>
+              </div>
+
+              <div class="rule-card">
+                <div>
+                  <span class="rule-tag">RULE 03</span>
+                  <h3 class="rule-title">Stage Progression Guardrail</h3>
+                  <p class="text-xs text-sub leading-relaxed mb-3">Prevents jumping to Interview without screening.</p>
+                </div>
+                <div class="rule-visual flex items-center justify-center gap-1">
+                  <span>Screen ➔</span>
+                  <span class="text-amber-400">🔒 Interview</span>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- CASE STUDY TAGS -->
+          <div class="case-study-tags my-4">${item.tags.map(tag => `<span>${tag}</span>`).join('')}</div>
+
+          <!-- FOOTER ACTIONS (OPEN CASE ARTIFACT + CLOSE BUTTON) -->
+          <div class="case-study-actions">
+            <a href="${item.link}" target="_blank" rel="noopener noreferrer" class="btn-solid case-study-primary">
+              OPEN CASE ARTIFACT <i data-lucide="external-link"></i>
+            </a>
+            <button onclick="closeCaseModal()" class="btn-outline case-study-secondary">
+              CLOSE
+            </button>
+          </div>
+        </div>
+      `;
     } else {
       body.classList.remove('modal-dialog-wide');
       body.innerHTML = `
@@ -1227,6 +1659,8 @@ document.addEventListener('DOMContentLoaded', () => {
       modal.classList.add('is-open');
       if (id === 'ecommerce-performance-analytics') {
         setTimeout(initEcomLineChart, 100);
+      } else if (id === 'avionic-crm-product') {
+        setTimeout(initRwmsCharts, 120);
       }
     });
   };
@@ -1237,6 +1671,14 @@ document.addEventListener('DOMContentLoaded', () => {
     if (ecomChartInstance) {
       ecomChartInstance.destroy();
       ecomChartInstance = null;
+    }
+    if (rwmsChart1Instance) {
+      rwmsChart1Instance.destroy();
+      rwmsChart1Instance = null;
+    }
+    if (rwmsChart2Instance) {
+      rwmsChart2Instance.destroy();
+      rwmsChart2Instance = null;
     }
     if (modal) {
       modal.classList.remove('is-open');
