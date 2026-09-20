@@ -1646,3 +1646,871 @@ body {
   opacity: 1;
   transform: translateY(0);
 }
+
+/* ==========================================================================
+   E-Commerce Performance Analytics — Custom Case Study Styles
+   ========================================================================== */
+
+/* Expanded Modal Container for Case Study */
+.modal-dialog-content.modal-dialog-wide {
+  max-width: 1020px !important;
+}
+
+.ecom-case-study {
+  position: relative;
+  padding: 2.25rem 2rem;
+  background: var(--bg-card);
+  color: var(--text-primary);
+  max-height: 85vh;
+  overflow-y: auto;
+}
+
+.ecom-cs-header {
+  position: relative;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 2rem;
+}
+
+.ecom-cs-kicker {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #34d399;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.ecom-cs-kicker-type {
+  color: var(--text-muted);
+}
+
+.ecom-cs-title {
+  font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-top: 0.4rem;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.ecom-cs-subtitle {
+  font-size: clamp(0.9rem, 1.8vw, 1.1rem);
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-top: 0.5rem;
+  max-width: 48rem;
+  line-height: 1.5;
+}
+
+.ecom-cs-section {
+  margin-bottom: 2.5rem;
+}
+
+.ecom-cs-sec-header {
+  margin-bottom: 1.25rem;
+}
+
+.ecom-cs-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #34d399;
+  letter-spacing: 0.1em;
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.ecom-cs-sec-title {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+
+.ecom-cs-sec-desc {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  margin-top: 0.25rem;
+}
+
+/* Metadata Grid */
+.ecom-cs-meta-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.25rem;
+}
+
+.ecom-cs-meta-pill {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.ecom-cs-meta-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  letter-spacing: 0.08em;
+}
+
+.ecom-cs-meta-val {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+/* Business Questions 2x2 Grid */
+.ecom-cs-questions-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.ecom-cs-q-card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1.25rem;
+  transition: all 0.2s ease;
+}
+
+.ecom-cs-q-card:hover {
+  border-color: var(--border-strong);
+  transform: translateY(-2px);
+}
+
+.ecom-cs-q-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.ecom-cs-q-badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+.ecom-cs-q-text {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.4;
+}
+
+/* Dashboard Section (2-Column Equal Width Side-by-Side Grid) */
+.ecom-cs-dashboards-wrap {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem;
+}
+
+.ecom-cs-dash-card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.ecom-cs-dash-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.85rem 1.25rem;
+  border-bottom: 1px solid var(--border);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.ecom-cs-zoom-hint {
+  font-size: 0.68rem;
+  color: var(--text-muted);
+}
+
+.ecom-cs-dash-img-frame {
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+  background: #000;
+}
+
+.ecom-cs-dash-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+  transition: transform 0.4s ease, filter 0.4s ease;
+}
+
+.ecom-cs-dash-img-frame:hover .ecom-cs-dash-img {
+  transform: scale(1.015);
+  filter: brightness(1.05);
+}
+
+.ecom-cs-img-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(9, 9, 11, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.ecom-cs-dash-img-frame:hover .ecom-cs-img-overlay {
+  opacity: 1;
+}
+
+.ecom-cs-overlay-btn {
+  background: rgba(24, 24, 27, 0.9);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  font-weight: 700;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Insights Layout & Top Row Alignment */
+.ecom-cs-insights-top-row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem;
+  align-items: stretch;
+  margin-bottom: 1.25rem;
+}
+
+.ecom-cs-insights-col-right {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  justify-content: space-between;
+}
+
+.ecom-cs-insight-card.compact-card {
+  padding: 1.15rem;
+}
+
+.ecom-cs-insight-card.compact-card .ecom-cs-insight-title {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.ecom-cs-insight-card.compact-card .ecom-cs-insight-interp {
+  font-size: 0.78rem;
+  padding: 0.55rem 0.75rem;
+  margin-top: 0.65rem;
+}
+
+.ecom-chart-wrap {
+  position: relative;
+  width: 100%;
+  height: 145px;
+  overflow: hidden;
+}
+
+.ecom-chart-wrap canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.ecom-cs-insights-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem;
+}
+
+.ecom-cs-insight-card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.full-width-insight {
+  grid-column: span 2;
+}
+
+.ecom-cs-insight-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  font-weight: 800;
+  color: #34d399;
+  letter-spacing: 0.1em;
+}
+
+.ecom-cs-insight-title {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-top: 0.25rem;
+  margin-bottom: 1.25rem;
+}
+
+.ecom-cs-insight-interp {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  background: var(--bg-card);
+  padding: 0.75rem 1rem;
+  border-left: 3px solid #34d399;
+  border-radius: 0 6px 6px 0;
+  margin-top: 1.25rem;
+  line-height: 1.5;
+}
+
+/* Mini Funnel Visual */
+.ecom-cs-funnel-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  margin-bottom: 1rem;
+}
+
+.ecom-cs-funnel-step {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  width: 100%;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.step-views {
+  background: rgba(52, 211, 153, 0.15);
+  border: 1px solid rgba(52, 211, 153, 0.3);
+  width: 100%;
+}
+
+.step-carts {
+  background: rgba(59, 130, 246, 0.15);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  width: 80%;
+}
+
+.step-purchases {
+  background: rgba(168, 85, 247, 0.15);
+  border: 1px solid rgba(168, 85, 247, 0.3);
+  width: 60%;
+}
+
+.funnel-val {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.funnel-lbl {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+.ecom-cs-funnel-rates {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+}
+
+.rate-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+}
+
+.rate-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1rem;
+  font-weight: 800;
+  color: #34d399;
+}
+
+.rate-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+/* Revenue Comparison Bars */
+.ecom-cs-compare-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.compare-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.compare-info {
+  display: flex;
+  justify-content: space-between;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.compare-bar-bg {
+  height: 10px;
+  background: var(--bg-card);
+  border-radius: 5px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+
+.compare-bar-fill {
+  height: 100%;
+  border-radius: 5px;
+}
+
+.fill-smartphones {
+  background: linear-gradient(90deg, #10b981, #34d399);
+}
+
+.fill-next {
+  background: var(--border-strong);
+}
+
+/* Brand Split */
+.ecom-cs-brand-split {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.brand-box {
+  flex: 1;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.85rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.brand-name {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.brand-role {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.brand-divider {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+/* Week Flow */
+.ecom-cs-week-flow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.3rem;
+  background: var(--bg-card);
+  padding: 0.85rem;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+
+.week-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.4rem 0.5rem;
+  border-radius: 6px;
+  flex: 1;
+}
+
+.week-node.stable {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border);
+}
+
+.week-node.decline {
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.wk-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.wk-status {
+  font-size: 0.58rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.week-node.decline .wk-status {
+  color: #f87171;
+}
+
+.wk-arrow {
+  color: var(--text-muted);
+  font-size: 0.7rem;
+}
+
+/* Purchase Signals Stack */
+.ecom-cs-signals-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.75rem;
+}
+
+.signal-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.85rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.signal-factor {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #34d399;
+}
+
+.signal-metric {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+/* Action Cards */
+.ecom-cs-actions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.ecom-cs-act-card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1.25rem;
+}
+
+.act-header {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  margin-bottom: 0.85rem;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.act-num {
+  font-size: 0.65rem;
+  font-weight: 800;
+  color: #34d399;
+  letter-spacing: 0.08em;
+}
+
+.act-area {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+.act-flow {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr auto 1.6fr;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.act-step {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.75rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.rec-step {
+  border-color: rgba(52, 211, 153, 0.4);
+  background: rgba(16, 185, 129, 0.04);
+}
+
+.step-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.58rem;
+  font-weight: 800;
+  color: var(--text-muted);
+  letter-spacing: 0.06em;
+}
+
+.rec-tag {
+  color: #34d399;
+}
+
+.act-step p {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+.act-arrow {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+/* Roadmap Grid */
+.ecom-cs-roadmap-grid {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.25rem;
+}
+
+.roadmap-stage {
+  flex: 1;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.stage-header {
+  display: flex;
+  justify-content: space-between;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  font-weight: 700;
+}
+
+.stage-tag {
+  color: var(--text-muted);
+}
+
+.stage-time {
+  color: #34d399;
+  font-weight: 800;
+}
+
+.stage-goal {
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.stage-desc {
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.roadmap-arrow {
+  color: var(--text-muted);
+  font-size: 1rem;
+}
+
+/* Limitations Section */
+.ecom-cs-limits-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.limit-card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1rem;
+}
+
+.limit-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  font-weight: 800;
+  color: var(--text-muted);
+  letter-spacing: 0.08em;
+  display: block;
+  margin-bottom: 0.35rem;
+}
+
+.limit-text {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  line-height: 1.45;
+}
+
+.ecom-cs-next-step {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: rgba(16, 185, 129, 0.08);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  border-radius: 8px;
+  padding: 0.85rem 1.25rem;
+  font-size: 0.8rem;
+  color: var(--text-primary);
+}
+
+.ecom-cs-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+
+/* Lightbox Styles */
+.ecom-cs-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  background: rgba(0, 0, 0, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  animation: fadeIn 0.25s ease;
+}
+
+.ecom-cs-lightbox-img-wrap {
+  position: relative;
+  max-width: 95vw;
+  max-height: 85vh;
+}
+
+.ecom-cs-lightbox-img {
+  max-width: 100%;
+  max-height: 85vh;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+}
+
+.ecom-cs-lightbox-close {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  background: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  width: 2.75rem;
+  height: 2.75rem;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.ecom-cs-lightbox-close:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.05);
+}
+
+.ecom-cs-lightbox-caption {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  color: #e4e4e7;
+  margin-top: 1rem;
+}
+
+/* Responsive Styles for Custom Case Study */
+@media (max-width: 900px) {
+  .act-flow {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+  .act-arrow {
+    text-align: center;
+    transform: rotate(90deg);
+  }
+  .ecom-cs-roadmap-grid {
+    flex-direction: column;
+  }
+  .roadmap-arrow {
+    transform: rotate(90deg);
+  }
+}
+
+@media (max-width: 768px) {
+  .ecom-case-study {
+    padding: 1.5rem 1rem;
+  }
+  .ecom-cs-meta-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .ecom-cs-questions-grid,
+  .ecom-cs-dashboards-wrap,
+  .ecom-cs-insights-top-row,
+  .ecom-cs-insights-grid,
+  .ecom-cs-signals-grid,
+  .ecom-cs-limits-grid {
+    grid-template-columns: 1fr;
+  }
+  .full-width-insight {
+    grid-column: span 1;
+  }
+  .ecom-cs-brand-split {
+    flex-direction: column;
+  }
+  .ecom-cs-week-flow {
+    flex-wrap: wrap;
+  }
+}
