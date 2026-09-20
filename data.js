@@ -116,16 +116,16 @@ const PORTFOLIO_DATA = {
         {
       id: "avionic-crm-product",
       num: "01",
-      title: "Avionic Workflow & CRM Digital Product",
-      type: "Product Management",
-      role: "APM Track",
+      title: "Recruitment Workflow Management System (RWMS)",
+      type: "Product & Operations",
+      role: "Founder's Office / APM Track",
       image: "avionic.jpeg",
-      summary: "Designed and built internal CRM and operational workflow automation tool during Founder's Office internship.",
-      problem: "Manual spreadsheet management led to lead drop-offs, recruiter misallocations, and delayed client deliverables.",
-      solution: "Authored comprehensive PRDs, mapped As-Is/To-Be workflows, constructed low-code AppSheet interface with Google Apps Script triggers.",
-      impact: "Reduced operational turnaround latency by 75% and streamlined 10+ client accounts.",
+      summary: "Turning a fragmented recruitment workflow into a centralized operating system for 12+ recruiters and 10+ active clients.",
+      problem: "Recruitment operations were scattered across 9–10 Excel files, causing follow-up gaps, manual reporting friction, and opaque team visibility.",
+      solution: "Mapped operational workflows, designed controlled data entry rules, built an AppSheet MVP, and iterated through 15+ V1→V2 modifications based on manager feedback.",
+      impact: "Consolidated 9–10 files into 1 system, eliminated ~1 hour/day of manual reporting work, and tracked 10 operational KPIs.",
       link: "https://drive.google.com/file/d/1Pwgnd-tumXcqIikDnFAi8jpuXr9QzxB1/view?usp=sharing",
-      tags: ["AppSheet", "PRD", "Workflow Automation", "Stakeholder Lead"]
+      tags: ["AppSheet", "Workflow Mapping", "Process Optimization", "Product Iteration"]
     },
     
     {
