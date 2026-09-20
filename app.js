@@ -453,7 +453,7 @@ document.addEventListener('DOMContentLoaded', () => {
             {
               label: 'Conversion Rate (%)',
               data: [100, 66.6, 38.0, 20.2, 8.5, 6.6],
-              backgroundColor: isDark ? 'rgba(96, 165, 250, 0.45)' : 'rgba(37, 99, 235, 0.45)',
+              backgroundColor: isDark ? 'rgba(96, 165, 250, 0.55)' : 'rgba(37, 99, 235, 0.55)',
               borderRadius: 4
             }
           ]
@@ -480,11 +480,11 @@ document.addEventListener('DOMContentLoaded', () => {
           },
           scales: {
             x: {
-              grid: { color: isDark ? '#27272a' : '#e4e4e7' },
+              grid: { color: isDark ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.08)' },
               ticks: { color: isDark ? '#a1a1aa' : '#52525b', font: { family: 'JetBrains Mono', size: 9, weight: 'bold' } }
             },
             y: {
-              grid: { color: isDark ? '#27272a' : '#e4e4e7' },
+              grid: { color: isDark ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.08)' },
               ticks: { color: isDark ? '#a1a1aa' : '#52525b', font: { family: 'JetBrains Mono', size: 9, weight: 'bold' } }
             }
           }
@@ -500,13 +500,13 @@ document.addEventListener('DOMContentLoaded', () => {
           datasets: [
             {
               label: 'Legacy Excel Spreadsheets',
-              data: [60, 35, 48, 15],
+              data: [90, 35, 48, 15],
               backgroundColor: isDark ? 'rgba(248, 113, 113, 0.85)' : 'rgba(220, 38, 38, 0.85)',
               borderRadius: 4
             },
             {
               label: 'RWMS AppSheet Ecosystem',
-              data: [5, 1, 1, 100],
+              data: [1, 1, 1, 100],
               backgroundColor: isDark ? 'rgba(52, 211, 153, 0.85)' : 'rgba(16, 185, 129, 0.85)',
               borderRadius: 4
             }
@@ -525,17 +525,22 @@ document.addEventListener('DOMContentLoaded', () => {
           },
           scales: {
             x: {
-              grid: { color: isDark ? '#27272a' : '#e4e4e7' },
+              grid: { color: isDark ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.08)' },
               ticks: { color: isDark ? '#a1a1aa' : '#52525b', font: { family: 'JetBrains Mono', size: 9, weight: 'bold' } }
             },
             y: {
-              grid: { color: isDark ? '#27272a' : '#e4e4e7' },
+              grid: { color: isDark ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.08)' },
               ticks: { color: isDark ? '#a1a1aa' : '#52525b', font: { family: 'JetBrains Mono', size: 9, weight: 'bold' } }
             }
           }
         }
       });
     }
+
+    setTimeout(() => {
+      if (rwmsChart1Instance) rwmsChart1Instance.resize();
+      if (rwmsChart2Instance) rwmsChart2Instance.resize();
+    }, 200);
   }
 
   function initEcomLineChart() {
@@ -1291,7 +1296,7 @@ document.addEventListener('DOMContentLoaded', () => {
       body.classList.add('modal-dialog-wide');
       body.innerHTML = `
         <div class="case-study rwms-case-study">
-          <!-- Header (Title Left, Image Right - Standard project overlay architecture) -->
+          <!-- Header (Title Left, Image Right - Preserved architecture) -->
           <header class="case-study-header">
             <div class="case-study-heading">
               <div class="case-study-kicker">
@@ -1301,7 +1306,7 @@ document.addEventListener('DOMContentLoaded', () => {
               <h2 class="case-study-title">${item.title}</h2>
               <p class="case-study-role">${item.role}</p>
               <p class="text-xs md:text-sm font-semibold text-sub mt-2 leading-relaxed max-w-lg">
-                Executive Case Study: Transforming fragmented recruitment spreadsheets into a centralized operational workflow platform across 10+ client accounts.
+                Product & Operations Case Study: Designing and deploying a custom AppSheet operational system for Avionic Consulting Solutions to eliminate multi-client spreadsheet chaos.
               </p>
             </div>
             <div class="case-study-image">
@@ -1310,93 +1315,446 @@ document.addEventListener('DOMContentLoaded', () => {
             <button onclick="closeCaseModal()" class="case-study-close" aria-label="Close case study">&times;</button>
           </header>
 
-          <!-- SECTION 1: EXECUTIVE SCORECARD -->
+          <!-- SECTION 1: EXECUTIVE CONTEXT & IMPACT SCORECARD -->
           <section class="rwms-cs-section my-6">
             <div class="rwms-cs-meta-grid">
               <div class="rwms-cs-meta-pill">
-                <span class="rwms-cs-meta-label">LEGACY FREQUENCY</span>
+                <span class="rwms-cs-meta-label">LEGACY INFRASTRUCTURE</span>
                 <span class="rwms-cs-meta-val text-red-400">9–10 Files</span>
-                <span class="font-mono text-[10px] text-red-400 font-bold mt-1">🔴 Scattered Files</span>
+                <span class="font-mono text-[10px] text-red-400 font-bold mt-1">🔴 Fragmented Spreadsheets</span>
               </div>
               <div class="rwms-cs-meta-pill">
-                <span class="rwms-cs-meta-label">ACTIVE TEAM</span>
-                <span class="rwms-cs-meta-val">12+ Recruiters</span>
-                <span class="font-mono text-[10px] text-emerald-400 font-bold mt-1">⚡ Full Adoption</span>
+                <span class="rwms-cs-meta-label">ORGANIZATIONAL ADOPTION</span>
+                <span class="rwms-cs-meta-val text-emerald-400">100% Core Team</span>
+                <span class="font-mono text-[10px] text-emerald-400 font-bold mt-1">⚡ 12+ Recruiters & Founder</span>
               </div>
               <div class="rwms-cs-meta-pill">
-                <span class="rwms-cs-meta-label">CLIENT ACCOUNTS</span>
-                <span class="rwms-cs-meta-val">10+ Accounts</span>
-                <span class="font-mono text-[10px] text-blue-400 font-bold mt-1">💼 Multi-Tenant</span>
+                <span class="rwms-cs-meta-label">ENGAGEMENT MODELS</span>
+                <span class="rwms-cs-meta-val text-blue-400">BT / BOT / BOM</span>
+                <span class="font-mono text-[10px] text-blue-400 font-bold mt-1">💼 Multi-Tenant SLAs</span>
               </div>
               <div class="rwms-cs-meta-pill">
-                <span class="rwms-cs-meta-label">TIME SAVED</span>
-                <span class="rwms-cs-meta-val text-emerald-400">~1 hr/day</span>
-                <span class="font-mono text-[10px] text-emerald-400 font-bold mt-1">⚡ Reporting Overhead Cut</span>
+                <span class="rwms-cs-meta-label">FOUNDER CAPACITY FREED</span>
+                <span class="rwms-cs-meta-val text-emerald-400">~1.5 hrs / day</span>
+                <span class="font-mono text-[10px] text-emerald-400 font-bold mt-1">🚀 ~450 hrs/yr Leadership Freed</span>
               </div>
             </div>
           </section>
 
-          <!-- SECTION 2: VISUAL SYSTEM TRANSFORMATION -->
+          <!-- PART 1: OPERATIONAL CONTEXT & DIAGNOSTIC FIELDWORK -->
           <section class="rwms-cs-section">
             <div class="rwms-cs-sec-header">
-              <span class="rwms-cs-tag">[ OPERATIONAL BOTTLENECK & SOLUTION ]</span>
-              <h2 class="rwms-cs-sec-title">Operational Transformation: Excel Chaos ➔ RWMS Platform</h2>
+              <span class="rwms-cs-tag">[ PART 1 · OPERATIONAL CONTEXT & DIAGNOSTIC FIELDWORK ]</span>
+              <h2 class="rwms-cs-sec-title">The Actual Problem: Multi-Account Spreadsheet Chaos</h2>
+              <p class="rwms-cs-sec-desc">Avionic Consulting Solution (ACS) is a 16-member boutique HR & sourcing consultancy handling 20+ active enterprise clients, 50–70 active roles, and 150–200 candidates monthly without a central MIS.</p>
             </div>
 
-            <!-- Visual Fragmentation & Solution Split -->
-            <div class="rwms-cs-transform-box">
-              <div class="transform-side old-side">
-                <span class="transform-title text-red-400">OLD SPREADSHEET CHAOS</span>
-                <h4 class="font-extrabold text-sm text-main mb-1">9–10 Fragmented Excel Files</h4>
-                <div class="rwms-cs-excel-chaos-grid my-2">
-                  <div class="rwms-excel-chip"><i data-lucide="file-spreadsheet" class="w-3.5 h-3.5 flex-shrink-0"></i> Client_A.xlsx</div>
-                  <div class="rwms-excel-chip"><i data-lucide="file-spreadsheet" class="w-3.5 h-3.5 flex-shrink-0"></i> Sourcing_v2.xlsx</div>
-                  <div class="rwms-excel-chip"><i data-lucide="file-spreadsheet" class="w-3.5 h-3.5 flex-shrink-0"></i> Followup_OLD.xlsx</div>
+            <!-- 4 Consequence Cards Grid -->
+            <div class="rwms-cs-consequence-grid my-3">
+              <div class="consequence-card">
+                <span class="consequence-tag">BOTTLENECK 01</span>
+                <h3 class="consequence-title">Missed Follow-Ups</h3>
+                <p class="consequence-desc">No due-date tracking for client calls, risking relationship degradation and client attrition.</p>
+              </div>
+              <div class="consequence-card">
+                <span class="consequence-tag">BOTTLENECK 02</span>
+                <h3 class="consequence-title">Duplicate Submissions</h3>
+                <p class="consequence-desc">Recruiters independently submitted same candidates to same clients, causing embarrassment.</p>
+              </div>
+              <div class="consequence-card">
+                <span class="consequence-tag">BOTTLENECK 03</span>
+                <h3 class="consequence-title">Reporting Lag</h3>
+                <p class="consequence-desc">Founder spent ~1.5 hours/day manually compiling reports from 9–10 disconnected Excel files.</p>
+              </div>
+              <div class="consequence-card">
+                <span class="consequence-tag">BOTTLENECK 04</span>
+                <h3 class="consequence-title">Recruiter Admin Overhead</h3>
+                <p class="consequence-desc">1–1.5 hours/day wasted per recruiter searching historical CVs and reconciling trackers.</p>
+              </div>
+            </div>
+
+            <!-- Fishbone Root Cause Diagram Grid -->
+            <div class="rwms-cs-problem-diagram my-4">
+              <span class="font-mono text-xs font-bold text-red-400 mb-2 block flex items-center gap-1.5">
+                <i data-lucide="git-branch" class="w-4 h-4"></i> FISHBONE (ISHIKAWA) 5-PILLAR ROOT CAUSE DIAGRAM
+              </span>
+              <div class="rwms-cs-fishbone-grid">
+                <div class="fishbone-card">
+                  <span class="fishbone-pillar">1. PEOPLE</span>
+                  <span class="fishbone-cause">No Shared Practice</span>
+                  <span class="fishbone-symptom">Recruiters used personal trackers; no administrative accountability.</span>
                 </div>
-                <div class="rwms-cs-progress-compare">
-                  <div class="rwms-progress-row">
-                    <div class="rwms-progress-meta"><span class="text-red-400">Data Integrity</span><span class="text-red-400">25%</span></div>
-                    <div class="rwms-progress-bar-bg"><div class="rwms-progress-bar-fill fill-red" style="width: 25%;"></div></div>
-                  </div>
-                  <div class="rwms-progress-row">
-                    <div class="rwms-progress-meta"><span class="text-zinc-400">Reporting Time</span><span class="text-zinc-400">60 min/day</span></div>
-                    <div class="rwms-progress-bar-bg"><div class="rwms-progress-bar-fill fill-red" style="width: 90%;"></div></div>
-                  </div>
+                <div class="fishbone-card">
+                  <span class="fishbone-pillar">2. PROCESS</span>
+                  <span class="fishbone-cause">Lack of Governance</span>
+                  <span class="fishbone-symptom">No escalation rules for missed follow-ups or duplicate SOPs.</span>
+                </div>
+                <div class="fishbone-card">
+                  <span class="fishbone-pillar">3. TECHNOLOGY</span>
+                  <span class="fishbone-cause">No Central Platform</span>
+                  <span class="fishbone-symptom">Dependency on unlinked local Excel files without version control.</span>
+                </div>
+                <div class="fishbone-card">
+                  <span class="fishbone-pillar">4. DATA</span>
+                  <span class="fishbone-cause">Disconnected Schema</span>
+                  <span class="fishbone-symptom">Inconsistent spellings, blank status fields, and conflicting entries.</span>
+                </div>
+                <div class="fishbone-card">
+                  <span class="fishbone-pillar">5. MANAGEMENT</span>
+                  <span class="fishbone-cause">Reactive Oversight</span>
+                  <span class="fishbone-symptom">No KPI dashboards; issues surfaced only after client escalation.</span>
                 </div>
               </div>
-              
-              <div class="transform-arrow">➔</div>
+            </div>
 
-              <div class="transform-side new-side">
-                <span class="transform-title text-emerald-400">NEW CENTRALIZED RWMS</span>
-                <h4 class="font-extrabold text-sm text-main mb-1">AppSheet Operational Ecosystem</h4>
-                <div class="rwms-cs-progress-compare mb-3">
-                  <div class="rwms-progress-row">
-                    <div class="rwms-progress-meta"><span class="text-emerald-400">Data Integrity</span><span class="text-emerald-400">99%</span></div>
-                    <div class="rwms-progress-bar-bg"><div class="rwms-progress-bar-fill fill-emerald" style="width: 99%;"></div></div>
-                  </div>
-                  <div class="rwms-progress-row">
-                    <div class="rwms-progress-meta"><span class="text-emerald-400">Reporting Time</span><span class="text-emerald-400">5 min/day (-92%)</span></div>
-                    <div class="rwms-progress-bar-bg"><div class="rwms-progress-bar-fill fill-emerald" style="width: 10%;"></div></div>
+            <!-- 7-Dimensional Gap Analysis Matrix Table -->
+            <div class="rwms-cs-mapping-box">
+              <span class="font-mono text-xs font-bold text-emerald-400 mb-2 block flex items-center gap-1.5">
+                <i data-lucide="table" class="w-4 h-4"></i> GAP ANALYSIS MATRIX (CURRENT EXCEL vs. DESIRED STATE)
+              </span>
+              <table class="rwms-cs-gap-table">
+                <thead>
+                  <tr>
+                    <th>FUNCTIONAL AREA</th>
+                    <th>CURRENT EXCEL STATE</th>
+                    <th>TARGET DESIRED STATE</th>
+                    <th>GAP IDENTIFIED</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Customer Management</td>
+                    <td>Client data split in separate files</td>
+                    <td>Single source of truth</td>
+                    <td>High data inconsistency</td>
+                  </tr>
+                  <tr>
+                    <td>Candidate Tracking</td>
+                    <td>Recruiters maintain distinct files</td>
+                    <td>Centralized CV repository</td>
+                    <td>Duplication & retrieval lag</td>
+                  </tr>
+                  <tr>
+                    <td>Follow-Up Management</td>
+                    <td>Handwritten notes & WhatsApp</td>
+                    <td>Structured due-date tracker</td>
+                    <td>Missed follow-up alerts</td>
+                  </tr>
+                  <tr>
+                    <td>Management Reporting</td>
+                    <td>Manual compilation (~1.5 hrs/day)</td>
+                    <td>Automated instant dashboards</td>
+                    <td>High reporting overhead</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <!-- PART 2: PRODUCT STRATEGY & PM TRADE-OFF EVALUATION -->
+          <section class="rwms-cs-section">
+            <div class="rwms-cs-sec-header">
+              <span class="rwms-cs-tag">[ PART 2 · PRODUCT STRATEGY & PM TRADE-OFF EVALUATION ]</span>
+              <h2 class="rwms-cs-sec-title">Evaluating Build vs. Buy Solutions (PM Trade-Off Matrix)</h2>
+              <p class="rwms-cs-sec-desc">Evaluated 4 potential solution paths against 6 weighted criteria (Cost, Speed, Skill Fit, Scalability, Governance) under 90-day internship, zero incremental budget, and non-technical team constraints.</p>
+            </div>
+
+            <div class="rwms-pm-tradeoff-grid">
+              <!-- OPTION 1 -->
+              <div class="pm-tradeoff-card">
+                <div>
+                  <span class="tradeoff-badge badge-rejected">OPTION 1 · REJECTED</span>
+                  <h3 class="tradeoff-title">Enhanced Excel Trackers</h3>
+                  <p class="tradeoff-meta">Weighted Score: 4.15 / 5.0</p>
+                  <div class="tradeoff-points">
+                    <div>• Near-zero cost & familiar tools</div>
+                    <div>• Fails to solve root cause of data fragmentation</div>
+                    <div>• No real-time multi-user validation or governance</div>
                   </div>
                 </div>
-                <div class="module-chips">
-                  <span class="module-chip">Candidate DB</span>
-                  <span class="module-chip">Pipeline</span>
-                  <span class="module-chip">Scheduler</span>
-                  <span class="module-chip">Recruiter View</span>
-                  <span class="module-chip">Client Workspace</span>
-                  <span class="module-chip">Reporting</span>
+                <div class="font-mono text-[10px] text-red-400 font-bold mt-3">❌ Cosmetic Fix; Brittle System</div>
+              </div>
+
+              <!-- OPTION 2 -->
+              <div class="pm-tradeoff-card">
+                <div>
+                  <span class="tradeoff-badge badge-rejected">OPTION 2 · REJECTED</span>
+                  <h3 class="tradeoff-title">Custom Full-Stack Web App</h3>
+                  <p class="tradeoff-meta">React + Node + Supabase (Score: 1.85 / 5.0)</p>
+                  <div class="tradeoff-points">
+                    <div>• High flexibility & custom UI</div>
+                    <div>• 4–6 month development cycle</div>
+                    <div>• High recurring DB/hosting cost & tech debt</div>
+                  </div>
+                </div>
+                <div class="font-mono text-[10px] text-red-400 font-bold mt-3">❌ Delayed TTM & Maintenance Risk</div>
+              </div>
+
+              <!-- OPTION 3 -->
+              <div class="pm-tradeoff-card">
+                <div>
+                  <span class="tradeoff-badge badge-rejected">OPTION 3 · REJECTED</span>
+                  <h3 class="tradeoff-title">Commercial Enterprise ATS</h3>
+                  <p class="tradeoff-meta">BambooHR / Greenhouse (Score: 2.20 / 5.0)</p>
+                  <div class="tradeoff-points">
+                    <div>• Turnkey features out-of-the-box</div>
+                    <div>• ₹25k–40k / user / month license fee</div>
+                    <div>• Rigid workflows clash with ACS high-touch SLAs</div>
+                  </div>
+                </div>
+                <div class="font-mono text-[10px] text-red-400 font-bold mt-3">❌ Over-budget & Low Workflow Fit</div>
+              </div>
+
+              <!-- OPTION 4 (CHOSEN) -->
+              <div class="pm-tradeoff-card chosen-card">
+                <div>
+                  <span class="tradeoff-badge badge-chosen">OPTION 4 · CHOSEN SOLUTION</span>
+                  <h3 class="tradeoff-title">Low-Code RWMS Ecosystem</h3>
+                  <p class="tradeoff-meta">Google Sheets DB + AppSheet UI (Score: 4.35 / 5.0)</p>
+                  <div class="tradeoff-points">
+                    <div>• ₹0 extra software licensing cost on Workspace</div>
+                    <div>• 30-day rapid build & live deployment</div>
+                    <div>• 100% custom ACS business rules & mobile/desktop access</div>
+                    <div>• Low-code maintainability by Founder</div>
+                  </div>
+                </div>
+                <div class="font-mono text-[10px] text-emerald-400 font-bold mt-3">✅ Fastest TTM & Zero Extra Cost</div>
+              </div>
+            </div>
+          </section>
+
+          <!-- PART 3: SOLUTION ARCHITECTURE & APPSHEET DESIGN -->
+          <section class="rwms-cs-section">
+            <div class="rwms-cs-sec-header">
+              <span class="rwms-cs-tag">[ PART 3 · SOLUTION ARCHITECTURE & APPSHEET DESIGN ]</span>
+              <h2 class="rwms-cs-sec-title">7-Module Relational Ecosystem & Business Rules Engine</h2>
+              <p class="rwms-cs-sec-desc">Architected a low-code database on Google Sheets mediated by AppSheet application views with role-based access, automated notifications, and strict validation logic.</p>
+            </div>
+
+            <!-- 7 Modules Grid -->
+            <div class="rwms-cs-module-map-box mb-4">
+              <span class="font-mono text-xs font-bold text-emerald-400 mb-2 block flex items-center gap-1.5">
+                <i data-lucide="layers" class="w-4 h-4"></i> 7 CORE INTERCONNECTED SYSTEM MODULES
+              </span>
+              <div class="rwms-cs-module-grid">
+                <div class="module-card">
+                  <div class="module-card-icon"><i data-lucide="building-2" class="w-4 h-4"></i></div>
+                  <div><span class="module-card-title">1. Client Management</span><p class="text-[10px] text-muted">Definitive record of clients & mandates</p></div>
+                </div>
+                <div class="module-card">
+                  <div class="module-card-icon"><i data-lucide="users" class="w-4 h-4"></i></div>
+                  <div><span class="module-card-title">2. Candidate Tracking</span><p class="text-[10px] text-muted">Central CV bank with attribution</p></div>
+                </div>
+                <div class="module-card">
+                  <div class="module-card-icon"><i data-lucide="briefcase" class="w-4 h-4"></i></div>
+                  <div><span class="module-card-title">3. Position Tracking</span><p class="text-[10px] text-muted">Open, closed & on-hold pipelines</p></div>
+                </div>
+                <div class="module-card">
+                  <div class="module-card-icon"><i data-lucide="user-check" class="w-4 h-4"></i></div>
+                  <div><span class="module-card-title">4. Recruiter Tracking</span><p class="text-[10px] text-muted">Output benchmarking & attribution</p></div>
+                </div>
+                <div class="module-card">
+                  <div class="module-card-icon"><i data-lucide="bell" class="w-4 h-4"></i></div>
+                  <div><span class="module-card-title">5. Follow-Up Tracker</span><p class="text-[10px] text-muted">Mobile deck view & due-date alerts</p></div>
+                </div>
+                <div class="module-card">
+                  <div class="module-card-icon"><i data-lucide="calendar" class="w-4 h-4"></i></div>
+                  <div><span class="module-card-title">6. Interview Tracker</span><p class="text-[10px] text-muted">Real-time interview status sync</p></div>
+                </div>
+                <div class="module-card">
+                  <div class="module-card-icon"><i data-lucide="receipt" class="w-4 h-4"></i></div>
+                  <div><span class="module-card-title">7. Billing Tracker</span><p class="text-[10px] text-muted">8.33% CTC fee milestones</p></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- ACS Business Rules Engine -->
+            <div class="rwms-cs-rules-grid">
+              <div class="rule-card">
+                <div>
+                  <span class="rule-tag">RULE 01 · DUPLICATE GUARDRAIL</span>
+                  <h3 class="rule-title">2-Day Candidate Disclosure</h3>
+                  <p class="text-xs text-sub leading-relaxed mb-3">Enforces candidate ownership lock if introduced within 2 working days, preventing multi-recruiter conflict.</p>
+                </div>
+                <div class="rule-visual flex items-center justify-center gap-1">
+                  <span>Ownership Lock</span>
+                  <span class="text-emerald-400">⚡ 2-Day Lock</span>
+                </div>
+              </div>
+
+              <div class="rule-card">
+                <div>
+                  <span class="rule-tag">RULE 02 · REPLACEMENT SLA</span>
+                  <h3 class="rule-title">90-Day Guarantee Window</h3>
+                  <p class="text-xs text-sub leading-relaxed mb-3">Automated alert triggering free replacement tracking if candidate exits within 90 days of joining.</p>
+                </div>
+                <div class="rule-visual flex items-center justify-center gap-1">
+                  <span class="text-emerald-400">🛡️ SLA Guarantee:</span>
+                  <span>90 Days</span>
+                </div>
+              </div>
+
+              <div class="rule-card">
+                <div>
+                  <span class="rule-tag">RULE 03 · PLACEMENT FEE</span>
+                  <h3 class="rule-title">8.33% Annual CTC Milestone</h3>
+                  <p class="text-xs text-sub leading-relaxed mb-3">Billing trigger synced automatically upon candidate onboarding verification in Billing Tracker.</p>
+                </div>
+                <div class="rule-visual flex items-center justify-center gap-1">
+                  <span>Placement Fee ➔</span>
+                  <span class="text-amber-400">💼 8.33% CTC</span>
                 </div>
               </div>
             </div>
           </section>
 
-          <!-- SECTION 3: WORKING GRAPH 1 — PIPELINE FUNNEL CHART -->
+          <!-- PART 4: ITERATIVE REFINEMENT & PHASED ORGANIZATIONAL ADOPTION -->
           <section class="rwms-cs-section">
             <div class="rwms-cs-sec-header">
-              <span class="rwms-cs-tag">[ CANDIDATE THROUGHPUT ANALYTICS ]</span>
-              <h2 class="rwms-cs-sec-title">Recruitment Pipeline Funnel & Stage Conversion</h2>
+              <span class="rwms-cs-tag">[ PART 4 · ITERATIVE REFINEMENT & PHASED ADOPTION ]</span>
+              <h2 class="rwms-cs-sec-title">5-Phase Implementation Plan & Iterative Prototyping</h2>
+              <p class="rwms-cs-sec-desc">Deployed through a controlled 5-phase change management plan and an iterative V1 ➔ V2 feedback loop with the Founder & core team.</p>
+            </div>
+
+            <!-- 5-Phase Implementation Roadmap Stepper -->
+            <div class="rwms-cs-stepper-grid mb-4">
+              <div class="stepper-card">
+                <span class="stepper-phase">PHASE 1</span>
+                <span class="stepper-title">Preparation</span>
+                <span class="stepper-desc">Freeze V2 schema & migrate historical Excel records</span>
+              </div>
+              <div class="stepper-card">
+                <span class="stepper-phase">PHASE 2</span>
+                <span class="stepper-title">Controlled Pilot</span>
+                <span class="stepper-desc">Parallel-running RWMS & legacy Excel trackers</span>
+              </div>
+              <div class="stepper-card">
+                <span class="stepper-phase">PHASE 3</span>
+                <span class="stepper-title">Core Rollout</span>
+                <span class="stepper-desc">Walkthrough training & retire legacy Excel</span>
+              </div>
+              <div class="stepper-card">
+                <span class="stepper-phase">PHASE 4</span>
+                <span class="stepper-title">Stabilisation</span>
+                <span class="stepper-desc">Daily check-ins & rapid turnaround fixes</span>
+              </div>
+              <div class="stepper-card">
+                <span class="stepper-phase">PHASE 5</span>
+                <span class="stepper-title">Handover</span>
+                <span class="stepper-desc">Written schema docs & AppSheet editor training</span>
+              </div>
+            </div>
+
+            <!-- V1 to V2 Feedback Loop Summary -->
+            <div class="rwms-cs-timeline-box">
+              <span class="font-mono text-xs font-bold text-emerald-400 mb-2 block flex items-center gap-1.5">
+                <i data-lucide="refresh-cw" class="w-4 h-4"></i> PROTOTYPE VALIDATION CYCLE (15+ FEEDBACK ENHANCEMENTS IN V2)
+              </span>
+              <div class="rwms-cs-timeline-nodes">
+                <div class="timeline-node">
+                  <span class="node-title">V1 Prototype</span>
+                  <p class="text-[10px] text-muted">Tested with 50 historical candidate records across Founder & 5 core team members.</p>
+                </div>
+                <div class="timeline-node active-node">
+                  <span class="node-title text-emerald-400">15+ User Feedback Items</span>
+                  <p class="text-[10px] text-muted">Recruiter filter slices, virtual month columns, color coding, deep links.</p>
+                </div>
+                <div class="timeline-node">
+                  <span class="node-title">V2 Deployed System</span>
+                  <p class="text-[10px] text-muted">100% adopted as sole operational system of record.</p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- PART 5: SIMULATED APPSHEET INTERFACE MOCKUPS -->
+          <section class="rwms-cs-section">
+            <div class="rwms-cs-sec-header">
+              <span class="rwms-cs-tag">[ PART 5 · APPSHEET INTERFACE MOCKUPS ]</span>
+              <h2 class="rwms-cs-sec-title">Simulated AppSheet Operational Interface Mockups</h2>
+              <p class="rwms-cs-sec-desc">Simulated operational UI mockups designed for recruiters and management.</p>
+            </div>
+
+            <div class="rwms-ui-mockup-grid">
+              <!-- MOCKUP 1 -->
+              <div class="rwms-ui-mockup-card">
+                <div class="mockup-header-bar">
+                  <div class="mockup-app-title">
+                    <i data-lucide="layout-grid" class="w-4 h-4"></i> RWMS · Recruiter Candidate Pipeline
+                  </div>
+                  <div class="mockup-actions">
+                    <i data-lucide="search" class="w-3.5 h-3.5"></i>
+                    <i data-lucide="filter" class="w-3.5 h-3.5"></i>
+                  </div>
+                </div>
+                <div class="mockup-body">
+                  <div class="mockup-row-card">
+                    <div class="mockup-cand-info">
+                      <span class="mockup-cand-name">Aarav Sharma</span>
+                      <span class="mockup-cand-role">Senior Java Developer · Fintech Account</span>
+                    </div>
+                    <span class="mockup-stage-badge bg-emerald-950/80 text-emerald-400 border border-emerald-800/50">Interview Scheduled</span>
+                  </div>
+                  <div class="mockup-row-card">
+                    <div class="mockup-cand-info">
+                      <span class="mockup-cand-name">Priya Patel</span>
+                      <span class="mockup-cand-role">DevOps Lead · Enterprise IT Account</span>
+                    </div>
+                    <span class="mockup-stage-badge bg-blue-950/80 text-blue-400 border border-blue-800/50">Screening Verified</span>
+                  </div>
+                  <div class="mockup-row-card">
+                    <div class="mockup-cand-info">
+                      <span class="mockup-cand-name">Rohan Mehta</span>
+                      <span class="mockup-cand-role">Product Manager · BFSI Account</span>
+                    </div>
+                    <span class="mockup-stage-badge bg-amber-950/80 text-amber-400 border border-amber-800/50">Offer Released</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- MOCKUP 2 -->
+              <div class="rwms-ui-mockup-card">
+                <div class="mockup-header-bar">
+                  <div class="mockup-app-title">
+                    <i data-lucide="shield-check" class="w-4 h-4"></i> RWMS · SLA & Follow-Up Deck View
+                  </div>
+                  <div class="mockup-actions">
+                    <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
+                    <i data-lucide="download" class="w-3.5 h-3.5"></i>
+                  </div>
+                </div>
+                <div class="mockup-body">
+                  <div class="mockup-row-card">
+                    <div class="mockup-cand-info">
+                      <span class="mockup-cand-name">90-Day Placement Guarantee Status</span>
+                      <span class="mockup-cand-role">34 Placed Candidates · 0 Exits Flagged</span>
+                    </div>
+                    <span class="mockup-stage-badge bg-emerald-950/80 text-emerald-300 border border-emerald-800/50">✓ 100% Compliant</span>
+                  </div>
+                  <div class="mockup-row-card">
+                    <div class="mockup-cand-info">
+                      <span class="mockup-cand-name">2-Day Duplicate Submission Check</span>
+                      <span class="mockup-cand-role">Automated Channel Ownership Lock</span>
+                    </div>
+                    <span class="mockup-stage-badge bg-blue-950/80 text-blue-300 border border-blue-800/50">⚡ Active Engine</span>
+                  </div>
+                  <div class="mockup-row-card">
+                    <div class="mockup-cand-info">
+                      <span class="mockup-cand-name">Placement Billing (8.33% Annual CTC)</span>
+                      <span class="mockup-cand-role">₹ 14.2L Invoiced Placements</span>
+                    </div>
+                    <span class="mockup-stage-badge bg-purple-950/80 text-purple-300 border border-purple-800/50">💼 Billing Synced</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- PART 6: EMPIRICAL ANALYTICS & INTERACTIVE CHARTS -->
+          <section class="rwms-cs-section">
+            <div class="rwms-cs-sec-header">
+              <span class="rwms-cs-tag">[ PART 6 · EMPIRICAL ANALYTICS & INTERACTIVE CHARTS ]</span>
+              <h2 class="rwms-cs-sec-title">Candidate Throughput & Measured Operational Gains</h2>
             </div>
 
             <!-- Visual Kanban Stage Stepper -->
@@ -1439,17 +1797,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 <canvas id="rwms-funnel-chart-canvas"></canvas>
               </div>
             </div>
-          </section>
-
-          <!-- SECTION 4: WORKING GRAPH 2 — OPERATIONAL EFFICIENCY IMPACT CHART -->
-          <section class="rwms-cs-section">
-            <div class="rwms-cs-sec-header">
-              <span class="rwms-cs-tag">[ MEASURED OPERATIONAL GAINS ]</span>
-              <h2 class="rwms-cs-sec-title">Operational Efficiency & Impact Comparison</h2>
-            </div>
 
             <!-- CHART 2: OPERATIONAL IMPACT COMPARISON -->
-            <div class="rwms-cs-chart-box mb-4">
+            <div class="rwms-cs-chart-box my-4">
               <div class="flex items-center justify-between mb-2">
                 <span class="font-mono text-xs font-bold text-emerald-400 flex items-center gap-1.5">
                   <i data-lucide="trending-up" class="w-4 h-4"></i> CHART 2: SPREADSHEET SYSTEM VS. RWMS APPSHEET ECOSYSTEM
@@ -1461,20 +1811,11 @@ document.addEventListener('DOMContentLoaded', () => {
               </div>
             </div>
 
-            <!-- Highlight Impact Card -->
-            <div class="rwms-cs-impact-highlight">
-              <i data-lucide="zap" class="w-5 h-5 text-emerald-400 flex-shrink-0"></i>
-              <span><strong>Key Operational Win:</strong> ~1 hour / day of reporting work eliminated per recruiter, saving ~240 hours/year across the team.</span>
+            <!-- 10 Core Monitored Management KPIs Matrix Grid -->
+            <div class="rwms-cs-sec-header mt-6 mb-2">
+              <span class="rwms-cs-tag">[ MANAGERIAL DASHBOARD MATRIX ]</span>
+              <h2 class="rwms-cs-sec-title">10 Core Monitored Operational Metrics</h2>
             </div>
-          </section>
-
-          <!-- SECTION 5: VISUAL 10 KPI DASHBOARD MATRIX -->
-          <section class="rwms-cs-section">
-            <div class="rwms-cs-sec-header mb-2">
-              <span class="rwms-cs-tag">[ MANAGERIAL DASHBOARD ]</span>
-              <h2 class="rwms-cs-sec-title">10 Core Monitored Metrics</h2>
-            </div>
-
             <div class="rwms-cs-kpi-matrix-grid">
               <div class="kpi-matrix-card">
                 <div class="kpi-glow-dot"></div>
@@ -1510,7 +1851,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="kpi-glow-dot"></div>
                 <span class="kpi-matrix-name">6. Offer Acceptance</span>
                 <span class="kpi-matrix-val">84%</span>
-                <span class="kpi-trend-tag">↑ Target Met</span>
+                <span class="kpi-trend-tag">↑ >80% Target</span>
               </div>
               <div class="kpi-matrix-card">
                 <div class="kpi-glow-dot"></div>
@@ -1534,52 +1875,41 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="kpi-glow-dot"></div>
                 <span class="kpi-matrix-name">10. Report Turnaround</span>
                 <span class="kpi-matrix-val">Real-Time</span>
-                <span class="kpi-trend-tag">⚡ Instant</span>
+                <span class="kpi-trend-tag">⚡ &lt;1 Min</span>
               </div>
             </div>
           </section>
 
-          <!-- SECTION 6: GRAPHIC BUSINESS RULES ENGINE -->
+          <!-- PART 7: BUSINESS IMPACT & CAPACITY RECOVERY -->
           <section class="rwms-cs-section">
             <div class="rwms-cs-sec-header">
-              <span class="rwms-cs-tag">[ AUTOMATED BUSINESS RULES ]</span>
-              <h2 class="rwms-cs-sec-title">Embedded System Rules</h2>
+              <span class="rwms-cs-tag">[ PART 7 · BUSINESS IMPACT & CAPACITY RECOVERY ]</span>
+              <h2 class="rwms-cs-sec-title">Annualized Capacity Recovery & Client Protection</h2>
             </div>
 
-            <div class="rwms-cs-rules-grid">
-              <div class="rule-card">
-                <div>
-                  <span class="rule-tag">RULE 01</span>
-                  <h3 class="rule-title">Submission Threshold</h3>
-                  <p class="text-xs text-sub leading-relaxed mb-3">Requires ≥ 3 qualified candidates before client submission.</p>
-                </div>
-                <div class="rule-visual flex items-center justify-center gap-1">
-                  <span>Threshold ≥ 3</span>
-                  <span class="text-emerald-400">👤👤👤</span>
+            <!-- Highlight Impact Card -->
+            <div class="rwms-cs-impact-highlight mb-4">
+              <i data-lucide="zap" class="w-5 h-5 text-emerald-400 flex-shrink-0"></i>
+              <span><strong>Key Leadership Impact:</strong> ~1.5 hours / day of manual report compilation eliminated for the Founder = 420–450 hours/year of strategic leadership capacity recovered for high-value client acquisition.</span>
+            </div>
+
+            <div class="rwms-cs-impact-split">
+              <div class="impact-side-box">
+                <span class="impact-side-title before-title">LEGACY OPERATIONAL COSTS</span>
+                <div class="impact-bullets">
+                  <div class="impact-bullet">🔴 ~1.5 hours/day wasted in manual report compilation</div>
+                  <div class="impact-bullet">🔴 1–1.5 hours/day lost per recruiter in admin work</div>
+                  <div class="impact-bullet">🔴 Duplicate profile submissions on client calls</div>
+                  <div class="impact-bullet">🔴 High risk of client attrition due to missed follow-ups</div>
                 </div>
               </div>
-
-              <div class="rule-card">
-                <div>
-                  <span class="rule-tag">RULE 02</span>
-                  <h3 class="rule-title">Recency Priority</h3>
-                  <p class="text-xs text-sub leading-relaxed mb-3">Prioritizes fresh applications over stale pipeline entries.</p>
-                </div>
-                <div class="rule-visual flex items-center justify-center gap-1">
-                  <span class="text-emerald-400">⚡ Priority:</span>
-                  <span>NEW > OLD</span>
-                </div>
-              </div>
-
-              <div class="rule-card">
-                <div>
-                  <span class="rule-tag">RULE 03</span>
-                  <h3 class="rule-title">Stage Progression Guardrail</h3>
-                  <p class="text-xs text-sub leading-relaxed mb-3">Prevents jumping to Interview without screening.</p>
-                </div>
-                <div class="rule-visual flex items-center justify-center gap-1">
-                  <span>Screen ➔</span>
-                  <span class="text-amber-400">🔒 Interview</span>
+              <div class="impact-side-box">
+                <span class="impact-side-title after-title">RWMS OPERATIONAL REVENUE IMPACT</span>
+                <div class="impact-bullets">
+                  <div class="impact-bullet">⚡ &lt; 1 minute daily report generation via AppSheet</div>
+                  <div class="impact-bullet">⚡ Zero duplicate candidate submissions</div>
+                  <div class="impact-bullet">⚡ ~450 hrs/yr Founder time reallocated to client BD</div>
+                  <div class="impact-bullet">⚡ ₹0 extra licensing cost on Google Workspace</div>
                 </div>
               </div>
             </div>
