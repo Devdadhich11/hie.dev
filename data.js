@@ -106,6 +106,12 @@ const PORTFOLIO_DATA = {
     sla: [72, 78, 84, 89, 94, 97]
   },
 
+  ecomChartData: {
+    labels: ["Week 1", "Week 2", "Week 3", "Week 4", "Week 5"],
+    cart: [6200, 6800, 6500, 6100, 1741],
+    purchase: [3100, 3400, 3200, 3000, 729]
+  },
+
   projects: [
         {
       id: "avionic-crm-product",
@@ -123,8 +129,22 @@ const PORTFOLIO_DATA = {
     },
     
     {
-      id: "power-plant-analytics",
+      id: "ecommerce-performance-analytics",
       num: "02",
+      title: "E-Commerce Performance Analytics",
+      type: "Data Analytics",
+      role: "Business Analyst Track",
+      image: "Overview.png",
+      summary: "Turning 657K+ customer events into actionable category, brand, and conversion insights.",
+      problem: "Analyzing 1M+ raw e-commerce records to pinpoint purchase funnel drop-offs, category dependencies, and customer purchase behaviors.",
+      solution: "Engineered a 2-page analytical Power BI dashboard using DAX calculations across 657K+ events and 122K+ unique users.",
+      impact: "Identified pre-cart funnel bottleneck (~4.1% View→Cart) and revenue concentration risks.",
+      link: "https://github.com/Devdadhich11/E-Commerce-Multi-Category-Store-Analysis",
+      tags: ["Power BI", "DAX", "Power Query", "E-Commerce Analytics"]
+    },
+    {
+      id: "power-plant-analytics",
+      num: "03",
       title: "Global Power Plant Analytics Dashboard",
       type: "Data Analytics",
       role: "Business Analyst Track",
@@ -136,24 +156,23 @@ const PORTFOLIO_DATA = {
       link: "https://linkedin.com/in/devdadhich/",
       tags: ["Power BI", "DAX", "SQL", "Data Modeling"]
     },
-
     {
-    id: "bookstore-sql-project",
-    num: "03",
-    title: "PageTurner Bookstore - SQL Database & Business Analysis",
-    type: "SQL / Business Analytics",
-    role: "Business Analyst / Data Analyst",
-    image: "bookstore.png",
-    summary: "Built a relational bookstore database and performed SQL-based analysis of books, authors, customers, sales, revenue, and referrals.",
-    problem: "Bookstore data needed to be structured across related entities so that sales, customer behavior, and business performance could be analyzed effectively.",
-    solution: "Designed and populated a relational MySQL database, established table relationships, implemented triggers and views, and performed business-focused SQL analysis using joins, aggregations, and date-based analysis.",
-    impact: "Created a structured database and analytical queries that enable insights into sales performance, customer behavior, author and genre revenue, and monthly and quarterly trends.",
-    link: "https://github.com/Devdadhich11/Bookstore-SQL",
-    tags: ["SQL", "MySQL", "Business Analytics", "Data Analysis"]
-},
+      id: "bookstore-sql-project",
+      num: "04",
+      title: "PageTurner Bookstore - SQL Database & Business Analysis",
+      type: "SQL / Business Analytics",
+      role: "Business Analyst / Data Analyst",
+      image: "bookstore.png",
+      summary: "Built a relational bookstore database and performed SQL-based analysis of books, authors, customers, sales, revenue, and referrals.",
+      problem: "Bookstore data needed to be structured across related entities so that sales, customer behavior, and business performance could be analyzed effectively.",
+      solution: "Designed and populated a relational MySQL database, established table relationships, implemented triggers and views, and performed business-focused SQL analysis using joins, aggregations, and date-based analysis.",
+      impact: "Created a structured database and analytical queries that enable insights into sales performance, customer behavior, author and genre revenue, and monthly and quarterly trends.",
+      link: "https://github.com/Devdadhich11/Bookstore-SQL",
+      tags: ["SQL", "MySQL", "Business Analytics", "Data Analysis"]
+    },
     {
       id: "vyndo-market-strategy",
-      num: "04",
+      num: "05",
       title: "Vyndo - Brand Development & Growth Strategy",
       type: "Market Strategy",
       role: "APM / Product Strategist",
@@ -167,7 +186,7 @@ const PORTFOLIO_DATA = {
     },
     {
       id: "ravivari-retail-study",
-      num: "05",
+      num: "06",
       title: "Marketing Strategies in Unorganized Markets",
       type: "Business Research",
       role: "Business Analyst Track",
@@ -181,7 +200,7 @@ const PORTFOLIO_DATA = {
     },
     {
       id: "drishti-brand-web",
-      num: "06",
+      num: "07",
       title: "Drishti — Visual Storytelling Studio Web App",
       type: "Web Development",
       role: "Web Developer & UI Designer",
@@ -195,7 +214,7 @@ const PORTFOLIO_DATA = {
     },
     {
       id: "eventsphere-app",
-      num: "07",
+      num: "08",
       title: "EventSphere — Campus Event Management Platform",
       type: "Web Application",
       role: "Frontend Developer",
@@ -209,7 +228,7 @@ const PORTFOLIO_DATA = {
     },
     {
       id: "pinkcity-parichay",
-      num: "08",
+      num: "09",
       title: "Pink City Parichay — Jaipur Tourism Portal",
       type: "Web Application",
       role: "Product Developer",
