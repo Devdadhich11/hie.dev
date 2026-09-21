@@ -124,7 +124,7 @@ const PORTFOLIO_DATA = {
       problem: "Recruitment operations were scattered across 9–10 Excel files, causing follow-up gaps, manual reporting friction, and opaque team visibility.",
       solution: "Mapped operational workflows, designed controlled data entry rules, built an AppSheet MVP, and iterated through 15+ V1→V2 modifications based on manager feedback.",
       impact: "Consolidated 9–10 files into 1 system, eliminated ~1 hour/day of manual reporting work, and tracked 10 operational KPIs.",
-      link: "https://drive.google.com/file/d/1Pwgnd-tumXcqIikDnFAi8jpuXr9QzxB1/view?usp=sharing",
+      link: "https://drive.google.com/drive/folders/1TQ1E0s0LnFDty4p_cf5l-a2uVSezRP6v?usp=sharing",
       tags: ["AppSheet", "Workflow Mapping", "Process Optimization", "Product Iteration"]
     },
     
