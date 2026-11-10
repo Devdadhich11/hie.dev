@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="E-Commerce Performance Analytics & Customer Funnel Deep Dive — Dedicated Case Study by Dev Dadhich. Power BI, DAX, funnel drop-off diagnostics, and merchandising strategy." />
+  <title>E-Commerce Performance Analytics — Dev Dadhich</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- Main Custom CSS -->
+  <link rel="stylesheet" href="custom.css">
+
+  <style>
+    .case-container {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+    .cs-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      transition: border-color 0.25s ease;
+    }
+    .cs-card:hover {
+      border-color: var(--border-strong);
+    }
+    .cs-metric-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.25rem;
+      transition: all 0.25s ease;
+    }
+    .cs-metric-card:hover {
+      border-color: rgba(96, 165, 250, 0.4);
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+<body class="min-h-screen antialiased selection:bg-blue-500 selection:text-white relative">
+
+  <!-- Ambient Floating Orange Glow Orbs (Glassmorphism Background) -->
+  <div class="ambient-orbs-container" aria-hidden="true">
+    <div class="ambient-orb orb-1"></div>
+    <div class="ambient-orb orb-2"></div>
+    <div class="ambient-orb orb-3"></div>
+    <div class="ambient-orb orb-4"></div>
+    <div class="ambient-orb orb-5"></div>
+  </div>
+
+  <!-- Sticky Top Navigation -->
+  <header class="fixed top-0 left-0 right-0 z-50 py-3.5 px-6 bg-[var(--bg)]/85 backdrop-blur-md border-b border-[var(--border)]">
+    <div class="max-w-5xl mx-auto flex items-center justify-between">
+      
+      <!-- Back to Portfolio Link -->
+      <a href="index.html#projects" class="font-mono text-xs font-bold text-sub hover:text-main flex items-center gap-2 group transition-colors">
+        <i data-lucide="arrow-left" class="w-4 h-4 group-hover:-translate-x-1 transition-transform"></i>
+        <span>BACK TO PORTFOLIO</span>
+      </a>
+
+      <!-- Case Identifier Badge -->
+      <div class="hidden sm:flex items-center gap-2 font-mono text-xs font-bold">
+        <span class="w-2 h-2 rounded-full bg-blue-400 animate-pulse"></span>
+        <span class="text-main">E-COMMERCE ANALYTICS</span>
+        <span class="text-dim">// CASE 02</span>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="flex items-center gap-3">
+        <button id="theme-toggle" class="p-2 rounded border border-zinc-700/80 text-sub hover:text-main transition-colors" aria-label="Toggle Theme">
+          <i id="theme-icon" data-lucide="sun" class="w-4 h-4"></i>
+        </button>
+        <a href="https://github.com/Devdadhich11/E-Commerce-Multi-Category-Store-Analysis" target="_blank" class="px-4 py-1.5 rounded font-mono text-xs font-extrabold btn-solid flex items-center gap-1.5 shadow-sm">
+          <span>GITHUB REPO</span>
+          <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+        </a>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- Main Content Wrap -->
+  <main class="pt-28 pb-24 space-y-12">
+    
+    <!-- Hero Article Header (Clean Editorial Header — No Big Images) -->
+    <section class="case-container pb-8 border-b border-zinc-800/70 space-y-6">
+      
+      <div class="space-y-3">
+        <div class="flex flex-wrap items-center gap-2 font-mono text-xs">
+          <span class="px-2.5 py-0.5 rounded-full bg-blue-500/15 text-blue-400 font-bold border border-blue-500/30">
+            CASE 02 · DATA ANALYTICS & CRO
+          </span>
+          <span class="text-dim">Multi-Category Store Dataset</span>
+          <span class="text-dim">• 657,000+ Records</span>
+        </div>
+
+        <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-main leading-tight">
+          E-Commerce Performance Analytics & Funnel Diagnostics
+        </h1>
+
+        <p class="text-base sm:text-lg text-sub font-medium leading-relaxed max-w-3xl">
+          Decoding 657,000+ customer interaction events: Pinpointing the critical 4.1% View-to-Cart bottleneck, analyzing category revenue concentration, and building DAX analytical models in Power BI.
+        </p>
+      </div>
+
+      <!-- Executive Overview Banner Callout -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 p-5 rounded-xl cs-card">
+        <div class="space-y-1.5 border-b md:border-b-0 md:border-r border-[var(--border)] pb-4 md:pb-0 md:pr-4">
+          <div class="font-mono text-xs text-red-400 font-bold flex items-center gap-1.5">
+            <i data-lucide="alert-circle" class="w-3.5 h-3.5"></i> THE BUSINESS CHALLENGE
+          </div>
+          <p class="text-xs sm:text-sm text-sub font-medium leading-relaxed">
+            Raw e-commerce log data lacked multi-dimensional relational modeling, masking severe customer drop-offs between product discovery and cart creation, alongside dangerous revenue concentration in a few key smartphone brands.
+          </p>
+        </div>
+
+        <div class="space-y-1.5 md:pl-2">
+          <div class="font-mono text-xs text-emerald-400 font-bold flex items-center gap-1.5">
+            <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> THE ANALYTICAL SOLUTION
+          </div>
+          <p class="text-xs sm:text-sm text-sub font-medium leading-relaxed">
+            Constructed a star-schema model in Power BI with custom DAX calculations, diagnostic funnel measures, and category cross-filters that surfaced the 4.1% pre-cart bottleneck and generated 5 high-impact merchandising playbooks.
+          </p>
+        </div>
+      </div>
+
+      <!-- Metadata Grid -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 font-mono text-xs pt-2">
+        <div class="p-3 rounded-lg cs-card">
+          <div class="text-dim">TOTAL EVENTS</div>
+          <div class="text-main font-bold mt-0.5">657,000+ Records</div>
+        </div>
+        <div class="p-3 rounded-lg cs-card">
+          <div class="text-dim">UNIQUE USERS</div>
+          <div class="text-blue-400 font-bold mt-0.5">122,000+ Shoppers</div>
+        </div>
+        <div class="p-3 rounded-lg cs-card">
+          <div class="text-dim">PRIMARY BOTTLENECK</div>
+          <div class="text-red-400 font-bold mt-0.5">4.1% View→Cart Rate</div>
+        </div>
+        <div class="p-3 rounded-lg cs-card">
+          <div class="text-dim">STACK</div>
+          <div class="text-main font-bold mt-0.5">Power BI · DAX · Power Query</div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- Executive Metric Scorecard Strip -->
+    <section class="case-container">
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        
+        <div class="cs-metric-card">
+          <div class="font-mono text-xs text-red-400 font-bold">CRITICAL DROP-OFF</div>
+          <div class="text-3xl font-extrabold text-red-400 font-mono mt-1">4.1%</div>
+          <div class="text-xs text-sub mt-1 leading-snug">Product View to Cart creation yield (95.9% abandonment)</div>
+        </div>
+
+        <div class="cs-metric-card">
+          <div class="font-mono text-xs text-emerald-400 font-bold">CART CONVERSION</div>
+          <div class="text-3xl font-extrabold text-emerald-400 font-mono mt-1">48.1%</div>
+          <div class="text-xs text-sub mt-1 leading-snug">Cart to Final Purchase completion rate</div>
+        </div>
+
+        <div class="cs-metric-card">
+          <div class="font-mono text-xs text-amber-400 font-bold">BRAND CONCENTRATION</div>
+          <div class="text-3xl font-extrabold text-amber-400 font-mono mt-1">64.0%</div>
+          <div class="text-xs text-sub mt-1 leading-snug">Share of total store revenue generated by top 5 brands</div>
+        </div>
+
+        <div class="cs-metric-card">
+          <div class="font-mono text-xs text-blue-400 font-bold">TOTAL PURCHASES</div>
+          <div class="text-3xl font-extrabold text-blue-400 font-mono mt-1">13,000+</div>
+          <div class="text-xs text-sub mt-1 leading-snug">Transactions modeled with end-to-end DAX metrics</div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Part 1: Problem Framework & The 4 Fundamental Inquiries -->
+    <section class="case-container space-y-6">
+      
+      <div class="space-y-2">
+        <span class="font-mono text-xs text-blue-400 font-bold uppercase tracking-wider">[ 01 · PROBLEM INQUIRY ]</span>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-main">The 4 Fundamental Business Questions</h2>
+        <p class="text-sm text-sub leading-relaxed max-w-3xl">
+          Rather than viewing 657,000+ rows as isolated statistics, the analysis was anchored around 4 core decisions that directly influence merchandising and revenue:
+        </p>
+      </div>
+
+      <!-- 4 Questions Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        
+        <div class="p-5 rounded-xl cs-card space-y-1.5">
+          <div class="flex items-center justify-between font-mono text-xs">
+            <span class="text-blue-400 font-bold">INQUIRY 01 · CONVERSION FUNNEL</span>
+            <i data-lucide="filter" class="w-4 h-4 text-blue-400"></i>
+          </div>
+          <h3 class="text-sm font-bold text-main">"Where are customers dropping out of the purchase funnel?"</h3>
+          <p class="text-xs text-sub leading-relaxed">
+            Data proved that 95.9% of user friction happens between viewing a product and adding it to cart. Once an item is in the cart, conversion jumps to 48.1%.
+          </p>
+        </div>
+
+        <div class="p-5 rounded-xl cs-card space-y-1.5">
+          <div class="flex items-center justify-between font-mono text-xs">
+            <span class="text-emerald-400 font-bold">INQUIRY 02 · CATEGORY DYNAMICS</span>
+            <i data-lucide="layers" class="w-4 h-4 text-emerald-400"></i>
+          </div>
+          <h3 class="text-sm font-bold text-main">"Which departments drive the store's financial engine?"</h3>
+          <p class="text-xs text-sub leading-relaxed">
+            Electronics and smart devices generated 78% of gross merchandise value (GMV), while apparel drove high traffic but exhibited low average order value (AOV).
+          </p>
+        </div>
+
+        <div class="p-5 rounded-xl cs-card space-y-1.5">
+          <div class="flex items-center justify-between font-mono text-xs">
+            <span class="text-amber-400 font-bold">INQUIRY 03 · BRAND CONCENTRATION</span>
+            <i data-lucide="award" class="w-4 h-4 text-amber-400"></i>
+          </div>
+          <h3 class="text-sm font-bold text-main">"Which brands drive volume versus margin value?"</h3>
+          <p class="text-xs text-sub leading-relaxed">
+            Identified heavy dependence on top 3 smartphone manufacturers (Samsung, Apple, Xiaomi), exposing the store to inventory supplier risk.
+          </p>
+        </div>
+
+        <div class="p-5 rounded-xl cs-card space-y-1.5">
+          <div class="flex items-center justify-between font-mono text-xs">
+            <span class="text-purple-400 font-bold">INQUIRY 04 · BEHAVIORAL WINDOWS</span>
+            <i data-lucide="activity" class="w-4 h-4 text-purple-400"></i>
+          </div>
+          <h3 class="text-sm font-bold text-main">"What session patterns predict purchase completion?"</h3>
+          <p class="text-xs text-sub leading-relaxed">
+            Discovered peak purchasing spikes between 7:00 PM – 10:00 PM on Thursdays and Sundays, indicating prime promotional marketing windows.
+          </p>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- Part 2: Interactive Data Simulations -->
+    <section class="case-container space-y-6">
+      
+      <div class="space-y-2">
+        <span class="font-mono text-xs text-blue-400 font-bold uppercase tracking-wider">[ 02 · INTERACTIVE DATA SIMULATION ]</span>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-main">Customer Purchase Funnel & Weekly Conversion</h2>
+        <p class="text-sm text-sub leading-relaxed max-w-3xl">
+          Visualizing the steep transition from broad viewing discovery down to completed transaction checkout.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        
+        <!-- Chart 1: Funnel Drop-off -->
+        <div class="p-6 rounded-xl cs-card flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-4 pb-2 border-b border-[var(--border)] font-mono text-xs">
+              <span class="text-main font-bold">PURCHASE FUNNEL DROP-OFF</span>
+              <span class="text-red-400 font-bold">95.9% Friction Point</span>
+            </div>
+            <div class="h-[270px] w-full">
+              <canvas id="ecom-funnel-chart"></canvas>
+            </div>
+          </div>
+          <div class="pt-3 text-[11px] font-mono text-dim border-t border-[var(--border)] flex justify-between mt-4">
+            <span>Views: 657,000 → Carts: 27,000</span>
+            <span class="text-emerald-400 font-bold">Purchases: 13,000</span>
+          </div>
+        </div>
+
+        <!-- Chart 2: Weekly Trends -->
+        <div class="p-6 rounded-xl cs-card flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-4 pb-2 border-b border-[var(--border)] font-mono text-xs">
+              <span class="text-main font-bold">WEEKLY CART VS. PURCHASE TRENDS</span>
+              <span class="text-blue-400 font-bold">Intent Tracking</span>
+            </div>
+            <div class="h-[270px] w-full">
+              <canvas id="ecom-weekly-chart"></canvas>
+            </div>
+          </div>
+          <div class="pt-3 text-[11px] font-mono text-dim border-t border-[var(--border)] flex justify-between mt-4">
+            <span>Green: Cart Events</span>
+            <span>Blue: Completed Purchases</span>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- Part 3: Data Modeling & Core DAX Formulations -->
+    <section class="case-container space-y-6">
+      
+      <div class="space-y-2">
+        <span class="font-mono text-xs text-blue-400 font-bold uppercase tracking-wider">[ 03 · MODELING & DAX ARCHITECTURE ]</span>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-main">Star Schema Design & Core DAX Formulations</h2>
+        <p class="text-sm text-sub leading-relaxed max-w-3xl">
+          Cleaned raw CSV tables using Power Query, extracted relational date hierarchies, and structured a star schema to optimize report performance across hundreds of thousands of rows.
+        </p>
+      </div>
+
+      <!-- 3 DAX Measure Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 font-mono text-xs">
+        
+        <div class="p-5 rounded-xl cs-card space-y-3">
+          <div class="text-blue-400 font-bold">DAX / VIEW TO CART YIELD</div>
+          <div class="p-3 rounded bg-[var(--bg)] border border-[var(--border)] text-sub overflow-x-auto text-[11px]">
+            <code>ViewToCartRate = <br/>
+            DIVIDE(<br/>
+            &nbsp;&nbsp;[Total Cart Events],<br/>
+            &nbsp;&nbsp;[Total View Events],<br/>
+            &nbsp;&nbsp;0<br/>
+            )</code>
+          </div>
+          <p class="text-dim text-[11px] font-sans">Quantifies the micro-conversion efficiency of product listing and detail pages.</p>
+        </div>
+
+        <div class="p-5 rounded-xl cs-card space-y-3">
+          <div class="text-emerald-400 font-bold">DAX / CART TO PURCHASE YIELD</div>
+          <div class="p-3 rounded bg-[var(--bg)] border border-[var(--border)] text-sub overflow-x-auto text-[11px]">
+            <code>CartToPurchaseRate = <br/>
+            DIVIDE(<br/>
+            &nbsp;&nbsp;[Total Purchases],<br/>
+            &nbsp;&nbsp;[Total Cart Events],<br/>
+            &nbsp;&nbsp;0<br/>
+            )</code>
+          </div>
+          <p class="text-dim text-[11px] font-sans">Measures checkout funnel friction once high intent is established.</p>
+        </div>
+
+        <div class="p-5 rounded-xl cs-card space-y-3">
+          <div class="text-amber-400 font-bold">DAX / BRAND REVENUE SHARE</div>
+          <div class="p-3 rounded bg-[var(--bg)] border border-[var(--border)] text-sub overflow-x-auto text-[11px]">
+            <code>BrandShare = <br/>
+            DIVIDE(<br/>
+            &nbsp;&nbsp;[Brand Revenue],<br/>
+            &nbsp;&nbsp;CALCULATE([Total Revenue], ALL(Dim_Brand)),<br/>
+            &nbsp;&nbsp;0<br/>
+            )</code>
+          </div>
+          <p class="text-dim text-[11px] font-sans">Monitors brand concentration and alerts leadership to dependency risks.</p>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- Part 4: Production Dashboards Showcase & Proof of Work -->
+    <section class="case-container space-y-6 pt-4 border-t border-zinc-800/70">
+      
+      <div class="space-y-2">
+        <div class="flex items-center justify-between flex-wrap gap-2">
+          <span class="font-mono text-xs text-blue-400 font-bold uppercase tracking-wider">[ 04 · VERIFIED POWER BI DASHBOARDS & PROOF OF WORK ]</span>
+          <span class="font-mono text-[11px] text-dim flex items-center gap-1.5">
+            <i data-lucide="zoom-in" class="w-3.5 h-3.5 text-blue-400"></i> Click any report to inspect full resolution
+          </span>
+        </div>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-main">Production Dashboards & Visual Reports</h2>
+        <p class="text-sm text-sub leading-relaxed max-w-3xl">
+          Direct dashboard screenshots from the deployed Power BI reports built for executive decision-makers. Click any report to open the high-resolution lightbox view.
+        </p>
+      </div>
+
+      <!-- Side-by-Side Horizontal Row Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5 items-stretch">
+        
+        <!-- Dashboard 1: Overview -->
+        <div class="cs-card overflow-hidden rounded-xl border border-[var(--border)] group flex flex-col justify-between">
+          <div>
+            <!-- Window Header Bar -->
+            <div class="px-3.5 py-2.5 bg-[var(--bg-card)] border-b border-[var(--border)] flex items-center justify-between font-mono text-xs">
+              <div class="flex items-center gap-1.5 min-w-0">
+                <span class="w-2 h-2 rounded-full bg-red-500/80 inline-block flex-shrink-0"></span>
+                <span class="w-2 h-2 rounded-full bg-yellow-500/80 inline-block flex-shrink-0"></span>
+                <span class="w-2 h-2 rounded-full bg-green-500/80 inline-block flex-shrink-0"></span>
+                <span class="ml-1.5 font-bold text-main truncate text-[11px]">Overview.pbix — Executive Funnel</span>
+              </div>
+              <span class="px-2 py-0.5 rounded bg-blue-500/15 text-blue-400 font-bold text-[10px] border border-blue-500/30 flex-shrink-0">
+                POWER BI
+              </span>
+            </div>
+            
+            <!-- Image Container with Zoom Trigger -->
+            <div class="relative bg-zinc-950 cursor-pointer overflow-hidden group/img aspect-[16/10]" onclick="openLightbox('Overview.png', 'Executive KPI & Funnel Diagnostic Dashboard — Power BI Report View')">
+              <img src="Overview.png" alt="Executive KPI & Funnel Diagnostic Dashboard built in Power BI by Dev Dadhich" class="w-full h-full object-cover transition-transform duration-300 group-hover/img:scale-105" loading="lazy" />
+              <div class="absolute inset-0 bg-blue-600/15 opacity-0 group-hover/img:opacity-100 transition-opacity flex items-center justify-center p-3">
+                <div class="px-3 py-1.5 rounded-lg bg-black/85 backdrop-blur-md border border-white/20 text-white font-mono text-[11px] font-bold flex items-center gap-1.5 shadow-xl">
+                  <i data-lucide="zoom-in" class="w-3.5 h-3.5 text-blue-400"></i>
+                  <span>INSPECT FULL RES (2034 × 1204)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Description Footer -->
+          <div class="p-3.5 bg-[var(--bg-card)] border-t border-[var(--border)] space-y-1.5 font-mono text-xs">
+            <div class="flex justify-between items-center text-[11px]">
+              <span class="text-dim">METRICS:</span>
+              <span class="text-main font-bold truncate">Sales, Views, Carts, Purchases, Yield</span>
+            </div>
+            <div class="flex justify-between items-center text-[11px]">
+              <span class="text-dim">OUTCOME:</span>
+              <span class="text-emerald-400 font-bold">Pinpointed 4.1% View→Cart bottleneck</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dashboard 2: Category and Brand Analysis -->
+        <div class="cs-card overflow-hidden rounded-xl border border-[var(--border)] group flex flex-col justify-between">
+          <div>
+            <!-- Window Header Bar -->
+            <div class="px-3.5 py-2.5 bg-[var(--bg-card)] border-b border-[var(--border)] flex items-center justify-between font-mono text-xs">
+              <div class="flex items-center gap-1.5 min-w-0">
+                <span class="w-2 h-2 rounded-full bg-red-500/80 inline-block flex-shrink-0"></span>
+                <span class="w-2 h-2 rounded-full bg-yellow-500/80 inline-block flex-shrink-0"></span>
+                <span class="w-2 h-2 rounded-full bg-green-500/80 inline-block flex-shrink-0"></span>
+                <span class="ml-1.5 font-bold text-main truncate text-[11px]">Category_and_Brand.pbix</span>
+              </div>
+              <span class="px-2 py-0.5 rounded bg-amber-500/15 text-amber-400 font-bold text-[10px] border border-amber-500/30 flex-shrink-0">
+                POWER BI
+              </span>
+            </div>
+            
+            <!-- Image Container with Zoom Trigger -->
+            <div class="relative bg-zinc-950 cursor-pointer overflow-hidden group/img aspect-[16/10]" onclick="openLightbox('Category and Brand Analysis.png', 'Category and Brand Analysis Matrix — Power BI Report View')">
+              <img src="Category and Brand Analysis.png" alt="Category and Brand Analysis Matrix built in Power BI by Dev Dadhich" class="w-full h-full object-cover transition-transform duration-300 group-hover/img:scale-105" loading="lazy" />
+              <div class="absolute inset-0 bg-amber-600/15 opacity-0 group-hover/img:opacity-100 transition-opacity flex items-center justify-center p-3">
+                <div class="px-3 py-1.5 rounded-lg bg-black/85 backdrop-blur-md border border-white/20 text-white font-mono text-[11px] font-bold flex items-center gap-1.5 shadow-xl">
+                  <i data-lucide="zoom-in" class="w-3.5 h-3.5 text-amber-400"></i>
+                  <span>INSPECT FULL RES (2032 × 1208)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Description Footer -->
+          <div class="p-3.5 bg-[var(--bg-card)] border-t border-[var(--border)] space-y-1.5 font-mono text-xs">
+            <div class="flex justify-between items-center text-[11px]">
+              <span class="text-dim">METRICS:</span>
+              <span class="text-main font-bold truncate">Brand GMV Share, Category Pareto</span>
+            </div>
+            <div class="flex justify-between items-center text-[11px]">
+              <span class="text-dim">OUTCOME:</span>
+              <span class="text-amber-400 font-bold">Identified 64% Top-5 brand concentration</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- Part 5: 5 Strategic Business & Merchandising Playbooks -->
+    <section class="case-container space-y-6 pt-4 border-t border-zinc-800/70">
+      
+      <div class="space-y-2">
+        <span class="font-mono text-xs text-blue-400 font-bold uppercase tracking-wider">[ 05 · STRATEGIC PLAYBOOKS ]</span>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-main">5 Actionable Growth Recommendations</h2>
+      </div>
+
+      <div class="space-y-3 font-mono text-xs">
+        
+        <div class="p-4 rounded-xl cs-card flex flex-col sm:flex-row items-start gap-3">
+          <div class="px-2 py-0.5 rounded bg-blue-500/15 text-blue-400 font-bold border border-blue-500/30 flex-shrink-0">
+            PLAYBOOK 01
+          </div>
+          <div class="space-y-1">
+            <h3 class="text-xs font-bold text-main">Solve the Pre-Cart Friction Point (Lift 4.1% → 6.5%)</h3>
+            <p class="text-xs text-sub leading-relaxed font-sans">
+              With 95.9% of viewers abandoning before cart creation, the biggest revenue unlock is on Product Listing and Detail pages. Deploy 1-click "Quick Add to Cart", surface verified delivery estimates, and introduce sticky CTA buttons on mobile viewports.
+            </p>
+          </div>
+        </div>
+
+        <div class="p-4 rounded-xl cs-card flex flex-col sm:flex-row items-start gap-3">
+          <div class="px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-400 font-bold border border-emerald-500/30 flex-shrink-0">
+            PLAYBOOK 02
+          </div>
+          <div class="space-y-1">
+            <h3 class="text-xs font-bold text-main">Automated Abandoned Cart Remarketing (Recover up to 18%)</h3>
+            <p class="text-xs text-sub leading-relaxed font-sans">
+              Because users who cart items convert at a high 48.1%, cart abandoners represent pure qualified pipeline. Implement automated 1-hour push alerts and 24-hour email discounts with dynamic cart item summaries.
+            </p>
+          </div>
+        </div>
+
+        <div class="p-4 rounded-xl cs-card flex flex-col sm:flex-row items-start gap-3">
+          <div class="px-2 py-0.5 rounded bg-amber-500/15 text-amber-400 font-bold border border-amber-500/30 flex-shrink-0">
+            PLAYBOOK 03
+          </div>
+          <div class="space-y-1">
+            <h3 class="text-xs font-bold text-main">De-Risk Brand Concentration with Challenger Bundles</h3>
+            <p class="text-xs text-sub leading-relaxed font-sans">
+              Top 5 brands contribute 64% of total revenue. Incentivize buyers of high-volume brands with bundled discounts on rising challenger brands to diversify margins and inventory turnover.
+            </p>
+          </div>
+        </div>
+
+        <div class="p-4 rounded-xl cs-card flex flex-col sm:flex-row items-start gap-3">
+          <div class="px-2 py-0.5 rounded bg-purple-500/15 text-purple-400 font-bold border border-purple-500/30 flex-shrink-0">
+            PLAYBOOK 04
+          </div>
+          <div class="space-y-1">
+            <h3 class="text-xs font-bold text-main">Schedule Flash Merchandising for Evening Peak Windows</h3>
+            <p class="text-xs text-sub leading-relaxed font-sans">
+              Traffic and purchase volume cluster tightly between 7:00 PM and 10:00 PM. Schedule promotional campaign emails and homepage banner swaps to launch at 6:30 PM to capture ready-to-buy evening shoppers.
+            </p>
+          </div>
+        </div>
+
+        <div class="p-4 rounded-xl cs-card flex flex-col sm:flex-row items-start gap-3">
+          <div class="px-2 py-0.5 rounded bg-cyan-500/15 text-cyan-400 font-bold border border-cyan-500/30 flex-shrink-0">
+            PLAYBOOK 05
+          </div>
+          <div class="space-y-1">
+            <h3 class="text-xs font-bold text-main">Cross-Sell High-Margin Accessories with Tech Hardware</h3>
+            <p class="text-xs text-sub leading-relaxed font-sans">
+              Electronics drives 78% GMV but often carries low retail margins. Automatically recommend screen protectors, cables, and cases at checkout to boost blended gross margin by 400–600 basis points.
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Navigation to Next Project & Portfolio Return -->
+      <div class="pt-8 border-t border-zinc-800/80 flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-xs">
+        <a href="index.html#projects" class="text-sub hover:text-main flex items-center gap-2">
+          <i data-lucide="arrow-left" class="w-4 h-4"></i> BACK TO ALL CASE STUDIES
+        </a>
+        <a href="rwms.html" class="px-5 py-2.5 rounded font-extrabold btn-solid flex items-center gap-2 shadow-sm">
+          <span>VIEW CASE 01: RWMS CASE STUDY</span>
+          <i data-lucide="arrow-right" class="w-4 h-4"></i>
+        </a>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- Scripts -->
+  <script>
+    if (typeof lucide !== 'undefined') lucide.createIcons();
+
+    // Theme Management synced with main portfolio
+    const currentTheme = localStorage.getItem('theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', currentTheme);
+    updateThemeIcon(currentTheme);
+
+    const themeToggle = document.getElementById('theme-toggle');
+    themeToggle?.addEventListener('click', () => {
+      const active = document.documentElement.getAttribute('data-theme');
+      const next = active === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      updateThemeIcon(next);
+      renderCharts(next);
+    });
+
+    function updateThemeIcon(theme) {
+      const icon = document.getElementById('theme-icon');
+      if (icon) {
+        icon.setAttribute('data-lucide', theme === 'dark' ? 'sun' : 'moon');
+        if (typeof lucide !== 'undefined') lucide.createIcons();
+      }
+    }
+
+    // Chart.js Interactive Instances
+    let funnelChart = null;
+    let weeklyChart = null;
+
+    function renderCharts(theme) {
+      const isDark = theme !== 'light';
+      const textColor = isDark ? '#f4f4f5' : '#09090b';
+      const gridColor = isDark ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.08)';
+
+      if (funnelChart) funnelChart.destroy();
+      if (weeklyChart) weeklyChart.destroy();
+
+      const ctx1 = document.getElementById('ecom-funnel-chart');
+      if (ctx1) {
+        funnelChart = new Chart(ctx1, {
+          type: 'bar',
+          data: {
+            labels: ["Product Views", "Cart Adds", "Completed Purchases"],
+            datasets: [
+              {
+                label: 'Event Volume',
+                data: [657000, 27000, 13000],
+                backgroundColor: [
+                  isDark ? 'rgba(148, 163, 184, 0.6)' : 'rgba(100, 116, 139, 0.6)',
+                  isDark ? 'rgba(248, 113, 113, 0.85)' : 'rgba(220, 38, 38, 0.85)',
+                  isDark ? 'rgba(52, 211, 153, 0.85)' : 'rgba(16, 185, 129, 0.85)'
+                ],
+                borderRadius: 4
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { display: false },
+              tooltip: {
+                callbacks: {
+                  label: function(ctx) {
+                    const raw = ctx.raw;
+                    if (ctx.dataIndex === 0) return ` ${raw.toLocaleString()} Views (Top of Funnel)`;
+                    if (ctx.dataIndex === 1) return ` ${raw.toLocaleString()} Carts (4.1% Yield)`;
+                    return ` ${raw.toLocaleString()} Purchases (48.1% of Carts)`;
+                  }
+                }
+              }
+            },
+            scales: {
+              x: { grid: { color: gridColor }, ticks: { color: isDark ? '#a1a1aa' : '#52525b', font: { family: 'JetBrains Mono', size: 9, weight: 'bold' } } },
+              y: { 
+                type: 'logarithmic',
+                grid: { color: gridColor }, 
+                ticks: { color: isDark ? '#a1a1aa' : '#52525b', font: { family: 'JetBrains Mono', size: 9, weight: 'bold' } } 
+              }
+            }
+          }
+        });
+      }
+
+      const ctx2 = document.getElementById('ecom-weekly-chart');
+      if (ctx2) {
+        weeklyChart = new Chart(ctx2, {
+          type: 'line',
+          data: {
+            labels: ["Week 1", "Week 2", "Week 3", "Week 4", "Week 5"],
+            datasets: [
+              {
+                label: 'Cart Events',
+                data: [6200, 6800, 6500, 6100, 1741],
+                borderColor: '#34d399',
+                backgroundColor: 'rgba(52, 211, 153, 0.12)',
+                borderWidth: 2,
+                tension: 0.35,
+                fill: true,
+                pointRadius: 4,
+                pointBackgroundColor: '#34d399'
+              },
+              {
+                label: 'Purchase Events',
+                data: [3100, 3400, 3200, 3000, 729],
+                borderColor: '#60a5fa',
+                backgroundColor: 'rgba(96, 165, 250, 0.12)',
+                borderWidth: 2,
+                tension: 0.35,
+                fill: true,
+                pointRadius: 4,
+                pointBackgroundColor: '#60a5fa'
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                labels: { color: textColor, font: { family: 'JetBrains Mono', size: 10, weight: 'bold' } }
+              }
+            },
+            scales: {
+              x: { grid: { color: gridColor }, ticks: { color: isDark ? '#a1a1aa' : '#52525b', font: { family: 'JetBrains Mono', size: 9, weight: 'bold' } } },
+              y: { grid: { color: gridColor }, ticks: { color: isDark ? '#a1a1aa' : '#52525b', font: { family: 'JetBrains Mono', size: 9, weight: 'bold' } } }
+            }
+          }
+        });
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      renderCharts(currentTheme);
+    });
+
+    // Lightbox modal functions
+    function openLightbox(src, title) {
+      const lb = document.getElementById('image-lightbox');
+      const img = document.getElementById('lightbox-img');
+      const cap = document.getElementById('lightbox-caption');
+      if (!lb || !img) return;
+      img.src = src;
+      if (cap) cap.textContent = title || 'Power BI Dashboard High Resolution Preview';
+      lb.classList.remove('hidden');
+      lb.classList.add('flex');
+      document.body.style.overflow = 'hidden';
+      if (typeof lucide !== 'undefined') lucide.createIcons();
+    }
+
+    function closeLightbox(e) {
+      const lb = document.getElementById('image-lightbox');
+      if (!lb) return;
+      lb.classList.add('hidden');
+      lb.classList.remove('flex');
+      document.body.style.overflow = '';
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeLightbox();
+    });
+  </script>
+
+  <!-- Lightbox Modal for High-Resolution Dashboard Inspection -->
+  <div id="image-lightbox" class="fixed inset-0 z-[100] bg-black/90 backdrop-blur-md hidden flex-col items-center justify-center p-4 sm:p-8" onclick="closeLightbox(event)">
+    <div class="max-w-6xl w-full flex items-center justify-between mb-3 text-white font-mono text-xs">
+      <span id="lightbox-caption" class="font-bold text-zinc-300">Dashboard View</span>
+      <button onclick="closeLightbox()" class="px-3 py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-white font-bold flex items-center gap-1.5 transition-colors cursor-pointer" aria-label="Close Preview">
+        <i data-lucide="x" class="w-4 h-4"></i>
+        <span>ESC / CLOSE</span>
+      </button>
+    </div>
+    <div class="relative max-w-6xl w-full max-h-[85vh] flex items-center justify-center overflow-auto rounded-xl border border-zinc-700 bg-zinc-950 shadow-2xl p-2" onclick="event.stopPropagation()">
+      <img id="lightbox-img" src="" alt="Power BI Dashboard High Resolution Preview" class="max-w-full max-h-[80vh] object-contain rounded-lg" />
+    </div>
+  </div>
+</body>
+</html>

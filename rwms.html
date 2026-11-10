@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Recruitment Workflow Management System (RWMS) — Dedicated Case Study by Dev Dadhich. AppSheet CRM, process re-engineering, and operations automation." />
+  <title>RWMS Case Study — Dev Dadhich</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- Main Custom CSS -->
+  <link rel="stylesheet" href="custom.css">
+
+  <style>
+    .case-container {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+    .cs-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      transition: border-color 0.25s ease;
+    }
+    .cs-card:hover {
+      border-color: var(--border-strong);
+    }
+    .cs-metric-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.25rem;
+      transition: all 0.25s ease;
+    }
+    .cs-metric-card:hover {
+      border-color: rgba(52, 211, 153, 0.4);
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+<body class="min-h-screen antialiased selection:bg-emerald-500 selection:text-black relative">
+
+  <!-- Ambient Floating Orange Glow Orbs (Glassmorphism Background) -->
+  <div class="ambient-orbs-container" aria-hidden="true">
+    <div class="ambient-orb orb-1"></div>
+    <div class="ambient-orb orb-2"></div>
+    <div class="ambient-orb orb-3"></div>
+    <div class="ambient-orb orb-4"></div>
+    <div class="ambient-orb orb-5"></div>
+  </div>
+
+  <!-- Sticky Top Navigation -->
+  <header class="fixed top-0 left-0 right-0 z-50 py-3.5 px-6 bg-[var(--bg)]/85 backdrop-blur-md border-b border-[var(--border)]">
+    <div class="max-w-5xl mx-auto flex items-center justify-between">
+      
+      <!-- Back to Portfolio Link -->
+      <a href="index.html#projects" class="font-mono text-xs font-bold text-sub hover:text-main flex items-center gap-2 group transition-colors">
+        <i data-lucide="arrow-left" class="w-4 h-4 group-hover:-translate-x-1 transition-transform"></i>
+        <span>BACK TO PORTFOLIO</span>
+      </a>
+
+      <!-- Case Identifier Badge -->
+      <div class="hidden sm:flex items-center gap-2 font-mono text-xs font-bold">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        <span class="text-main">RWMS</span>
+        <span class="text-dim">// CASE 01</span>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="flex items-center gap-3">
+        <button id="theme-toggle" class="p-2 rounded border border-zinc-700/80 text-sub hover:text-main transition-colors" aria-label="Toggle Theme">
+          <i id="theme-icon" data-lucide="sun" class="w-4 h-4"></i>
+        </button>
+        <a href="https://drive.google.com/file/d/1Pwgnd-tumXcqIikDnFAi8jpuXr9QzxB1/view?usp=sharing" target="_blank" class="px-4 py-1.5 rounded font-mono text-xs font-extrabold btn-solid flex items-center gap-1.5 shadow-sm">
+          <span>VIEW ARTIFACT / PRD</span>
+          <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+        </a>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- Main Content Wrap -->
+  <main class="pt-28 pb-24 space-y-12">
+    
+    <!-- Hero Article Header (Clean Editorial Header — No Big Images) -->
+    <section class="case-container pb-8 border-b border-zinc-800/70 space-y-6">
+      
+      <div class="space-y-3">
+        <div class="flex flex-wrap items-center gap-2 font-mono text-xs">
+          <span class="px-2.5 py-0.5 rounded-full bg-emerald-500/15 text-emerald-400 font-bold border border-emerald-500/30">
+            CASE 01 · PRODUCT & OPERATIONS
+          </span>
+          <span class="text-dim">Avionic Consulting Solution</span>
+          <span class="text-dim">• May – July 2026</span>
+        </div>
+
+        <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-main leading-tight">
+          Recruitment Workflow Management System (RWMS)
+        </h1>
+
+        <p class="text-base sm:text-lg text-sub font-medium leading-relaxed max-w-3xl">
+          Consolidating 9–10 fragmented spreadsheets into an integrated AppSheet operational CRM for 12+ recruiters and 10+ corporate client accounts.
+        </p>
+      </div>
+
+      <!-- Executive Overview Banner Callout -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 p-5 rounded-xl cs-card">
+        <div class="space-y-1.5 border-b md:border-b-0 md:border-r border-[var(--border)] pb-4 md:pb-0 md:pr-4">
+          <div class="font-mono text-xs text-red-400 font-bold flex items-center gap-1.5">
+            <i data-lucide="alert-circle" class="w-3.5 h-3.5"></i> THE OPERATIONAL PROBLEM
+          </div>
+          <p class="text-xs sm:text-sm text-sub font-medium leading-relaxed">
+            Recruitment operations were scattered across 9–10 disconnected Excel workbooks on recruiters' local laptops. This caused missed candidate follow-ups, duplicate submissions, and forced the Founder to spend ~90 minutes every evening manually compiling status reports.
+          </p>
+        </div>
+
+        <div class="space-y-1.5 md:pl-2">
+          <div class="font-mono text-xs text-emerald-400 font-bold flex items-center gap-1.5">
+            <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> THE ARCHITECTED SOLUTION
+          </div>
+          <p class="text-xs sm:text-sm text-sub font-medium leading-relaxed">
+            Designed an AppSheet operational CRM with role-based permissions, automated Google Apps Script email notifications, stage-gate recruiter validations, and real-time SLA metrics that consolidated all operations into one centralized database.
+          </p>
+        </div>
+      </div>
+
+      <!-- Metadata Grid -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 font-mono text-xs pt-2">
+        <div class="p-3 rounded-lg cs-card">
+          <div class="text-dim">ROLE</div>
+          <div class="text-main font-bold mt-0.5">Founder's Office Intern</div>
+        </div>
+        <div class="p-3 rounded-lg cs-card">
+          <div class="text-dim">ADOPTION</div>
+          <div class="text-emerald-400 font-bold mt-0.5">100% Core Team (12+)</div>
+        </div>
+        <div class="p-3 rounded-lg cs-card">
+          <div class="text-dim">SLA TRACKING</div>
+          <div class="text-main font-bold mt-0.5">10 Active Client Accounts</div>
+        </div>
+        <div class="p-3 rounded-lg cs-card">
+          <div class="text-dim">CORE STACK</div>
+          <div class="text-main font-bold mt-0.5">AppSheet · Apps Script · Power BI</div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- Executive Metric Scorecard Strip -->
+    <section class="case-container">
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        
+        <div class="cs-metric-card">
+          <div class="font-mono text-xs text-red-400 font-bold">LEGACY FILES</div>
+          <div class="text-3xl font-extrabold text-main font-mono mt-1">9–10</div>
+          <div class="text-xs text-sub mt-1 leading-snug">Fragmented Excel sheets with no synchronization</div>
+        </div>
+
+        <div class="cs-metric-card">
+          <div class="font-mono text-xs text-emerald-400 font-bold">SYSTEM ADOPTION</div>
+          <div class="text-3xl font-extrabold text-emerald-400 font-mono mt-1">100%</div>
+          <div class="text-xs text-sub mt-1 leading-snug">Active daily usage across 12+ recruiters & Founder</div>
+        </div>
+
+        <div class="cs-metric-card">
+          <div class="font-mono text-xs text-blue-400 font-bold">DELIVERY MODELS</div>
+          <div class="text-3xl font-extrabold text-blue-400 font-mono mt-1">3 Models</div>
+          <div class="text-xs text-sub mt-1 leading-snug">Built-in governance for BT, BOT, & BOM client SLAs</div>
+        </div>
+
+        <div class="cs-metric-card">
+          <div class="font-mono text-xs text-emerald-400 font-bold">CAPACITY SAVED</div>
+          <div class="text-3xl font-extrabold text-emerald-400 font-mono mt-1">~450h</div>
+          <div class="text-xs text-sub mt-1 leading-snug">Annualized founder reporting hours reclaimed</div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Part 1: Diagnostic Fieldwork & Root Cause Analysis -->
+    <section class="case-container space-y-6">
+      
+      <div class="space-y-2">
+        <span class="font-mono text-xs text-emerald-400 font-bold uppercase tracking-wider">[ 01 · OPERATIONAL CONTEXT ]</span>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-main">The Root Cause: Siloed Information Architecture</h2>
+        <p class="text-sm text-sub leading-relaxed max-w-3xl">
+          Avionic Consulting Solution handles 20+ active enterprise clients and 150–200 monthly candidates. Without a shared MIS, operations suffered from 4 systemic failure modes:
+        </p>
+      </div>
+
+      <!-- 4 Core Bottlenecks Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        
+        <div class="p-5 rounded-xl cs-card space-y-1.5">
+          <div class="flex items-center justify-between font-mono text-xs">
+            <span class="text-red-400 font-bold">BOTTLENECK 01</span>
+            <i data-lucide="clock" class="w-4 h-4 text-red-400"></i>
+          </div>
+          <h3 class="text-sm font-bold text-main">Missed Candidate Follow-Ups</h3>
+          <p class="text-xs text-sub leading-relaxed">
+            Follow-up dates lived in individual personal spreadsheets, leading to communication drops and candidate drop-offs during client interview rounds.
+          </p>
+        </div>
+
+        <div class="p-5 rounded-xl cs-card space-y-1.5">
+          <div class="flex items-center justify-between font-mono text-xs">
+            <span class="text-red-400 font-bold">BOTTLENECK 02</span>
+            <i data-lucide="copy" class="w-4 h-4 text-red-400"></i>
+          </div>
+          <h3 class="text-sm font-bold text-main">Duplicate Candidate Outreach</h3>
+          <p class="text-xs text-sub leading-relaxed">
+            Without unique identity validation, recruiters independently contacted the same candidate for identical client requisitions, creating client embarrassment.
+          </p>
+        </div>
+
+        <div class="p-5 rounded-xl cs-card space-y-1.5">
+          <div class="flex items-center justify-between font-mono text-xs">
+            <span class="text-red-400 font-bold">BOTTLENECK 03</span>
+            <i data-lucide="hourglass" class="w-4 h-4 text-red-400"></i>
+          </div>
+          <h3 class="text-sm font-bold text-main">Heavy Founder Reporting Overhead</h3>
+          <p class="text-xs text-sub leading-relaxed">
+            The Founder spent ~1.5 hours daily chasing updates across recruiters and manually formatting status digests for corporate client leads.
+          </p>
+        </div>
+
+        <div class="p-5 rounded-xl cs-card space-y-1.5">
+          <div class="flex items-center justify-between font-mono text-xs">
+            <span class="text-red-400 font-bold">BOTTLENECK 04</span>
+            <i data-lucide="eye-off" class="w-4 h-4 text-red-400"></i>
+          </div>
+          <h3 class="text-sm font-bold text-main">Opaque Recruiter Throughput</h3>
+          <p class="text-xs text-sub leading-relaxed">
+            Leadership lacked visibility into who was actively sourcing versus stalled, preventing timely resource reallocations on urgent positions.
+          </p>
+        </div>
+
+      </div>
+
+      <!-- Root Cause Analysis Matrix -->
+      <div class="p-6 rounded-xl cs-card space-y-4">
+        <div class="flex items-center justify-between border-b border-[var(--border)] pb-3 font-mono text-xs">
+          <span class="text-main font-bold">[ ISHIKAWA ROOT CAUSE FRAMEWORK ]</span>
+          <span class="text-emerald-400">Operational Breakdown</span>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 text-xs font-mono">
+          <div class="p-3 rounded-lg bg-[var(--bg)] border border-[var(--border)]">
+            <div class="text-emerald-400 font-bold mb-1">PEOPLE</div>
+            <p class="text-sub">12+ recruiters operating in informational silos with differing spreadsheet formatting habits.</p>
+          </div>
+          <div class="p-3 rounded-lg bg-[var(--bg)] border border-[var(--border)]">
+            <div class="text-emerald-400 font-bold mb-1">PROCESS</div>
+            <p class="text-sub">No standardized stage-gate exit criteria between Sourced, Screened, and Client-Submitted.</p>
+          </div>
+          <div class="p-3 rounded-lg bg-[var(--bg)] border border-[var(--border)]">
+            <div class="text-emerald-400 font-bold mb-1">TOOLS</div>
+            <p class="text-sub">Static Excel sheets with zero relational constraints, audit logs, or automated reminders.</p>
+          </div>
+          <div class="p-3 rounded-lg bg-[var(--bg)] border border-[var(--border)]">
+            <div class="text-emerald-400 font-bold mb-1">GOVERNANCE</div>
+            <p class="text-sub">No real-time SLA breach alerts or centralized client status reporting dashboard.</p>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- Part 2: Interactive Operational Simulations -->
+    <section class="case-container space-y-6">
+      
+      <div class="space-y-2">
+        <span class="font-mono text-xs text-emerald-400 font-bold uppercase tracking-wider">[ 02 · INTERACTIVE PERFORMANCE SIMULATION ]</span>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-main">Recruitment Funnel & Before vs. After ROI</h2>
+        <p class="text-sm text-sub leading-relaxed max-w-3xl">
+          Real-time pipeline tracking enabled stage-by-stage conversion analysis and dramatic operational efficiency gains.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        
+        <!-- Chart 1: Funnel -->
+        <div class="p-6 rounded-xl cs-card flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-4 pb-2 border-b border-[var(--border)] font-mono text-xs">
+              <span class="text-main font-bold">PIPELINE CONVERSION FUNNEL</span>
+              <span class="text-emerald-400 font-bold">RWMS Live Metric</span>
+            </div>
+            <div class="h-[270px] w-full">
+              <canvas id="rwms-funnel-chart"></canvas>
+            </div>
+          </div>
+          <div class="pt-3 text-[11px] font-mono text-dim border-t border-[var(--border)] flex justify-between mt-4">
+            <span>Sourcing to Placement Flow</span>
+            <span>6.6% End-to-End Joining Yield</span>
+          </div>
+        </div>
+
+        <!-- Chart 2: Before vs After -->
+        <div class="p-6 rounded-xl cs-card flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-4 pb-2 border-b border-[var(--border)] font-mono text-xs">
+              <span class="text-main font-bold">OPERATIONAL METRICS COMPARISON</span>
+              <span class="text-blue-400 font-bold">Efficiency Comparison</span>
+            </div>
+            <div class="h-[270px] w-full">
+              <canvas id="rwms-impact-chart"></canvas>
+            </div>
+          </div>
+          <div class="pt-3 text-[11px] font-mono text-dim border-t border-[var(--border)] flex justify-between mt-4">
+            <span>Red: Legacy Excel Spreadsheets</span>
+            <span>Green: RWMS AppSheet Platform</span>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- Part 3: Architecture & The 15+ Feedback Iterations -->
+    <section class="case-container space-y-6">
+      
+      <div class="space-y-2">
+        <span class="font-mono text-xs text-emerald-400 font-bold uppercase tracking-wider">[ 03 · ITERATION MATRIX ]</span>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-main">System Design & The 15+ User Feedback Sprints</h2>
+        <p class="text-sm text-sub leading-relaxed max-w-3xl">
+          Rather than purchasing a rigid off-the-shelf ATS with high seat fees, we architected a bespoke, low-code operational CRM directly around Avionic's consulting delivery models.
+        </p>
+      </div>
+
+      <!-- 4 Stack Pillars -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 font-mono text-xs">
+        <div class="p-4 rounded-xl cs-card">
+          <div class="text-emerald-400 font-bold">FRONTEND UI</div>
+          <div class="text-main font-bold text-sm mt-1">AppSheet Mobile/Web</div>
+          <p class="text-dim mt-1 font-sans text-xs">Role-based views for Recruiters vs. Founder with stage-gate data rules.</p>
+        </div>
+        <div class="p-4 rounded-xl cs-card">
+          <div class="text-emerald-400 font-bold">LOGIC ENGINE</div>
+          <div class="text-main font-bold text-sm mt-1">Google Apps Script</div>
+          <p class="text-dim mt-1 font-sans text-xs">Automated email triggers, duplicate email detection, and SLA flags.</p>
+        </div>
+        <div class="p-4 rounded-xl cs-card">
+          <div class="text-emerald-400 font-bold">DATABASE</div>
+          <div class="text-main font-bold text-sm mt-1">Relational Cloud Sheets</div>
+          <p class="text-dim mt-1 font-sans text-xs">Primary keys, relational foreign tables for Candidates, Jobs, & Clients.</p>
+        </div>
+        <div class="p-4 rounded-xl cs-card">
+          <div class="text-emerald-400 font-bold">ANALYTICS</div>
+          <div class="text-main font-bold text-sm mt-1">Power BI Executive MIS</div>
+          <p class="text-dim mt-1 font-sans text-xs">Real-time throughput, SLA fulfillment, and recruiter leaderboard.</p>
+        </div>
+      </div>
+
+      <!-- V1 to V2 Evolution Table -->
+      <div class="p-6 rounded-xl cs-card space-y-4">
+        <div class="flex items-center justify-between border-b border-[var(--border)] pb-3 font-mono text-xs">
+          <span class="text-main font-bold">THE V1 → V2 PRODUCT EVOLUTION</span>
+          <span class="text-dim">15+ User Feedback Sprints</span>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left font-mono text-xs">
+            <thead>
+              <tr class="text-dim border-b border-[var(--border)]">
+                <th class="py-2.5 pr-4">OPERATIONAL MODULE</th>
+                <th class="py-2.5 pr-4 text-red-400">WHAT BROKE IN V1</th>
+                <th class="py-2.5 text-emerald-400">HOW V2 SOLVED IT</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-[var(--border)] text-sub">
+              <tr>
+                <td class="py-3 pr-4 font-bold text-main">Candidate Intake</td>
+                <td class="py-3 pr-4">Recruiters complained 14 mandatory fields took >4 mins per candidate.</td>
+                <td class="py-3 text-main">Streamlined to 5 initial fields; progressive disclosure unlocks remaining fields at interview stage.</td>
+              </tr>
+              <tr>
+                <td class="py-3 pr-4 font-bold text-main">Duplicate Detection</td>
+                <td class="py-3 pr-4">Only checked exact full-name matches, missing candidate entries with spelling variations.</td>
+                <td class="py-3 text-main">Implemented Phone Number + Normalized Email hashing with instant in-form warning flags.</td>
+              </tr>
+              <tr>
+                <td class="py-3 pr-4 font-bold text-main">Daily Status Reports</td>
+                <td class="py-3 pr-4">Founder still had to manually export CSVs to format client update emails.</td>
+                <td class="py-3 text-main">Automated a daily 7:00 PM HTML client summary email trigger sent directly to client account managers.</td>
+              </tr>
+              <tr>
+                <td class="py-3 pr-4 font-bold text-main">SLA Stage Gates</td>
+                <td class="py-3 pr-4">Candidates got stuck in "Screened" without accountability.</td>
+                <td class="py-3 text-main">Added 48-hour automated amber alerts and 72-hour red escalation tags on recruiter dashboards.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- Part 4: Key Takeaways & Strategic Reflections -->
+    <section class="case-container space-y-6 pt-4 border-t border-zinc-800/70">
+      
+      <div class="space-y-2">
+        <span class="font-mono text-xs text-emerald-400 font-bold uppercase tracking-wider">[ 04 · EXECUTIVE TAKEAWAYS ]</span>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-main">What Building RWMS Taught Me</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5 font-mono text-xs">
+        
+        <div class="p-5 rounded-xl cs-card space-y-2">
+          <div class="text-emerald-400 font-bold text-sm">01 / ADOPTION > CODE</div>
+          <p class="text-sub leading-relaxed font-sans text-xs">
+            The toughest part of internal software isn't the data model — it's driving behavioral adoption. Shadowing recruiters, mapping their pain points, and removing needless friction was what turned spreadsheet resistance into 100% daily buy-in.
+          </p>
+        </div>
+
+        <div class="p-5 rounded-xl cs-card space-y-2">
+          <div class="text-emerald-400 font-bold text-sm">02 / RAPID ITERATIONS</div>
+          <p class="text-sub leading-relaxed font-sans text-xs">
+            V1 is never the final product. Shipping a functional MVP within 7 days and running 15+ rapid micro-feedback sprints was 10x more effective than attempting to architect a perfect system in a vacuum.
+          </p>
+        </div>
+
+        <div class="p-5 rounded-xl cs-card space-y-2">
+          <div class="text-emerald-400 font-bold text-sm">03 / QUANTIFY ROI</div>
+          <p class="text-sub leading-relaxed font-sans text-xs">
+            Every operational feature must justify itself in business terms. Reclaiming ~1.5 hours daily for the Founder and eliminating client SLA breaches translated directly into agency revenue growth and client contract renewals.
+          </p>
+        </div>
+
+      </div>
+
+      <!-- Navigation to Next Project & Portfolio Return -->
+      <div class="pt-8 border-t border-zinc-800/80 flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-xs">
+        <a href="index.html#projects" class="text-sub hover:text-main flex items-center gap-2">
+          <i data-lucide="arrow-left" class="w-4 h-4"></i> BACK TO ALL CASE STUDIES
+        </a>
+        <a href="ecommerce-analytics.html" class="px-5 py-2.5 rounded font-extrabold btn-solid flex items-center gap-2 shadow-sm">
+          <span>NEXT: E-COMMERCE PERFORMANCE ANALYTICS</span>
+          <i data-lucide="arrow-right" class="w-4 h-4"></i>
+        </a>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- Scripts -->
+  <script>
+    if (typeof lucide !== 'undefined') lucide.createIcons();
+
+    // Theme Management synced with main portfolio
+    const currentTheme = localStorage.getItem('theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', currentTheme);
+    updateThemeIcon(currentTheme);
+
+    const themeToggle = document.getElementById('theme-toggle');
+    themeToggle?.addEventListener('click', () => {
+      const active = document.documentElement.getAttribute('data-theme');
+      const next = active === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      updateThemeIcon(next);
+      renderCharts(next);
+    });
+
+    function updateThemeIcon(theme) {
+      const icon = document.getElementById('theme-icon');
+      if (icon) {
+        icon.setAttribute('data-lucide', theme === 'dark' ? 'sun' : 'moon');
+        if (typeof lucide !== 'undefined') lucide.createIcons();
+      }
+    }
+
+    // Chart.js Interactive Instances
+    let funnelChart = null;
+    let impactChart = null;
+
+    function renderCharts(theme) {
+      const isDark = theme !== 'light';
+      const textColor = isDark ? '#f4f4f5' : '#09090b';
+      const gridColor = isDark ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.08)';
+
+      if (funnelChart) funnelChart.destroy();
+      if (impactChart) impactChart.destroy();
+
+      const ctx1 = document.getElementById('rwms-funnel-chart');
+      if (ctx1) {
+        funnelChart = new Chart(ctx1, {
+          type: 'bar',
+          data: {
+            labels: ["Sourcing", "Screening", "Shortlist", "Interview", "Offer", "Onboarded"],
+            datasets: [
+              {
+                label: 'Candidates Handled',
+                data: [420, 280, 160, 85, 36, 28],
+                backgroundColor: isDark ? 'rgba(52, 211, 153, 0.85)' : 'rgba(16, 185, 129, 0.85)',
+                borderRadius: 4
+              },
+              {
+                label: 'Pipeline Yield (%)',
+                data: [100, 66.6, 38.0, 20.2, 8.5, 6.6],
+                backgroundColor: isDark ? 'rgba(96, 165, 250, 0.55)' : 'rgba(37, 99, 235, 0.55)',
+                borderRadius: 4
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                labels: { color: textColor, font: { family: 'JetBrains Mono', size: 10, weight: 'bold' } }
+              }
+            },
+            scales: {
+              x: { grid: { color: gridColor }, ticks: { color: isDark ? '#a1a1aa' : '#52525b', font: { family: 'JetBrains Mono', size: 9, weight: 'bold' } } },
+              y: { grid: { color: gridColor }, ticks: { color: isDark ? '#a1a1aa' : '#52525b', font: { family: 'JetBrains Mono', size: 9, weight: 'bold' } } }
+            }
+          }
+        });
+      }
+
+      const ctx2 = document.getElementById('rwms-impact-chart');
+      if (ctx2) {
+        impactChart = new Chart(ctx2, {
+          type: 'bar',
+          data: {
+            labels: ["Daily Reporting (min)", "Data Error Rate (%)", "Status Lag (hrs)", "Visibility Index (%)"],
+            datasets: [
+              {
+                label: 'Legacy Spreadsheets',
+                data: [90, 35, 48, 15],
+                backgroundColor: isDark ? 'rgba(248, 113, 113, 0.85)' : 'rgba(220, 38, 38, 0.85)',
+                borderRadius: 4
+              },
+              {
+                label: 'RWMS AppSheet Ecosystem',
+                data: [1, 1, 1, 100],
+                backgroundColor: isDark ? 'rgba(52, 211, 153, 0.85)' : 'rgba(16, 185, 129, 0.85)',
+                borderRadius: 4
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                labels: { color: textColor, font: { family: 'JetBrains Mono', size: 10, weight: 'bold' } }
+              }
+            },
+            scales: {
+              x: { grid: { color: gridColor }, ticks: { color: isDark ? '#a1a1aa' : '#52525b', font: { family: 'JetBrains Mono', size: 9, weight: 'bold' } } },
+              y: { grid: { color: gridColor }, ticks: { color: isDark ? '#a1a1aa' : '#52525b', font: { family: 'JetBrains Mono', size: 9, weight: 'bold' } } }
+            }
+          }
+        });
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      renderCharts(currentTheme);
+    });
+  </script>
+</body>
+</html>
