@@ -1,53 +1,186 @@
 /**
  * Dev Dadhich — Portfolio Application Controller
- * Executive Masterpiece Edition: High-Impact Asymmetric Showcase Architecture & Filter Count Badges
+ * Dual-Persona Architecture: "Business Analyst" vs. "Marketing & Branding"
+ * First-Screen Perspective Chooser, Smooth Loading Sequence, and Iconic Graphic Project Cards
  */
 
 document.addEventListener('DOMContentLoaded', () => {
   if (typeof lucide !== 'undefined') lucide.createIcons();
 
   const data = window.PORTFOLIO_DATA;
-  let currentRole = 'apm';
+  let currentRole = localStorage.getItem('portfolio_persona') || 'ba';
   let chartInstance = null;
-  let ecomChartInstance = null;
-  let rwmsChart1Instance = null;
-  let rwmsChart2Instance = null;
   let hasCountedStats = false;
+  let hasCompletedInitialLoad = false;
 
-  initPreloader();
+  // Initialize navigation and theme
   initTheme();
   initNavigation();
+  initPersonaModal();
   initRoleSwitcher();
-  setRole('apm'); // Force APM mode as default on initial load
-  renderHeroStats();
-  renderCompetencies();
-  renderMarquee();
-  renderPRDDoc();
-  initChart();
-  renderProjects('all');
-  renderTimeline();
-  renderEducation();
-  initScrollAnimations();
 
-  // -------------------------------------------------------------
-  // Preloader Animation (DD -> Dev Dadhich expansion)
-  // -------------------------------------------------------------
-  function initPreloader() {
-    const preloader = document.getElementById('preloader');
-    if (!preloader) return;
+  // Perspective Chooser & Preloader Load Sequence Check
+  const sessionHasPersona = sessionStorage.getItem('persona_selected');
+  const runLoaderOnLoad = sessionStorage.getItem('run_loader_on_load');
+  const navDestination = sessionStorage.getItem('nav_destination') || window.location.hash;
 
-    setTimeout(() => {
-      preloader.classList.add('expand');
-    }, 300);
+  if (runLoaderOnLoad === 'true') {
+    // User switched view and requested reload: load new role, preserve destination, play preloader
+    sessionStorage.removeItem('run_loader_on_load');
+    sessionStorage.removeItem('nav_destination');
+    sessionStorage.setItem('persona_selected', 'true');
 
-    setTimeout(() => {
-      preloader.classList.add('fade-out');
-      setTimeout(() => preloader.style.display = 'none', 600);
-    }, 1300);
+    document.documentElement.classList.remove('is-reloading-view');
+    closePersonaModalImmediate();
+    setRole(currentRole);
+    renderPRDDoc();
+    initChart();
+    renderTimeline();
+    renderEducation();
+    initScrollAnimations();
+    hasCompletedInitialLoad = true;
+
+    // Apply destination scroll position and active nav state
+    if (navDestination && navDestination !== '#home') {
+      const sectionId = navDestination.replace('#', '');
+      const links = document.querySelectorAll('.nav-links a[data-section]');
+      links.forEach(l => l.classList.toggle('active', l.dataset.section === sectionId));
+
+      const targetEl = document.querySelector(navDestination);
+      if (targetEl) {
+        setTimeout(() => targetEl.scrollIntoView({ behavior: 'auto' }), 10);
+      }
+    }
+
+    // Play smooth preloader animation (DD -> DEV DADHICH)
+    runPreloaderAnimation(() => {
+      if (navDestination && navDestination !== '#home') {
+        const targetEl = document.querySelector(navDestination);
+        if (targetEl) targetEl.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  } else if (sessionHasPersona) {
+    // Normal in-session load: load stored role immediately
+    closePersonaModalImmediate();
+    setRole(currentRole);
+    renderPRDDoc();
+    initChart();
+    renderTimeline();
+    renderEducation();
+    initScrollAnimations();
+    hasCompletedInitialLoad = true;
+
+    if (window.location.hash && window.location.hash !== '#home') {
+      const sectionId = window.location.hash.replace('#', '');
+      const links = document.querySelectorAll('.nav-links a[data-section]');
+      links.forEach(l => l.classList.toggle('active', l.dataset.section === sectionId));
+      const targetEl = document.querySelector(window.location.hash);
+      if (targetEl) {
+        setTimeout(() => targetEl.scrollIntoView({ behavior: 'smooth' }), 100);
+      }
+    }
+  } else {
+    // First time visiting: Show the Perspective Chooser ONLY
+    openPersonaModal();
   }
 
   // -------------------------------------------------------------
-  // Theme Manager
+  // Perspective Chooser & View Switching with Proper Reload
+  // -------------------------------------------------------------
+  window.switchViewWithReload = function(role, destination) {
+    localStorage.setItem('portfolio_persona', role);
+    sessionStorage.setItem('persona_selected', 'true');
+    sessionStorage.setItem('run_loader_on_load', 'true');
+
+    const targetHash = destination || window.location.hash || '#home';
+    sessionStorage.setItem('nav_destination', targetHash);
+
+    if (window.location.hash !== targetHash && targetHash !== '#home') {
+      window.location.hash = targetHash;
+    }
+    window.location.reload();
+  };
+
+  function handleSelectPersona(role) {
+    window.switchViewWithReload(role, window.location.hash);
+  }
+
+  function initPersonaModal() {
+    const btnBA = document.getElementById('persona-card-ba');
+    const btnMarketing = document.getElementById('persona-card-marketing');
+    const btnOpen = document.getElementById('open-persona-btn');
+
+    if (btnBA) {
+      btnBA.addEventListener('click', () => handleSelectPersona('ba'));
+    }
+
+    if (btnMarketing) {
+      btnMarketing.addEventListener('click', () => handleSelectPersona('marketing'));
+    }
+
+    if (btnOpen) {
+      btnOpen.addEventListener('click', () => {
+        openPersonaModal();
+      });
+    }
+  }
+
+  function openPersonaModal() {
+    const modal = document.getElementById('persona-modal');
+    if (!modal) return;
+    modal.classList.remove('is-hidden', 'hidden');
+    modal.style.display = 'flex';
+    void modal.offsetWidth;
+    modal.style.opacity = '1';
+  }
+
+  function closePersonaModal() {
+    const modal = document.getElementById('persona-modal');
+    if (!modal) return;
+    modal.style.opacity = '0';
+    setTimeout(() => {
+      modal.classList.add('is-hidden');
+      modal.style.display = 'none';
+    }, 250);
+  }
+
+  function closePersonaModalImmediate() {
+    const modal = document.getElementById('persona-modal');
+    if (!modal) return;
+    modal.classList.add('is-hidden');
+    modal.style.opacity = '0';
+    modal.style.display = 'none';
+  }
+
+  // -------------------------------------------------------------
+  // Preloader Welcome Animation (DD -> Dev Dadhich)
+  // -------------------------------------------------------------
+  function runPreloaderAnimation(onComplete) {
+    const preloader = document.getElementById('preloader');
+    if (!preloader) {
+      if (onComplete) onComplete();
+      return;
+    }
+
+    preloader.classList.remove('hidden', 'fade-out', 'expand');
+    preloader.style.display = 'flex';
+    preloader.style.opacity = '1';
+
+    setTimeout(() => {
+      preloader.classList.add('expand');
+    }, 200);
+
+    setTimeout(() => {
+      preloader.classList.add('fade-out');
+      if (onComplete) onComplete();
+      setTimeout(() => {
+        preloader.style.display = 'none';
+      }, 600);
+    }, 1150);
+  }
+
+  // -------------------------------------------------------------
+  // Theme Manager (Dark / Light Mode)
   // -------------------------------------------------------------
   function initTheme() {
     const btn = document.getElementById('theme-toggle');
@@ -73,9 +206,11 @@ document.addEventListener('DOMContentLoaded', () => {
       icon.setAttribute('data-lucide', theme === 'dark' ? 'sun' : 'moon');
       if (typeof lucide !== 'undefined') lucide.createIcons();
     }
-
   }
 
+  // -------------------------------------------------------------
+  // Navigation & ScrollSpy
+  // -------------------------------------------------------------
   function initNavigation() {
     const nav = document.querySelector('.nav-minimal');
     const toggle = document.getElementById('mobile-menu-toggle');
@@ -83,12 +218,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const links = document.querySelectorAll('.nav-links a[data-section]');
     const sections = [...new Set([...links].map(link => document.getElementById(link.dataset.section)).filter(Boolean))];
     const setActive = (id) => links.forEach(link => link.classList.toggle('active', link.dataset.section === id));
+
     const closeMenu = () => {
       if (!menu || !toggle) return;
       menu.classList.remove('is-open');
       menu.setAttribute('aria-hidden', 'true');
       toggle.setAttribute('aria-expanded', 'false');
-      toggle.setAttribute('aria-label', 'Open navigation menu');
       toggle.innerHTML = '<i data-lucide="menu"></i>';
       if (typeof lucide !== 'undefined') lucide.createIcons();
     };
@@ -98,11 +233,12 @@ document.addEventListener('DOMContentLoaded', () => {
       menu.classList.toggle('is-open', open);
       menu.setAttribute('aria-hidden', String(!open));
       toggle.setAttribute('aria-expanded', String(open));
-      toggle.setAttribute('aria-label', open ? 'Close navigation menu' : 'Open navigation menu');
       toggle.innerHTML = `<i data-lucide="${open ? 'x' : 'menu'}"></i>`;
       if (typeof lucide !== 'undefined') lucide.createIcons();
     });
+
     links.forEach(link => link.addEventListener('click', closeMenu));
+
     if (sections.length) {
       const observer = new IntersectionObserver(entries => {
         const visible = entries.filter(entry => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
@@ -110,6 +246,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }, { rootMargin: '-25% 0px -60% 0px', threshold: [0.1, 0.3, 0.6] });
       sections.forEach(section => observer.observe(section));
     }
+
     window.addEventListener('scroll', () => {
       nav?.classList.toggle('is-scrolled', window.scrollY > 20);
       if (window.scrollY < 120) setActive('');
@@ -117,41 +254,93 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // -------------------------------------------------------------
-  // Role Mode Switcher (APM Mode Default)
+  // Dual-Role Switcher ("Business Analyst" vs "Marketing & Branding")
   // -------------------------------------------------------------
   function initRoleSwitcher() {
-    const apmBtn = document.getElementById('role-btn-apm');
     const baBtn = document.getElementById('role-btn-ba');
+    const marketingBtn = document.getElementById('role-btn-marketing');
 
-    if (apmBtn && baBtn) {
-      apmBtn.addEventListener('click', () => setRole('apm'));
-      baBtn.addEventListener('click', () => setRole('ba'));
+    if (baBtn) {
+      baBtn.addEventListener('click', () => {
+        if (currentRole !== 'ba') {
+          handleSelectPersona('ba');
+        }
+      });
+    }
+
+    if (marketingBtn) {
+      marketingBtn.addEventListener('click', () => {
+        if (currentRole !== 'marketing') {
+          handleSelectPersona('marketing');
+        }
+      });
     }
   }
 
   function setRole(role) {
     currentRole = role;
-    const apmBtn = document.getElementById('role-btn-apm');
-    const baBtn = document.getElementById('role-btn-ba');
-    const roleTitle = document.getElementById('hero-role-title');
-    const roleTagline = document.getElementById('hero-role-tagline');
-    const bioText = document.getElementById('hero-bio-text');
+    localStorage.setItem('portfolio_persona', role);
 
-    if (role === 'apm') {
-      if (apmBtn) apmBtn.classList.add('active');
-      if (baBtn) baBtn.classList.remove('active');
-      if (roleTitle) roleTitle.textContent = "Aspiring Associate Product Manager";
-      if (roleTagline) roleTagline.textContent = data.roles.apm.heroTagline;
-      if (bioText) bioText.textContent = data.profile.bioAPM;
-      updateFocusBullets(data.roles.apm.focus);
-    } else {
+    const baBtn = document.getElementById('role-btn-ba');
+    const marketingBtn = document.getElementById('role-btn-marketing');
+    const navBadge = document.getElementById('nav-role-badge');
+    const heroTag = document.getElementById('hero-role-tag');
+    const heroTitle = document.getElementById('hero-role-title');
+    const heroTagline = document.getElementById('hero-role-tagline');
+    const bioText = document.getElementById('hero-bio-text');
+    const credFocus = document.getElementById('credentials-focus');
+    const contactSeeking = document.getElementById('contact-seeking-text');
+    const compHeading = document.getElementById('competency-heading');
+    const projDesc = document.getElementById('projects-section-desc');
+
+    const roleData = data.roles[role];
+
+    if (role === 'ba') {
       if (baBtn) baBtn.classList.add('active');
-      if (apmBtn) apmBtn.classList.remove('active');
-      if (roleTitle) roleTitle.textContent = "Aspiring Business Analyst";
-      if (roleTagline) roleTagline.textContent = data.roles.ba.heroTagline;
+      if (marketingBtn) marketingBtn.classList.remove('active');
+      if (navBadge) navBadge.textContent = "// BUSINESS ANALYST";
+      if (heroTag) heroTag.textContent = roleData.heroTag;
+      if (heroTitle) heroTitle.textContent = roleData.heroTitle;
+      if (heroTagline) heroTagline.textContent = roleData.heroTagline;
       if (bioText) bioText.textContent = data.profile.bioBA;
-      updateFocusBullets(data.roles.ba.focus);
+      if (credFocus) credFocus.innerHTML = `<strong class="text-main">Focus:</strong> Power BI, SQL, Process Re-Engineering, AppSheet`;
+      if (contactSeeking) contactSeeking.textContent = "Seeking Business Analyst, Data Analytics, and Operations Optimization opportunities.";
+      if (compHeading) compHeading.textContent = "Data Analytics & Operational Foundations";
+      if (projDesc) projDesc.textContent = "A structured archive of data analytics, process re-engineering, and operational systems.";
+      updateFocusBullets(roleData.focus);
+    } else {
+      if (marketingBtn) marketingBtn.classList.add('active');
+      if (baBtn) baBtn.classList.remove('active');
+      if (navBadge) navBadge.textContent = "// MARKETING & BRANDING";
+      if (heroTag) heroTag.textContent = roleData.heroTag;
+      if (heroTitle) heroTitle.textContent = roleData.heroTitle;
+      if (heroTagline) heroTagline.textContent = roleData.heroTagline;
+      if (bioText) bioText.textContent = data.profile.bioMarketing;
+      if (credFocus) credFocus.innerHTML = `<strong class="text-main">Focus:</strong> Brand Strategy, Consumer Insights, GTM Funnels, Content`;
+      if (contactSeeking) contactSeeking.textContent = "Seeking Brand Strategy, Growth Marketing, and Creative Direction opportunities.";
+      if (compHeading) compHeading.textContent = "Brand Architecture & Growth Foundations";
+      if (projDesc) projDesc.textContent = "A curated showcase of brand development, qualitative field studies, and digital acquisition funnels.";
+      updateFocusBullets(roleData.focus);
     }
+
+    const mobBaBtn = document.getElementById('mobile-role-btn-ba');
+    const mobMktBtn = document.getElementById('mobile-role-btn-marketing');
+    if (mobBaBtn && mobMktBtn) {
+      if (role === 'ba') {
+        mobBaBtn.className = "py-2 px-3 rounded font-mono text-[11px] font-bold border border-emerald-500/50 bg-emerald-500/20 text-emerald-400 text-center";
+        mobMktBtn.className = "py-2 px-3 rounded font-mono text-[11px] font-bold border border-zinc-700 text-sub hover:text-main text-center";
+      } else {
+        mobMktBtn.className = "py-2 px-3 rounded font-mono text-[11px] font-bold border border-purple-500/50 bg-purple-500/20 text-purple-400 text-center";
+        mobBaBtn.className = "py-2 px-3 rounded font-mono text-[11px] font-bold border border-zinc-700 text-sub hover:text-main text-center";
+      }
+    }
+
+    renderHeroStats();
+    renderCompetencies();
+    renderMarquee();
+    renderProjects('all');
+
+    if (typeof lucide !== 'undefined') lucide.createIcons();
   }
 
   function updateFocusBullets(list) {
@@ -159,7 +348,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!container) return;
     container.innerHTML = list.map(item => `
       <div class="flex items-start gap-3 py-2 border-b border-zinc-800/40 last:border-0 text-xs md:text-sm">
-        <span class="font-mono text-dim font-bold">/</span>
+        <span class="font-mono text-emerald-400 font-bold">/</span>
         <span class="text-sub font-semibold">${item}</span>
       </div>
     `).join('');
@@ -171,7 +360,9 @@ document.addEventListener('DOMContentLoaded', () => {
   function renderHeroStats() {
     const grid = document.getElementById('hero-stats-grid');
     if (!grid) return;
-    grid.innerHTML = data.profile.stats.map((s, idx) => `
+    const stats = currentRole === 'ba' ? data.profile.statsBA : data.profile.statsMarketing;
+
+    grid.innerHTML = stats.map((s, idx) => `
       <div class="py-4 px-3 border-r border-zinc-800/60 last:border-0 text-center sm:text-left">
         <div class="text-3xl md:text-4xl font-extrabold text-main font-mono flex items-center justify-center sm:justify-start">
           <span id="stat-val-${idx}">0</span><span>${s.suffix}</span>
@@ -179,19 +370,24 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="text-xs font-semibold text-sub mt-1 leading-tight">${s.label}</div>
       </div>
     `).join('');
+
+    hasCountedStats = false;
+    triggerStatsCounter();
   }
 
   function triggerStatsCounter() {
     if (hasCountedStats) return;
     hasCountedStats = true;
 
-    data.profile.stats.forEach((s, idx) => {
+    const stats = currentRole === 'ba' ? data.profile.statsBA : data.profile.statsMarketing;
+
+    stats.forEach((s, idx) => {
       const el = document.getElementById(`stat-val-${idx}`);
       if (!el) return;
 
       const target = s.num;
-      const duration = 1500;
-      const steps = 30;
+      const duration = 1200;
+      const steps = 25;
       const stepTime = duration / steps;
       let current = 0;
       const increment = target / steps;
@@ -214,6 +410,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function renderMarquee() {
     const container = document.getElementById('marquee-section');
     if (!container) return;
+    const marquee = data.roles[currentRole].marquee;
 
     const buildTrack = (items, directionClass) => {
       const chips = items.map(item => `<div class="marquee-chip">${item}</div>`).join('');
@@ -228,10 +425,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     container.innerHTML = `
       <div class="py-6">
-        <span class="section-tag mb-4 block">[ TECHNOLOGIES & TOOLS MATRIX ]</span>
-        ${buildTrack(data.marquee.line1, 'marquee-left')}
-        ${buildTrack(data.marquee.line2, 'marquee-right')}
-        ${buildTrack(data.marquee.line3, 'marquee-left')}
+        <span class="section-tag mb-4 block">[ TECHNOLOGIES & COMPETENCIES MATRIX ]</span>
+        ${buildTrack(marquee.line1, 'marquee-left')}
+        ${buildTrack(marquee.line2, 'marquee-right')}
+        ${buildTrack(marquee.line3, 'marquee-left')}
       </div>
     `;
   }
@@ -242,7 +439,9 @@ document.addEventListener('DOMContentLoaded', () => {
   function renderCompetencies() {
     const container = document.getElementById('competencies-grid');
     if (!container) return;
-    container.innerHTML = data.competencies.map(c => `
+    const comps = data.roles[currentRole].competencies;
+
+    container.innerHTML = comps.map(c => `
       <div class="minimal-card p-6 flex flex-col justify-between reveal-on-scroll">
         <div>
           <div class="font-mono text-xs font-bold text-dim mb-3">[ ${c.code} ]</div>
@@ -254,7 +453,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // -------------------------------------------------------------
-  // Interactive PRD Document Viewer (High-Contrast Refined Box Styling)
+  // Interactive PRD Document Viewer
   // -------------------------------------------------------------
   function renderPRDDoc() {
     const prd = data.samplePRD;
@@ -361,7 +560,7 @@ document.addEventListener('DOMContentLoaded', () => {
           {
             label: 'SLA Met (%)',
             data: data.chartData.sla,
-            backgroundColor: isDark ? 'rgba(212, 212, 216, 0.45)' : 'rgba(82, 82, 91, 0.45)',
+            backgroundColor: isDark ? 'rgba(52, 211, 153, 0.65)' : 'rgba(16, 185, 129, 0.65)',
             borderRadius: 4
           }
         ]
@@ -370,7 +569,7 @@ document.addEventListener('DOMContentLoaded', () => {
         responsive: true,
         maintainAspectRatio: false,
         layout: {
-          padding: { top: 42, right: 4, bottom: 0, left: 0 }
+          padding: { top: 40, right: 4, bottom: 0, left: 0 }
         },
         plugins: {
           legend: {
@@ -385,8 +584,7 @@ document.addEventListener('DOMContentLoaded', () => {
             grid: {
               color: isDark ? '#27272a' : '#e4e4e7',
               drawOnChartArea: true,
-              drawTicks: true,
-              z: -1
+              drawTicks: true
             },
             ticks: { color: isDark ? '#d4d4d8' : '#3f3f46', font: { family: 'JetBrains Mono', size: 10, weight: 'bold' } }
           },
@@ -394,8 +592,7 @@ document.addEventListener('DOMContentLoaded', () => {
             grid: {
               color: isDark ? '#27272a' : '#e4e4e7',
               drawOnChartArea: true,
-              drawTicks: true,
-              z: -1
+              drawTicks: true
             },
             ticks: { color: isDark ? '#d4d4d8' : '#3f3f46', font: { family: 'JetBrains Mono', size: 10, weight: 'bold' } }
           }
@@ -408,248 +605,17 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!chartInstance) return;
     const isDark = theme === 'dark';
     chartInstance.data.datasets[0].backgroundColor = isDark ? 'rgba(255, 255, 255, 0.85)' : 'rgba(9, 9, 11, 0.85)';
-    chartInstance.data.datasets[1].backgroundColor = isDark ? 'rgba(212, 212, 216, 0.45)' : 'rgba(82, 82, 91, 0.45)';
+    chartInstance.data.datasets[1].backgroundColor = isDark ? 'rgba(52, 211, 153, 0.65)' : 'rgba(16, 185, 129, 0.65)';
     chartInstance.options.plugins.legend.labels.color = isDark ? '#f4f4f5' : '#09090b';
     chartInstance.options.scales.x.grid.color = isDark ? '#27272a' : '#e4e4e7';
     chartInstance.options.scales.x.ticks.color = isDark ? '#d4d4d8' : '#3f3f46';
     chartInstance.options.scales.y.grid.color = isDark ? '#27272a' : '#e4e4e7';
     chartInstance.options.scales.y.ticks.color = isDark ? '#d4d4d8' : '#3f3f46';
     chartInstance.update();
-    if (document.getElementById('ecom-line-chart-canvas')) {
-      initEcomLineChart();
-    }
-    if (document.getElementById('rwms-funnel-chart-canvas')) {
-      initRwmsCharts();
-    }
-  }
-
-  function initRwmsCharts() {
-    const canvas1 = document.getElementById('rwms-funnel-chart-canvas');
-    const canvas2 = document.getElementById('rwms-impact-chart-canvas');
-    if (typeof Chart === 'undefined') return;
-    const isDark = document.documentElement.getAttribute('data-theme') !== 'light';
-
-    if (rwmsChart1Instance) {
-      rwmsChart1Instance.destroy();
-      rwmsChart1Instance = null;
-    }
-    if (rwmsChart2Instance) {
-      rwmsChart2Instance.destroy();
-      rwmsChart2Instance = null;
-    }
-
-    if (canvas1) {
-      rwmsChart1Instance = new Chart(canvas1, {
-        type: 'bar',
-        data: {
-          labels: ["Sourcing", "Screening", "Shortlisted", "Interview", "Offer", "Onboarded"],
-          datasets: [
-            {
-              label: 'Candidates Handled',
-              data: [420, 280, 160, 85, 36, 28],
-              backgroundColor: isDark ? 'rgba(52, 211, 153, 0.85)' : 'rgba(16, 185, 129, 0.85)',
-              borderRadius: 4
-            },
-            {
-              label: 'Conversion Rate (%)',
-              data: [100, 66.6, 38.0, 20.2, 8.5, 6.6],
-              backgroundColor: isDark ? 'rgba(96, 165, 250, 0.55)' : 'rgba(37, 99, 235, 0.55)',
-              borderRadius: 4
-            }
-          ]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: {
-            legend: {
-              labels: {
-                color: isDark ? '#f4f4f5' : '#09090b',
-                font: { family: 'JetBrains Mono', size: 10, weight: 'bold' }
-              }
-            },
-            tooltip: {
-              callbacks: {
-                label: function(ctx) {
-                  return ctx.datasetIndex === 0 
-                    ? ` ${ctx.dataset.label}: ${ctx.raw} candidates`
-                    : ` ${ctx.dataset.label}: ${ctx.raw}% of pipeline`;
-                }
-              }
-            }
-          },
-          scales: {
-            x: {
-              grid: { color: isDark ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.08)' },
-              ticks: { color: isDark ? '#a1a1aa' : '#52525b', font: { family: 'JetBrains Mono', size: 9, weight: 'bold' } }
-            },
-            y: {
-              grid: { color: isDark ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.08)' },
-              ticks: { color: isDark ? '#a1a1aa' : '#52525b', font: { family: 'JetBrains Mono', size: 9, weight: 'bold' } }
-            }
-          }
-        }
-      });
-    }
-
-    if (canvas2) {
-      rwmsChart2Instance = new Chart(canvas2, {
-        type: 'bar',
-        data: {
-          labels: ["Daily Reporting (min)", "Data Error Rate (%)", "Status Lag (hrs)", "Visibility Index (%)"],
-          datasets: [
-            {
-              label: 'Legacy Excel Spreadsheets',
-              data: [90, 35, 48, 15],
-              backgroundColor: isDark ? 'rgba(248, 113, 113, 0.85)' : 'rgba(220, 38, 38, 0.85)',
-              borderRadius: 4
-            },
-            {
-              label: 'RWMS AppSheet Ecosystem',
-              data: [1, 1, 1, 100],
-              backgroundColor: isDark ? 'rgba(52, 211, 153, 0.85)' : 'rgba(16, 185, 129, 0.85)',
-              borderRadius: 4
-            }
-          ]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: {
-            legend: {
-              labels: {
-                color: isDark ? '#f4f4f5' : '#09090b',
-                font: { family: 'JetBrains Mono', size: 10, weight: 'bold' }
-              }
-            }
-          },
-          scales: {
-            x: {
-              grid: { color: isDark ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.08)' },
-              ticks: { color: isDark ? '#a1a1aa' : '#52525b', font: { family: 'JetBrains Mono', size: 9, weight: 'bold' } }
-            },
-            y: {
-              grid: { color: isDark ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.08)' },
-              ticks: { color: isDark ? '#a1a1aa' : '#52525b', font: { family: 'JetBrains Mono', size: 9, weight: 'bold' } }
-            }
-          }
-        }
-      });
-    }
-
-    setTimeout(() => {
-      if (rwmsChart1Instance) rwmsChart1Instance.resize();
-      if (rwmsChart2Instance) rwmsChart2Instance.resize();
-    }, 200);
-  }
-
-  function initEcomLineChart() {
-    const canvas = document.getElementById('ecom-line-chart-canvas');
-    if (!canvas || typeof Chart === 'undefined') return;
-
-    if (ecomChartInstance) {
-      ecomChartInstance.destroy();
-      ecomChartInstance = null;
-    }
-
-    const isDark = document.documentElement.getAttribute('data-theme') !== 'light';
-    const chartData = data.ecomChartData || {
-      labels: ["Week 1", "Week 2", "Week 3", "Week 4", "Week 5"],
-      cart: [6200, 6800, 6500, 6100, 1741],
-      purchase: [3100, 3400, 3200, 3000, 729]
-    };
-
-    ecomChartInstance = new Chart(canvas, {
-      type: 'line',
-      data: {
-        labels: chartData.labels,
-        datasets: [
-          {
-            label: 'Cart Events',
-            data: chartData.cart,
-            borderColor: '#34d399',
-            backgroundColor: 'rgba(52, 211, 153, 0.12)',
-            borderWidth: 2,
-            tension: 0.35,
-            fill: true,
-            pointRadius: 4,
-            pointBackgroundColor: '#34d399',
-            pointHoverRadius: 6
-          },
-          {
-            label: 'Purchase Events',
-            data: chartData.purchase,
-            borderColor: '#60a5fa',
-            backgroundColor: 'rgba(96, 165, 250, 0.12)',
-            borderWidth: 2,
-            tension: 0.35,
-            fill: true,
-            pointRadius: 4,
-            pointBackgroundColor: '#60a5fa',
-            pointHoverRadius: 6
-          }
-        ]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        layout: {
-          padding: { top: 8, right: 8, bottom: 0, left: 0 }
-        },
-        plugins: {
-          legend: {
-            position: 'top',
-            align: 'end',
-            labels: {
-              color: isDark ? '#f4f4f5' : '#09090b',
-              font: { family: 'JetBrains Mono', size: 9, weight: 'bold' },
-              boxWidth: 8,
-              usePointStyle: true
-            }
-          },
-          tooltip: {
-            mode: 'index',
-            intersect: false,
-            callbacks: {
-              label: function(ctx) {
-                return ` ${ctx.dataset.label}: ${ctx.raw.toLocaleString()} events`;
-              }
-            }
-          }
-        },
-        scales: {
-          x: {
-            grid: {
-              color: isDark ? '#27272a' : '#e4e4e7',
-              drawOnChartArea: true,
-              drawTicks: false
-            },
-            ticks: {
-              color: isDark ? '#a1a1aa' : '#52525b',
-              font: { family: 'JetBrains Mono', size: 9, weight: 'bold' }
-            }
-          },
-          y: {
-            grid: {
-              color: isDark ? '#27272a' : '#e4e4e7',
-              drawOnChartArea: true,
-              drawTicks: false
-            },
-            ticks: {
-              color: isDark ? '#a1a1aa' : '#52525b',
-              font: { family: 'JetBrains Mono', size: 9, weight: 'bold' },
-              callback: function(val) {
-                return val >= 1000 ? (val / 1000) + 'k' : val;
-              }
-            }
-          }
-        }
-      }
-    });
   }
 
   // -------------------------------------------------------------
-  // Render Projects (Equal-weight organized grid)
+  // Render Projects Grid (Restored Iconic Graphic Visual Cards)
   // -------------------------------------------------------------
   function renderProjects(filter) {
     const grid = document.getElementById('projects-grid');
@@ -666,51 +632,105 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
+    const projectPool = currentRole === 'ba' ? data.projectsBA : data.projectsMarketing;
+
     const items = filter === 'all'
-      ? data.projects
-      : data.projects.filter(p => p.type.toLowerCase().includes(filter));
-    items.sort((a, b) => (a.id === 'avionic-crm-product' ? -1 : b.id === 'avionic-crm-product' ? 1 : 0));
+      ? projectPool
+      : projectPool.filter(p => {
+          const typeStr = (p.type + ' ' + (p.tags || []).join(' ')).toLowerCase();
+          if (filter === 'analytics') return typeStr.includes('analytics') || typeStr.includes('sql') || typeStr.includes('power bi') || typeStr.includes('data');
+          if (filter === 'brand') return typeStr.includes('brand') || typeStr.includes('gtm') || typeStr.includes('strategy') || typeStr.includes('marketing');
+          if (filter === 'operations') return typeStr.includes('operation') || typeStr.includes('workflow') || typeStr.includes('crm') || typeStr.includes('process');
+          return true;
+        });
 
     if (!items.length) {
       grid.innerHTML = `<div class="col-span-full py-12 text-center text-dim font-mono">No projects found for this category.</div>`;
       return;
     }
 
-    const imageFallback = "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=900&auto=format&fit=crop&q=80";
     const projectIcons = {
       'avionic-crm-product': 'workflow',
-      'power-plant-analytics': 'bar-chart-3',
+      'ecommerce-performance-analytics': 'bar-chart-3',
+      'power-plant-analytics': 'activity',
+      'bookstore-sql-project': 'database',
       'vyndo-market-strategy': 'megaphone',
       'ravivari-retail-study': 'store',
       'drishti-brand-web': 'clapperboard',
+      'student-media-lead': 'film',
       'eventsphere-app': 'calendar-days',
-      'pinkcity-parichay': 'map',
-      'frames-of-friendship': 'film'
+      'pinkcity-parichay': 'map'
     };
-    grid.innerHTML = items.map(p => `
-      <article class="project-card cursor-pointer group reveal-on-scroll" onclick="openCaseModal('${p.id}')">
-        <div class="project-card-top">
-          <span class="project-number">${p.num}</span>
-          <span class="project-type">${p.type}</span>
-          <i data-lucide="arrow-up-right" class="project-arrow"></i>
-        </div>
-        <div class="project-card-visual" aria-hidden="true">
-          <span class="project-visual-label">CASE / ${p.num}</span>
-          <span class="project-visual-mark"><i data-lucide="${projectIcons[p.id] || 'sparkles'}"></i></span>
-          <span class="project-visual-initial">${p.title.charAt(0)}</span>
-          <span class="project-visual-line"></span>
-        </div>
-        <div class="project-card-content">
-          <div class="project-card-meta"><span>${p.role}</span><span>${p.tags.length} skills</span></div>
-          <h3>${p.title}</h3>
-          <p>${p.summary}</p>
-        </div>
-        <div class="project-card-bottom">
-          <div class="project-tags">${p.tags.slice(0, 3).map(t => `<span>${t}</span>`).join('')}</div>
-          <span class="project-view">VIEW CASE</span>
-        </div>
-      </article>
-    `).join('');
+
+    grid.innerHTML = items.map(p => {
+      const isDedicated = Boolean(p.dedicatedPage);
+      const clickAction = isDedicated 
+        ? `window.location.href='${p.dedicatedPage}'`
+        : `openCaseModal('${p.id}')`;
+
+      const badgeHtml = p.badge 
+        ? `<span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">${p.badge}</span>`
+        : `<span class="project-type">${p.type}</span>`;
+
+      const initialChar = p.title.replace(/[^a-zA-Z]/g, '').charAt(0) || 'P';
+      const iconName = projectIcons[p.id] || 'sparkles';
+
+      return `
+        <article class="project-card cursor-pointer group reveal-on-scroll" onclick="${clickAction}">
+          
+          <!-- Iconic Graphic Visual Header with Integrated Headings & Badges -->
+          <div class="project-card-visual" aria-hidden="true">
+            <!-- Top Integrated Row: Project Number + Heading Pill + Arrow -->
+            <div class="project-visual-top">
+              <div class="project-visual-tags">
+                <span class="visual-badge-num">#${p.num}</span>
+                <span class="visual-heading-pill ${p.badge ? 'is-dedicated' : ''}">${p.badge || p.type}</span>
+              </div>
+              <span class="visual-arrow-btn">
+                <i data-lucide="${isDedicated ? 'arrow-up-right' : 'maximize-2'}"></i>
+              </span>
+            </div>
+
+            <!-- Bottom Integrated Row: Case Identifier + Category Icon Mark -->
+            <div class="project-visual-bottom">
+              <span class="project-visual-label">CASE // ${p.num}</span>
+              <span class="project-visual-mark"><i data-lucide="${iconName}"></i></span>
+            </div>
+
+            <!-- Abstract Background Artwork Elements -->
+            <span class="project-visual-initial">${initialChar}</span>
+            <span class="project-visual-line"></span>
+          </div>
+
+          <!-- Card Content Body -->
+          <div class="project-card-content p-5 space-y-2 flex-1 flex flex-col justify-between">
+            <div>
+              <div class="project-card-meta text-dim text-xs font-mono mb-1">
+                <span>${p.role}</span>
+                <span>${(p.tags || []).length} competencies</span>
+              </div>
+              <h3 class="font-bold text-main text-base group-hover:text-emerald-400 transition-colors leading-snug">
+                ${p.title}
+              </h3>
+              <p class="text-xs text-sub mt-2 leading-relaxed">
+                ${p.summary}
+              </p>
+            </div>
+
+            <!-- Tags & CTA -->
+            <div class="project-card-bottom border-t border-[var(--border)] mt-4 flex items-center justify-between text-xs font-mono">
+              <div class="project-tags flex flex-wrap gap-1">
+                ${(p.tags || []).slice(0, 3).map(t => `<span>${t}</span>`).join('')}
+              </div>
+              <span class="project-view flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                ${isDedicated ? 'DEEP DIVE →' : 'VIEW CASE →'}
+              </span>
+            </div>
+          </div>
+
+        </article>
+      `;
+    }).join('');
 
     if (typeof lucide !== 'undefined') lucide.createIcons();
 
@@ -722,1332 +742,123 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // -------------------------------------------------------------
-  // Case Study Modal Window with Smooth Zoom-In Spring Animation
+  // Case Study Modal Window (Restored Original Expansion Design)
   // -------------------------------------------------------------
-  window.openImageLightbox = (src, alt) => {
-    let lightbox = document.getElementById('ecom-lightbox');
-    if (!lightbox) {
-      lightbox = document.createElement('div');
-      lightbox.id = 'ecom-lightbox';
-      lightbox.className = 'ecom-cs-lightbox';
-      document.body.appendChild(lightbox);
-    }
-    lightbox.innerHTML = `
-      <button class="ecom-cs-lightbox-close" onclick="closeImageLightbox()">&times;</button>
-      <div class="ecom-cs-lightbox-img-wrap" onclick="event.stopPropagation()">
-        <img src="${src}" alt="${alt}" class="ecom-cs-lightbox-img" />
-        <div class="ecom-cs-lightbox-caption">${alt}</div>
-      </div>
-    `;
-    lightbox.onclick = () => closeImageLightbox();
-    lightbox.style.display = 'flex';
-  };
-
-  window.closeImageLightbox = () => {
-    const lightbox = document.getElementById('ecom-lightbox');
-    if (lightbox) {
-      lightbox.style.display = 'none';
-    }
-  };
-
   window.openCaseModal = (id) => {
-    const item = data.projects.find(p => p.id === id);
+    const projectPool = currentRole === 'ba' ? data.projectsBA : data.projectsMarketing;
+    const item = projectPool.find(p => p.id === id);
     if (!item) return;
+
+    // E-Commerce Analytics and RWMS remain unchanged (dedicated case study pages)
+    if (item.dedicatedPage) {
+      window.location.href = item.dedicatedPage;
+      return;
+    }
 
     const modal = document.getElementById('case-modal');
     const body = document.getElementById('case-modal-body');
     if (!modal || !body) return;
 
-    const totalProjects = String(data.projects.length).padStart(2, '0');
+    const totalProjects = String(projectPool.length).padStart(2, '0');
 
-    if (id === 'ecommerce-performance-analytics') {
-      body.classList.add('modal-dialog-wide');
-      body.innerHTML = `
-        <div class="case-study ecom-case-study">
-          <!-- Header (Title Left, Image Right - Matching standard project overlay architecture) -->
-          <header class="case-study-header">
-            <div class="case-study-heading">
-              <div class="case-study-kicker">
-                <span>CASE ${item.num} / ${totalProjects}</span>
-                <span>${item.type}</span>
-              </div>
-              <h2 class="case-study-title">${item.title}</h2>
-              <p class="case-study-role">${item.role}</p>
-              <p class="text-xs md:text-sm font-semibold text-sub mt-2 leading-relaxed max-w-lg">
-                Turning 657K+ customer events into actionable category, brand, and conversion insights.
-              </p>
+    // Restored Original Project Expansion Design with original image and layout
+    body.innerHTML = `
+      <div class="case-study">
+        <!-- Header (Title & Kicker Left, Real Project Image Right) -->
+        <header class="case-study-header">
+          <div class="case-study-heading">
+            <div class="case-study-kicker">
+              <span>CASE ${item.num} / ${totalProjects}</span>
+              <span>${item.type}</span>
             </div>
-            <div class="case-study-image">
-              <img src="Overview.png" onerror="this.onerror=null; this.src='Overview.png';" alt="${item.title}" />
-            </div>
-            <button onclick="closeCaseModal()" class="case-study-close" aria-label="Close case study">&times;</button>
-          </header>
+            <h2 class="case-study-title">${item.title}</h2>
+            <p class="case-study-role">${item.role}</p>
+          </div>
+          <div class="case-study-image">
+            <img src="${item.image}" alt="${item.title}" onerror="this.onerror=null; this.src='dev.png';" />
+          </div>
+          <button onclick="closeCaseModal()" class="case-study-close" aria-label="Close case study">&times;</button>
+        </header>
 
-          <!-- SECTION 1: HERO METADATA BAR -->
-          <section class="ecom-cs-section my-6">
-            <div class="ecom-cs-meta-grid">
-              <div class="ecom-cs-meta-pill">
-                <span class="ecom-cs-meta-label">DATASET</span>
-                <span class="ecom-cs-meta-val">657K+ events</span>
-              </div>
-              <div class="ecom-cs-meta-pill">
-                <span class="ecom-cs-meta-label">USERS</span>
-                <span class="ecom-cs-meta-val">122K+</span>
-              </div>
-              <div class="ecom-cs-meta-pill">
-                <span class="ecom-cs-meta-label">PURCHASES</span>
-                <span class="ecom-cs-meta-val">13K+</span>
-              </div>
-              <div class="ecom-cs-meta-pill">
-                <span class="ecom-cs-meta-label">TOOLS</span>
-                <span class="ecom-cs-meta-val">Power BI · DAX · Power Query</span>
-              </div>
-            </div>
-          </section>
-
-          <!-- SECTION 2: BUSINESS QUESTIONS -->
-          <section class="ecom-cs-section">
-            <div class="ecom-cs-sec-header">
-              <span class="ecom-cs-tag">[ PROBLEM FRAMEWORK ]</span>
-              <h2 class="ecom-cs-sec-title">Business Questions</h2>
-            </div>
-            <div class="ecom-cs-questions-grid">
-              <div class="ecom-cs-q-card">
-                <div class="ecom-cs-q-top">
-                  <span class="ecom-cs-q-badge">CARD 1 / CONVERSION</span>
-                  <i data-lucide="filter" class="w-4 h-4 text-emerald-400"></i>
-                </div>
-                <p class="ecom-cs-q-text">"Where are customers dropping out of the purchase funnel?"</p>
-              </div>
-              <div class="ecom-cs-q-card">
-                <div class="ecom-cs-q-top">
-                  <span class="ecom-cs-q-badge">CARD 2 / CATEGORY</span>
-                  <i data-lucide="layers" class="w-4 h-4 text-emerald-400"></i>
-                </div>
-                <p class="ecom-cs-q-text">"Which categories are driving revenue?"</p>
-              </div>
-              <div class="ecom-cs-q-card">
-                <div class="ecom-cs-q-top">
-                  <span class="ecom-cs-q-badge">CARD 3 / BRAND</span>
-                  <i data-lucide="award" class="w-4 h-4 text-emerald-400"></i>
-                </div>
-                <p class="ecom-cs-q-text">"Which brands drive volume versus value?"</p>
-              </div>
-              <div class="ecom-cs-q-card">
-                <div class="ecom-cs-q-top">
-                  <span class="ecom-cs-q-badge">CARD 4 / BEHAVIOUR</span>
-                  <i data-lucide="activity" class="w-4 h-4 text-emerald-400"></i>
-                </div>
-                <p class="ecom-cs-q-text">"What factors are associated with purchase activity?"</p>
-              </div>
-            </div>
-          </section>
-
-          <!-- SECTION 3: DASHBOARD (2-Column Equal Width Side-by-Side Grid) -->
-          <section class="ecom-cs-section">
-            <div class="ecom-cs-sec-header">
-              <span class="ecom-cs-tag">[ VISUAL ANALYTICS ]</span>
-              <h2 class="ecom-cs-sec-title">Power BI Dashboard</h2>
-              <p class="ecom-cs-sec-desc">Click any dashboard view below for a high-resolution full-screen preview.</p>
-            </div>
-            
-            <div class="ecom-cs-dashboards-wrap">
-              <!-- Dashboard 1 (Column 1) -->
-              <div class="ecom-cs-dash-card">
-                <div class="ecom-cs-dash-header">
-                  <span class="ecom-cs-dash-title"><i data-lucide="layout-dashboard" class="w-4 h-4 inline mr-1 text-emerald-400"></i> Dashboard 1: Overview</span>
-                  <span class="ecom-cs-zoom-hint"><i data-lucide="maximize-2" class="w-3.5 h-3.5 inline mr-1"></i> Expand</span>
-                </div>
-                <div class="ecom-cs-dash-img-frame" onclick="openImageLightbox('Overview.png', 'E-Commerce Performance Overview Dashboard')">
-                  <img src="Overview.png" alt="E-Commerce Performance Overview" class="ecom-cs-dash-img" />
-                  <div class="ecom-cs-img-overlay">
-                    <span class="ecom-cs-overlay-btn"><i data-lucide="zoom-in" class="w-4 h-4 inline mr-1"></i> Full View</span>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Dashboard 2 (Column 2) -->
-              <div class="ecom-cs-dash-card">
-                <div class="ecom-cs-dash-header">
-                  <span class="ecom-cs-dash-title"><i data-lucide="smartphone" class="w-4 h-4 inline mr-1 text-emerald-400"></i> Dashboard 2: Smartphone Deep Dive</span>
-                  <span class="ecom-cs-zoom-hint"><i data-lucide="maximize-2" class="w-3.5 h-3.5 inline mr-1"></i> Expand</span>
-                </div>
-                <div class="ecom-cs-dash-img-frame" onclick="openImageLightbox('Category and Brand Analysis.png', 'Category & Brand Analysis — Smartphone Deep Dive Dashboard')">
-                  <img src="Category and Brand Analysis.png" alt="Category & Brand Analysis — Smartphone Deep Dive" class="ecom-cs-dash-img" />
-                  <div class="ecom-cs-img-overlay">
-                    <span class="ecom-cs-overlay-btn"><i data-lucide="zoom-in" class="w-4 h-4 inline mr-1"></i> Full View</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <!-- SECTION 4: KEY INSIGHTS -->
-          <section class="ecom-cs-section">
-            <div class="ecom-cs-sec-header">
-              <span class="ecom-cs-tag">[ EMPIRICAL FINDINGS ]</span>
-              <h2 class="ecom-cs-sec-title">What the Data Revealed</h2>
-            </div>
-
-            <!-- TOP ROW: Left (Insight 1), Right ([New Line Chart Graph] + Insight 2) -->
-            <div class="ecom-cs-insights-top-row">
-              <!-- Left Column: INSIGHT 01 -->
-              <div class="ecom-cs-insight-card">
-                <div>
-                  <div class="ecom-cs-insight-num">INSIGHT 01</div>
-                  <h3 class="ecom-cs-insight-title">Conversion Bottleneck</h3>
-                  
-                  <div class="ecom-cs-funnel-wrap">
-                    <div class="ecom-cs-funnel-step step-views">
-                      <span class="funnel-val">657K</span>
-                      <span class="funnel-lbl">VIEWS</span>
-                    </div>
-                    <div class="ecom-cs-funnel-arrow"><i data-lucide="chevron-down" class="w-4 h-4 text-zinc-500"></i></div>
-                    <div class="ecom-cs-funnel-step step-carts">
-                      <span class="funnel-val">27K</span>
-                      <span class="funnel-lbl">CARTS</span>
-                    </div>
-                    <div class="ecom-cs-funnel-arrow"><i data-lucide="chevron-down" class="w-4 h-4 text-zinc-500"></i></div>
-                    <div class="ecom-cs-funnel-step step-purchases">
-                      <span class="funnel-val">13K</span>
-                      <span class="funnel-lbl">PURCHASES</span>
-                    </div>
-                  </div>
-
-                  <div class="ecom-cs-funnel-rates">
-                    <div class="rate-badge">
-                      <span class="rate-num">~4.1%</span>
-                      <span class="rate-label">View → Cart</span>
-                    </div>
-                    <div class="rate-badge">
-                      <span class="rate-num">~48.9%</span>
-                      <span class="rate-label">Cart → Purchase</span>
-                    </div>
-                  </div>
-                </div>
-
-                <p class="ecom-cs-insight-interp">
-                  "The largest observed funnel drop occurs before cart creation."
-                </p>
-              </div>
-
-              <!-- Right Column: Stacked [New Graph] + [Insight 02] -->
-              <div class="ecom-cs-insights-col-right">
-                <!-- NEW GRAPH: CART & PURCHASE EVENT TREND LINE CHART -->
-                <div class="ecom-cs-insight-card compact-card">
-                  <div>
-                    <div class="ecom-cs-insight-num">INSIGHT — EVENT TRENDS</div>
-                    <h3 class="ecom-cs-insight-title">Cart & Purchase Funnel Activity</h3>
-                    
-                    <div class="ecom-chart-wrap">
-                      <canvas id="ecom-line-chart-canvas"></canvas>
-                    </div>
-                  </div>
-
-                  <p class="ecom-cs-insight-interp">
-                    "Cart and purchase events track closely across Weeks 1–4 before experiencing a parallel decline in Week 5."
-                  </p>
-                </div>
-
-                <!-- INSIGHT 02: REVENUE CONCENTRATION -->
-                <div class="ecom-cs-insight-card compact-card">
-                  <div>
-                    <div class="ecom-cs-insight-num">INSIGHT 02</div>
-                    <h3 class="ecom-cs-insight-title">Revenue Concentration</h3>
-                    
-                    <div class="ecom-cs-compare-bars">
-                      <div class="compare-row">
-                        <div class="compare-info">
-                          <span class="compare-label">Smartphones</span>
-                          <span class="compare-val text-emerald-400">≈ ₹3.9M revenue</span>
-                        </div>
-                        <div class="compare-bar-bg">
-                          <div class="compare-bar-fill fill-smartphones" style="width: 95%;"></div>
-                        </div>
-                      </div>
-
-                      <div class="compare-row">
-                        <div class="compare-info">
-                          <span class="compare-label">Next major category</span>
-                          <span class="compare-val text-zinc-400">≈ ₹0.2M</span>
-                        </div>
-                        <div class="compare-bar-bg">
-                          <div class="compare-bar-fill fill-next" style="width: 8%;"></div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <p class="ecom-cs-insight-interp">
-                    "Revenue is heavily concentrated in smartphones, increasing dependence on a single category."
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <!-- BOTTOM ROW: INSIGHTS 03, 04, 05 -->
-            <div class="ecom-cs-insights-grid">
-              <!-- INSIGHT 03 -->
-              <div class="ecom-cs-insight-card">
-                <div>
-                  <div class="ecom-cs-insight-num">INSIGHT 03</div>
-                  <h3 class="ecom-cs-insight-title">Volume ≠ Value</h3>
-
-                  <div class="ecom-cs-brand-split">
-                    <div class="brand-box">
-                      <span class="brand-name text-emerald-400">SAMSUNG</span>
-                      <span class="brand-role">Highest purchase volume</span>
-                    </div>
-                    <div class="brand-divider">vs</div>
-                    <div class="brand-box">
-                      <span class="brand-name text-blue-400">APPLE</span>
-                      <span class="brand-role">Highest revenue contribution</span>
-                    </div>
-                  </div>
-                </div>
-
-                <p class="ecom-cs-insight-interp">
-                  "Samsung appears to be a volume-driving brand, while Apple contributes substantially more revenue value."
-                </p>
-              </div>
-
-              <!-- INSIGHT 04 -->
-              <div class="ecom-cs-insight-card">
-                <div>
-                  <div class="ecom-cs-insight-num">INSIGHT 04</div>
-                  <h3 class="ecom-cs-insight-title">Weekly Activity Pattern</h3>
-
-                  <div class="ecom-cs-week-flow">
-                    <div class="week-node stable">
-                      <span class="wk-title">WEEK 1</span>
-                      <span class="wk-status">Stable</span>
-                    </div>
-                    <div class="wk-arrow">→</div>
-                    <div class="week-node stable">
-                      <span class="wk-title">WEEK 2</span>
-                      <span class="wk-status">Stable</span>
-                    </div>
-                    <div class="wk-arrow">→</div>
-                    <div class="week-node stable">
-                      <span class="wk-title">WEEK 3</span>
-                      <span class="wk-status">Stable</span>
-                    </div>
-                    <div class="wk-arrow">→</div>
-                    <div class="week-node stable">
-                      <span class="wk-title">WEEK 4</span>
-                      <span class="wk-status">Stable</span>
-                    </div>
-                    <div class="wk-arrow">→</div>
-                    <div class="week-node decline">
-                      <span class="wk-title">WEEK 5</span>
-                      <span class="wk-status">Declines</span>
-                    </div>
-                  </div>
-                </div>
-
-                <p class="ecom-cs-insight-interp">
-                  "Customer activity remains broadly stable through Weeks 1–4, followed by a sharp decline in Week 5."
-                </p>
-              </div>
-
-              <!-- INSIGHT 05 -->
-              <div class="ecom-cs-insight-card full-width-insight">
-                <div>
-                  <div class="ecom-cs-insight-num">INSIGHT 05</div>
-                  <h3 class="ecom-cs-insight-title">Purchase Signals</h3>
-
-                  <div class="ecom-cs-signals-grid">
-                    <div class="signal-card">
-                      <span class="signal-factor">₹254–₹255</span>
-                      <span class="signal-metric">2.35× purchase likelihood</span>
-                    </div>
-                    <div class="signal-card">
-                      <span class="signal-factor">Days 3–19</span>
-                      <span class="signal-metric">1.70× purchase likelihood</span>
-                    </div>
-                    <div class="signal-card">
-                      <span class="signal-factor">Samsung</span>
-                      <span class="signal-metric">1.43× purchase likelihood</span>
-                    </div>
-                    <div class="signal-card">
-                      <span class="signal-factor">Week 2</span>
-                      <span class="signal-metric">1.41× purchase likelihood</span>
-                    </div>
-                  </div>
-                </div>
-
-                <p class="ecom-cs-insight-interp">
-                  "The analysis identified associations between purchase likelihood and specific price ranges, brands and time periods."
-                </p>
-              </div>
-            </div>
-          </section>
-
-          <!-- SECTION 5: FROM INSIGHT TO ACTION -->
-          <section class="ecom-cs-section">
-            <div class="ecom-cs-sec-header">
-              <span class="ecom-cs-tag">[ STRATEGIC EXECUTION ]</span>
-              <h2 class="ecom-cs-sec-title">From Insight to Action</h2>
-            </div>
-
-            <div class="ecom-cs-actions-list">
-              <!-- ACTION 01 -->
-              <div class="ecom-cs-act-card">
-                <div class="act-header">
-                  <span class="act-num">ACTION 01</span>
-                  <span class="act-area">CONVERSION</span>
-                </div>
-                <div class="act-flow">
-                  <div class="act-step">
-                    <span class="step-tag">INSIGHT</span>
-                    <p>View → Cart conversion is approximately 4%.</p>
-                  </div>
-                  <div class="act-arrow">➔</div>
-                  <div class="act-step">
-                    <span class="step-tag">IMPLICATION</span>
-                    <p>The largest observed funnel leakage occurs before cart creation.</p>
-                  </div>
-                  <div class="act-arrow">➔</div>
-                  <div class="act-step rec-step">
-                    <span class="step-tag rec-tag">RECOMMENDED ACTION</span>
-                    <p>Investigate product-page conversion factors such as CTA visibility, product information, reviews, delivery/returns visibility, pricing/value communication, product imagery, and stock availability.</p>
-                  </div>
-                </div>
-              </div>
-
-              <!-- ACTION 02 -->
-              <div class="ecom-cs-act-card">
-                <div class="act-header">
-                  <span class="act-num">ACTION 02</span>
-                  <span class="act-area">CATEGORY</span>
-                </div>
-                <div class="act-flow">
-                  <div class="act-step">
-                    <span class="step-tag">INSIGHT</span>
-                    <p>Smartphones contribute disproportionately to revenue.</p>
-                  </div>
-                  <div class="act-arrow">➔</div>
-                  <div class="act-step">
-                    <span class="step-tag">IMPLICATION</span>
-                    <p>The business is highly dependent on one category.</p>
-                  </div>
-                  <div class="act-arrow">➔</div>
-                  <div class="act-step rec-step">
-                    <span class="step-tag rec-tag">RECOMMENDED ACTION</span>
-                    <p>Develop adjacent-category growth and cross-selling opportunities such as: smartphones → accessories → audio → wearables.</p>
-                  </div>
-                </div>
-              </div>
-
-              <!-- ACTION 03 -->
-              <div class="ecom-cs-act-card">
-                <div class="act-header">
-                  <span class="act-num">ACTION 03</span>
-                  <span class="act-area">BRAND</span>
-                </div>
-                <div class="act-flow">
-                  <div class="act-step">
-                    <span class="step-tag">INSIGHT</span>
-                    <p>Samsung leads purchase volume while Apple contributes more revenue.</p>
-                  </div>
-                  <div class="act-arrow">➔</div>
-                  <div class="act-step">
-                    <span class="step-tag">IMPLICATION</span>
-                    <p>Different brands may play different commercial roles.</p>
-                  </div>
-                  <div class="act-arrow">➔</div>
-                  <div class="act-step rec-step">
-                    <span class="step-tag rec-tag">RECOMMENDED ACTION</span>
-                    <p>Use separate merchandising/campaign strategies for volume-oriented and value-oriented brands.</p>
-                  </div>
-                </div>
-              </div>
-
-              <!-- ACTION 04 -->
-              <div class="ecom-cs-act-card">
-                <div class="act-header">
-                  <span class="act-num">ACTION 04</span>
-                  <span class="act-area">PRICE</span>
-                </div>
-                <div class="act-flow">
-                  <div class="act-step">
-                    <span class="step-tag">INSIGHT</span>
-                    <p>A specific price range is associated with higher purchase likelihood.</p>
-                  </div>
-                  <div class="act-arrow">➔</div>
-                  <div class="act-step">
-                    <span class="step-tag">IMPLICATION</span>
-                    <p>Price appears to be an important behavioural signal.</p>
-                  </div>
-                  <div class="act-arrow">➔</div>
-                  <div class="act-step rec-step">
-                    <span class="step-tag rec-tag">RECOMMENDED ACTION</span>
-                    <p>Validate the relationship through controlled pricing/promotional experiments rather than assuming causality.</p>
-                  </div>
-                </div>
-              </div>
-
-              <!-- ACTION 05 -->
-              <div class="ecom-cs-act-card">
-                <div class="act-header">
-                  <span class="act-num">ACTION 05</span>
-                  <span class="act-area">WEEK 5</span>
-                </div>
-                <div class="act-flow">
-                  <div class="act-step">
-                    <span class="step-tag">INSIGHT</span>
-                    <p>Activity declines during Week 5.</p>
-                  </div>
-                  <div class="act-arrow">➔</div>
-                  <div class="act-step">
-                    <span class="step-tag">IMPLICATION</span>
-                    <p>A period-specific change may need investigation.</p>
-                  </div>
-                  <div class="act-arrow">➔</div>
-                  <div class="act-step rec-step">
-                    <span class="step-tag rec-tag">RECOMMENDED ACTION</span>
-                    <p>Check inventory, campaign activity, calendar effects, category-level activity, or whether the final period contains fewer observations/days.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <!-- SECTION 6: RECOMMENDED ANALYTICS ROADMAP -->
-          <section class="ecom-cs-section">
-            <div class="ecom-cs-sec-header">
-              <span class="ecom-cs-tag">[ FORWARD STRATEGY ]</span>
-              <h2 class="ecom-cs-sec-title">Recommended Analytics Roadmap</h2>
-            </div>
-
-            <div class="ecom-cs-roadmap-grid">
-              <div class="roadmap-stage">
-                <div class="stage-header">
-                  <span class="stage-tag">STAGE 01</span>
-                  <span class="stage-time">NOW</span>
-                </div>
-                <h4 class="stage-goal">Improve View → Cart conversion</h4>
-                <p class="stage-desc">Prioritize friction-reduction on high-traffic product pages.</p>
-              </div>
-              <div class="roadmap-arrow">➔</div>
-              <div class="roadmap-stage">
-                <div class="stage-header">
-                  <span class="stage-tag">STAGE 02</span>
-                  <span class="stage-time">NEXT</span>
-                </div>
-                <h4 class="stage-goal">Reduce category concentration</h4>
-                <p class="stage-desc">Expand cross-sell funnels to accessories and wearables.</p>
-              </div>
-              <div class="roadmap-arrow">➔</div>
-              <div class="roadmap-stage">
-                <div class="stage-header">
-                  <span class="stage-tag">STAGE 03</span>
-                  <span class="stage-time">TEST</span>
-                </div>
-                <h4 class="stage-goal">Validate pricing and merchandising signals</h4>
-                <p class="stage-desc">Run controlled price elasticity and promotional experiments.</p>
-              </div>
-            </div>
-          </section>
-
-          <!-- SECTION 7: ANALYTICAL LIMITATIONS -->
-          <section class="ecom-cs-section">
-            <div class="ecom-cs-sec-header">
-              <span class="ecom-cs-tag">[ METHODOLOGICAL CONSTRAINTS ]</span>
-              <h2 class="ecom-cs-sec-title">What the Data Cannot Tell Us</h2>
-            </div>
-
-            <div class="ecom-cs-limits-grid">
-              <div class="limit-card">
-                <span class="limit-title">CAUSALITY</span>
-                <p class="limit-text">"Observed relationships do not establish causation."</p>
-              </div>
-              <div class="limit-card">
-                <span class="limit-title">CUSTOMER INTENT</span>
-                <p class="limit-text">"Event data shows behaviour but not why customers abandon."</p>
-              </div>
-              <div class="limit-card">
-                <span class="limit-title">LONG-TERM TREND</span>
-                <p class="limit-text">"A single ~30-day period cannot establish seasonality or long-term trends."</p>
-              </div>
-            </div>
-
-            <div class="ecom-cs-next-step">
-              <i data-lucide="compass" class="w-5 h-5 text-emerald-400 flex-shrink-0"></i>
-              <span><strong>Next step:</strong> combine behavioural data with A/B testing, customer feedback and longer historical periods.</span>
-            </div>
-          </section>
-
-          <!-- CASE STUDY TAGS -->
-          <div class="case-study-tags my-4">${item.tags.map(tag => `<span>${tag}</span>`).join('')}</div>
-
-          <!-- FOOTER ACTIONS (OPEN CASE ARTIFACT + CLOSE BUTTON) -->
-          <div class="case-study-actions">
-            <a href="${item.link}" target="_blank" rel="noopener noreferrer" class="btn-solid case-study-primary">
-              OPEN CASE ARTIFACT <i data-lucide="external-link"></i>
-            </a>
-            <button onclick="closeCaseModal()" class="btn-outline case-study-secondary">
-              CLOSE
-            </button>
+        <!-- Stats Bar -->
+        <div class="case-study-stats">
+          <div>
+            <span>TRACK / DOMAIN</span>
+            <strong>${item.type}</strong>
+          </div>
+          <div>
+            <span>ROLE</span>
+            <strong>${item.role}</strong>
+          </div>
+          <div>
+            <span>MEASURED IMPACT</span>
+            <strong>${item.impact}</strong>
           </div>
         </div>
-      `;
-    } else if (id === 'avionic-crm-product') {
-      body.classList.add('modal-dialog-wide');
-      body.innerHTML = `
-        <div class="case-study rwms-case-study">
-          <!-- Header (Title Left, Image Right - Preserved architecture) -->
-          <header class="case-study-header">
-            <div class="case-study-heading">
-              <div class="case-study-kicker">
-                <span>CASE ${item.num} / ${totalProjects}</span>
-                <span>${item.type}</span>
-              </div>
-              <h2 class="case-study-title">${item.title}</h2>
-              <p class="case-study-role">${item.role}</p>
-              <p class="text-xs md:text-sm font-semibold text-sub mt-2 leading-relaxed max-w-lg">
-                Product & Operations Case Study: Designing and deploying a custom AppSheet operational system for Avionic Consulting Solutions to eliminate multi-client spreadsheet chaos.
-              </p>
-            </div>
-            <div class="case-study-image">
-              <img src="avionic.jpeg" onerror="this.onerror=null; this.src='avionic.jpeg';" alt="${item.title}" />
-            </div>
-            <button onclick="closeCaseModal()" class="case-study-close" aria-label="Close case study">&times;</button>
-          </header>
 
-          <!-- SECTION 1: EXECUTIVE CONTEXT & IMPACT SCORECARD -->
-          <section class="rwms-cs-section my-6">
-            <div class="rwms-cs-meta-grid">
-              <div class="rwms-cs-meta-pill">
-                <span class="rwms-cs-meta-label">LEGACY INFRASTRUCTURE</span>
-                <span class="rwms-cs-meta-val text-red-400">9–10 Files</span>
-                <span class="font-mono text-[10px] text-red-400 font-bold mt-1">🔴 Fragmented Spreadsheets</span>
-              </div>
-              <div class="rwms-cs-meta-pill">
-                <span class="rwms-cs-meta-label">ORGANIZATIONAL ADOPTION</span>
-                <span class="rwms-cs-meta-val text-emerald-400">100% Core Team</span>
-                <span class="font-mono text-[10px] text-emerald-400 font-bold mt-1">⚡ 12+ Recruiters & Founder</span>
-              </div>
-              <div class="rwms-cs-meta-pill">
-                <span class="rwms-cs-meta-label">ENGAGEMENT MODELS</span>
-                <span class="rwms-cs-meta-val text-blue-400">BT / BOT / BOM</span>
-                <span class="font-mono text-[10px] text-blue-400 font-bold mt-1">💼 Multi-Tenant SLAs</span>
-              </div>
-              <div class="rwms-cs-meta-pill">
-                <span class="rwms-cs-meta-label">FOUNDER CAPACITY FREED</span>
-                <span class="rwms-cs-meta-val text-emerald-400">~1.5 hrs / day</span>
-                <span class="font-mono text-[10px] text-emerald-400 font-bold mt-1">🚀 ~450 hrs/yr Leadership Freed</span>
-              </div>
-            </div>
-          </section>
-
-          <!-- PART 1: OPERATIONAL CONTEXT & DIAGNOSTIC FIELDWORK -->
-          <section class="rwms-cs-section">
-            <div class="rwms-cs-sec-header">
-              <span class="rwms-cs-tag">[ PART 1 · OPERATIONAL CONTEXT & DIAGNOSTIC FIELDWORK ]</span>
-              <h2 class="rwms-cs-sec-title">The Actual Problem: Multi-Account Spreadsheet Chaos</h2>
-              <p class="rwms-cs-sec-desc">Avionic Consulting Solution (ACS) is a 16-member boutique HR & sourcing consultancy handling 20+ active enterprise clients, 50–70 active roles, and 150–200 candidates monthly without a central MIS.</p>
-            </div>
-
-            <!-- 4 Consequence Cards Grid -->
-            <div class="rwms-cs-consequence-grid my-3">
-              <div class="consequence-card">
-                <span class="consequence-tag">BOTTLENECK 01</span>
-                <h3 class="consequence-title">Missed Follow-Ups</h3>
-                <p class="consequence-desc">No due-date tracking for client calls, risking relationship degradation and client attrition.</p>
-              </div>
-              <div class="consequence-card">
-                <span class="consequence-tag">BOTTLENECK 02</span>
-                <h3 class="consequence-title">Duplicate Submissions</h3>
-                <p class="consequence-desc">Recruiters independently submitted same candidates to same clients, causing embarrassment.</p>
-              </div>
-              <div class="consequence-card">
-                <span class="consequence-tag">BOTTLENECK 03</span>
-                <h3 class="consequence-title">Reporting Lag</h3>
-                <p class="consequence-desc">Founder spent ~1.5 hours/day manually compiling reports from 9–10 disconnected Excel files.</p>
-              </div>
-              <div class="consequence-card">
-                <span class="consequence-tag">BOTTLENECK 04</span>
-                <h3 class="consequence-title">Recruiter Admin Overhead</h3>
-                <p class="consequence-desc">1–1.5 hours/day wasted per recruiter searching historical CVs and reconciling trackers.</p>
-              </div>
-            </div>
-
-            <!-- Fishbone Root Cause Diagram Grid -->
-            <div class="rwms-cs-problem-diagram my-4">
-              <span class="font-mono text-xs font-bold text-red-400 mb-2 block flex items-center gap-1.5">
-                <i data-lucide="git-branch" class="w-4 h-4"></i> FISHBONE (ISHIKAWA) 5-PILLAR ROOT CAUSE DIAGRAM
-              </span>
-              <div class="rwms-cs-fishbone-grid">
-                <div class="fishbone-card">
-                  <span class="fishbone-pillar">1. PEOPLE</span>
-                  <span class="fishbone-cause">No Shared Practice</span>
-                  <span class="fishbone-symptom">Recruiters used personal trackers; no administrative accountability.</span>
-                </div>
-                <div class="fishbone-card">
-                  <span class="fishbone-pillar">2. PROCESS</span>
-                  <span class="fishbone-cause">Lack of Governance</span>
-                  <span class="fishbone-symptom">No escalation rules for missed follow-ups or duplicate SOPs.</span>
-                </div>
-                <div class="fishbone-card">
-                  <span class="fishbone-pillar">3. TECHNOLOGY</span>
-                  <span class="fishbone-cause">No Central Platform</span>
-                  <span class="fishbone-symptom">Dependency on unlinked local Excel files without version control.</span>
-                </div>
-                <div class="fishbone-card">
-                  <span class="fishbone-pillar">4. DATA</span>
-                  <span class="fishbone-cause">Disconnected Schema</span>
-                  <span class="fishbone-symptom">Inconsistent spellings, blank status fields, and conflicting entries.</span>
-                </div>
-                <div class="fishbone-card">
-                  <span class="fishbone-pillar">5. MANAGEMENT</span>
-                  <span class="fishbone-cause">Reactive Oversight</span>
-                  <span class="fishbone-symptom">No KPI dashboards; issues surfaced only after client escalation.</span>
-                </div>
-              </div>
-            </div>
-
-            <!-- 7-Dimensional Gap Analysis Matrix Table -->
-            <div class="rwms-cs-mapping-box">
-              <span class="font-mono text-xs font-bold text-emerald-400 mb-2 block flex items-center gap-1.5">
-                <i data-lucide="table" class="w-4 h-4"></i> GAP ANALYSIS MATRIX (CURRENT EXCEL vs. DESIRED STATE)
-              </span>
-              <table class="rwms-cs-gap-table">
-                <thead>
-                  <tr>
-                    <th>FUNCTIONAL AREA</th>
-                    <th>CURRENT EXCEL STATE</th>
-                    <th>TARGET DESIRED STATE</th>
-                    <th>GAP IDENTIFIED</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>Customer Management</td>
-                    <td>Client data split in separate files</td>
-                    <td>Single source of truth</td>
-                    <td>High data inconsistency</td>
-                  </tr>
-                  <tr>
-                    <td>Candidate Tracking</td>
-                    <td>Recruiters maintain distinct files</td>
-                    <td>Centralized CV repository</td>
-                    <td>Duplication & retrieval lag</td>
-                  </tr>
-                  <tr>
-                    <td>Follow-Up Management</td>
-                    <td>Handwritten notes & WhatsApp</td>
-                    <td>Structured due-date tracker</td>
-                    <td>Missed follow-up alerts</td>
-                  </tr>
-                  <tr>
-                    <td>Management Reporting</td>
-                    <td>Manual compilation (~1.5 hrs/day)</td>
-                    <td>Automated instant dashboards</td>
-                    <td>High reporting overhead</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </section>
-
-          <!-- PART 2: PRODUCT STRATEGY & PM TRADE-OFF EVALUATION -->
-          <section class="rwms-cs-section">
-            <div class="rwms-cs-sec-header">
-              <span class="rwms-cs-tag">[ PART 2 · PRODUCT STRATEGY & PM TRADE-OFF EVALUATION ]</span>
-              <h2 class="rwms-cs-sec-title">Evaluating Build vs. Buy Solutions (PM Trade-Off Matrix)</h2>
-              <p class="rwms-cs-sec-desc">Evaluated 4 potential solution paths against 6 weighted criteria (Cost, Speed, Skill Fit, Scalability, Governance) under 90-day internship, zero incremental budget, and non-technical team constraints.</p>
-            </div>
-
-            <div class="rwms-pm-tradeoff-grid">
-              <!-- OPTION 1 -->
-              <div class="pm-tradeoff-card">
-                <div>
-                  <span class="tradeoff-badge badge-rejected">OPTION 1 · REJECTED</span>
-                  <h3 class="tradeoff-title">Enhanced Excel Trackers</h3>
-                  <p class="tradeoff-meta">Weighted Score: 4.15 / 5.0</p>
-                  <div class="tradeoff-points">
-                    <div>• Near-zero cost & familiar tools</div>
-                    <div>• Fails to solve root cause of data fragmentation</div>
-                    <div>• No real-time multi-user validation or governance</div>
-                  </div>
-                </div>
-                <div class="font-mono text-[10px] text-red-400 font-bold mt-3">❌ Cosmetic Fix; Brittle System</div>
-              </div>
-
-              <!-- OPTION 2 -->
-              <div class="pm-tradeoff-card">
-                <div>
-                  <span class="tradeoff-badge badge-rejected">OPTION 2 · REJECTED</span>
-                  <h3 class="tradeoff-title">Custom Full-Stack Web App</h3>
-                  <p class="tradeoff-meta">React + Node + Supabase (Score: 1.85 / 5.0)</p>
-                  <div class="tradeoff-points">
-                    <div>• High flexibility & custom UI</div>
-                    <div>• 4–6 month development cycle</div>
-                    <div>• High recurring DB/hosting cost & tech debt</div>
-                  </div>
-                </div>
-                <div class="font-mono text-[10px] text-red-400 font-bold mt-3">❌ Delayed TTM & Maintenance Risk</div>
-              </div>
-
-              <!-- OPTION 3 -->
-              <div class="pm-tradeoff-card">
-                <div>
-                  <span class="tradeoff-badge badge-rejected">OPTION 3 · REJECTED</span>
-                  <h3 class="tradeoff-title">Commercial Enterprise ATS</h3>
-                  <p class="tradeoff-meta">BambooHR / Greenhouse (Score: 2.20 / 5.0)</p>
-                  <div class="tradeoff-points">
-                    <div>• Turnkey features out-of-the-box</div>
-                    <div>• ₹25k–40k / user / month license fee</div>
-                    <div>• Rigid workflows clash with ACS high-touch SLAs</div>
-                  </div>
-                </div>
-                <div class="font-mono text-[10px] text-red-400 font-bold mt-3">❌ Over-budget & Low Workflow Fit</div>
-              </div>
-
-              <!-- OPTION 4 (CHOSEN) -->
-              <div class="pm-tradeoff-card chosen-card">
-                <div>
-                  <span class="tradeoff-badge badge-chosen">OPTION 4 · CHOSEN SOLUTION</span>
-                  <h3 class="tradeoff-title">Low-Code RWMS Ecosystem</h3>
-                  <p class="tradeoff-meta">Google Sheets DB + AppSheet UI (Score: 4.35 / 5.0)</p>
-                  <div class="tradeoff-points">
-                    <div>• ₹0 extra software licensing cost on Workspace</div>
-                    <div>• 30-day rapid build & live deployment</div>
-                    <div>• 100% custom ACS business rules & mobile/desktop access</div>
-                    <div>• Low-code maintainability by Founder</div>
-                  </div>
-                </div>
-                <div class="font-mono text-[10px] text-emerald-400 font-bold mt-3">✅ Fastest TTM & Zero Extra Cost</div>
-              </div>
-            </div>
-          </section>
-
-          <!-- PART 3: SOLUTION ARCHITECTURE & APPSHEET DESIGN -->
-          <section class="rwms-cs-section">
-            <div class="rwms-cs-sec-header">
-              <span class="rwms-cs-tag">[ PART 3 · SOLUTION ARCHITECTURE & APPSHEET DESIGN ]</span>
-              <h2 class="rwms-cs-sec-title">7-Module Relational Ecosystem & Business Rules Engine</h2>
-              <p class="rwms-cs-sec-desc">Architected a low-code database on Google Sheets mediated by AppSheet application views with role-based access, automated notifications, and strict validation logic.</p>
-            </div>
-
-            <!-- 7 Modules Grid -->
-            <div class="rwms-cs-module-map-box mb-4">
-              <span class="font-mono text-xs font-bold text-emerald-400 mb-2 block flex items-center gap-1.5">
-                <i data-lucide="layers" class="w-4 h-4"></i> 7 CORE INTERCONNECTED SYSTEM MODULES
-              </span>
-              <div class="rwms-cs-module-grid">
-                <div class="module-card">
-                  <div class="module-card-icon"><i data-lucide="building-2" class="w-4 h-4"></i></div>
-                  <div><span class="module-card-title">1. Client Management</span><p class="text-[10px] text-muted">Definitive record of clients & mandates</p></div>
-                </div>
-                <div class="module-card">
-                  <div class="module-card-icon"><i data-lucide="users" class="w-4 h-4"></i></div>
-                  <div><span class="module-card-title">2. Candidate Tracking</span><p class="text-[10px] text-muted">Central CV bank with attribution</p></div>
-                </div>
-                <div class="module-card">
-                  <div class="module-card-icon"><i data-lucide="briefcase" class="w-4 h-4"></i></div>
-                  <div><span class="module-card-title">3. Position Tracking</span><p class="text-[10px] text-muted">Open, closed & on-hold pipelines</p></div>
-                </div>
-                <div class="module-card">
-                  <div class="module-card-icon"><i data-lucide="user-check" class="w-4 h-4"></i></div>
-                  <div><span class="module-card-title">4. Recruiter Tracking</span><p class="text-[10px] text-muted">Output benchmarking & attribution</p></div>
-                </div>
-                <div class="module-card">
-                  <div class="module-card-icon"><i data-lucide="bell" class="w-4 h-4"></i></div>
-                  <div><span class="module-card-title">5. Follow-Up Tracker</span><p class="text-[10px] text-muted">Mobile deck view & due-date alerts</p></div>
-                </div>
-                <div class="module-card">
-                  <div class="module-card-icon"><i data-lucide="calendar" class="w-4 h-4"></i></div>
-                  <div><span class="module-card-title">6. Interview Tracker</span><p class="text-[10px] text-muted">Real-time interview status sync</p></div>
-                </div>
-                <div class="module-card">
-                  <div class="module-card-icon"><i data-lucide="receipt" class="w-4 h-4"></i></div>
-                  <div><span class="module-card-title">7. Billing Tracker</span><p class="text-[10px] text-muted">8.33% CTC fee milestones</p></div>
-                </div>
-              </div>
-            </div>
-
-            <!-- ACS Business Rules Engine -->
-            <div class="rwms-cs-rules-grid">
-              <div class="rule-card">
-                <div>
-                  <span class="rule-tag">RULE 01 · DUPLICATE GUARDRAIL</span>
-                  <h3 class="rule-title">2-Day Candidate Disclosure</h3>
-                  <p class="text-xs text-sub leading-relaxed mb-3">Enforces candidate ownership lock if introduced within 2 working days, preventing multi-recruiter conflict.</p>
-                </div>
-                <div class="rule-visual flex items-center justify-center gap-1">
-                  <span>Ownership Lock</span>
-                  <span class="text-emerald-400">⚡ 2-Day Lock</span>
-                </div>
-              </div>
-
-              <div class="rule-card">
-                <div>
-                  <span class="rule-tag">RULE 02 · REPLACEMENT SLA</span>
-                  <h3 class="rule-title">90-Day Guarantee Window</h3>
-                  <p class="text-xs text-sub leading-relaxed mb-3">Automated alert triggering free replacement tracking if candidate exits within 90 days of joining.</p>
-                </div>
-                <div class="rule-visual flex items-center justify-center gap-1">
-                  <span class="text-emerald-400">🛡️ SLA Guarantee:</span>
-                  <span>90 Days</span>
-                </div>
-              </div>
-
-              <div class="rule-card">
-                <div>
-                  <span class="rule-tag">RULE 03 · PLACEMENT FEE</span>
-                  <h3 class="rule-title">8.33% Annual CTC Milestone</h3>
-                  <p class="text-xs text-sub leading-relaxed mb-3">Billing trigger synced automatically upon candidate onboarding verification in Billing Tracker.</p>
-                </div>
-                <div class="rule-visual flex items-center justify-center gap-1">
-                  <span>Placement Fee ➔</span>
-                  <span class="text-amber-400">💼 8.33% CTC</span>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <!-- PART 4: ITERATIVE REFINEMENT & PHASED ORGANIZATIONAL ADOPTION -->
-          <section class="rwms-cs-section">
-            <div class="rwms-cs-sec-header">
-              <span class="rwms-cs-tag">[ PART 4 · ITERATIVE REFINEMENT & PHASED ADOPTION ]</span>
-              <h2 class="rwms-cs-sec-title">5-Phase Implementation Plan & Iterative Prototyping</h2>
-              <p class="rwms-cs-sec-desc">Deployed through a controlled 5-phase change management plan and an iterative V1 ➔ V2 feedback loop with the Founder & core team.</p>
-            </div>
-
-            <!-- 5-Phase Implementation Roadmap Stepper -->
-            <div class="rwms-cs-stepper-grid mb-4">
-              <div class="stepper-card">
-                <span class="stepper-phase">PHASE 1</span>
-                <span class="stepper-title">Preparation</span>
-                <span class="stepper-desc">Freeze V2 schema & migrate historical Excel records</span>
-              </div>
-              <div class="stepper-card">
-                <span class="stepper-phase">PHASE 2</span>
-                <span class="stepper-title">Controlled Pilot</span>
-                <span class="stepper-desc">Parallel-running RWMS & legacy Excel trackers</span>
-              </div>
-              <div class="stepper-card">
-                <span class="stepper-phase">PHASE 3</span>
-                <span class="stepper-title">Core Rollout</span>
-                <span class="stepper-desc">Walkthrough training & retire legacy Excel</span>
-              </div>
-              <div class="stepper-card">
-                <span class="stepper-phase">PHASE 4</span>
-                <span class="stepper-title">Stabilisation</span>
-                <span class="stepper-desc">Daily check-ins & rapid turnaround fixes</span>
-              </div>
-              <div class="stepper-card">
-                <span class="stepper-phase">PHASE 5</span>
-                <span class="stepper-title">Handover</span>
-                <span class="stepper-desc">Written schema docs & AppSheet editor training</span>
-              </div>
-            </div>
-
-            <!-- V1 to V2 Feedback Loop Summary -->
-            <div class="rwms-cs-timeline-box">
-              <span class="font-mono text-xs font-bold text-emerald-400 mb-2 block flex items-center gap-1.5">
-                <i data-lucide="refresh-cw" class="w-4 h-4"></i> PROTOTYPE VALIDATION CYCLE (15+ FEEDBACK ENHANCEMENTS IN V2)
-              </span>
-              <div class="rwms-cs-timeline-nodes">
-                <div class="timeline-node">
-                  <span class="node-title">V1 Prototype</span>
-                  <p class="text-[10px] text-muted">Tested with 50 historical candidate records across Founder & 5 core team members.</p>
-                </div>
-                <div class="timeline-node active-node">
-                  <span class="node-title text-emerald-400">15+ User Feedback Items</span>
-                  <p class="text-[10px] text-muted">Recruiter filter slices, virtual month columns, color coding, deep links.</p>
-                </div>
-                <div class="timeline-node">
-                  <span class="node-title">V2 Deployed System</span>
-                  <p class="text-[10px] text-muted">100% adopted as sole operational system of record.</p>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <!-- PART 5: SIMULATED APPSHEET INTERFACE MOCKUPS -->
-          <section class="rwms-cs-section">
-            <div class="rwms-cs-sec-header">
-              <span class="rwms-cs-tag">[ PART 5 · APPSHEET INTERFACE MOCKUPS ]</span>
-              <h2 class="rwms-cs-sec-title">Simulated AppSheet Operational Interface Mockups</h2>
-              <p class="rwms-cs-sec-desc">Simulated operational UI mockups designed for recruiters and management.</p>
-            </div>
-
-            <div class="rwms-ui-mockup-grid">
-              <!-- MOCKUP 1 -->
-              <div class="rwms-ui-mockup-card">
-                <div class="mockup-header-bar">
-                  <div class="mockup-app-title">
-                    <i data-lucide="layout-grid" class="w-4 h-4"></i> RWMS · Recruiter Candidate Pipeline
-                  </div>
-                  <div class="mockup-actions">
-                    <i data-lucide="search" class="w-3.5 h-3.5"></i>
-                    <i data-lucide="filter" class="w-3.5 h-3.5"></i>
-                  </div>
-                </div>
-                <div class="mockup-body">
-                  <div class="mockup-row-card">
-                    <div class="mockup-cand-info">
-                      <span class="mockup-cand-name">Aarav Sharma</span>
-                      <span class="mockup-cand-role">Senior Java Developer · Fintech Account</span>
-                    </div>
-                    <span class="mockup-stage-badge bg-emerald-950/80 text-emerald-400 border border-emerald-800/50">Interview Scheduled</span>
-                  </div>
-                  <div class="mockup-row-card">
-                    <div class="mockup-cand-info">
-                      <span class="mockup-cand-name">Priya Patel</span>
-                      <span class="mockup-cand-role">DevOps Lead · Enterprise IT Account</span>
-                    </div>
-                    <span class="mockup-stage-badge bg-blue-950/80 text-blue-400 border border-blue-800/50">Screening Verified</span>
-                  </div>
-                  <div class="mockup-row-card">
-                    <div class="mockup-cand-info">
-                      <span class="mockup-cand-name">Rohan Mehta</span>
-                      <span class="mockup-cand-role">Product Manager · BFSI Account</span>
-                    </div>
-                    <span class="mockup-stage-badge bg-amber-950/80 text-amber-400 border border-amber-800/50">Offer Released</span>
-                  </div>
-                </div>
-              </div>
-
-              <!-- MOCKUP 2 -->
-              <div class="rwms-ui-mockup-card">
-                <div class="mockup-header-bar">
-                  <div class="mockup-app-title">
-                    <i data-lucide="shield-check" class="w-4 h-4"></i> RWMS · SLA & Follow-Up Deck View
-                  </div>
-                  <div class="mockup-actions">
-                    <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
-                    <i data-lucide="download" class="w-3.5 h-3.5"></i>
-                  </div>
-                </div>
-                <div class="mockup-body">
-                  <div class="mockup-row-card">
-                    <div class="mockup-cand-info">
-                      <span class="mockup-cand-name">90-Day Placement Guarantee Status</span>
-                      <span class="mockup-cand-role">34 Placed Candidates · 0 Exits Flagged</span>
-                    </div>
-                    <span class="mockup-stage-badge bg-emerald-950/80 text-emerald-300 border border-emerald-800/50">✓ 100% Compliant</span>
-                  </div>
-                  <div class="mockup-row-card">
-                    <div class="mockup-cand-info">
-                      <span class="mockup-cand-name">2-Day Duplicate Submission Check</span>
-                      <span class="mockup-cand-role">Automated Channel Ownership Lock</span>
-                    </div>
-                    <span class="mockup-stage-badge bg-blue-950/80 text-blue-300 border border-blue-800/50">⚡ Active Engine</span>
-                  </div>
-                  <div class="mockup-row-card">
-                    <div class="mockup-cand-info">
-                      <span class="mockup-cand-name">Placement Billing (8.33% Annual CTC)</span>
-                      <span class="mockup-cand-role">₹ 14.2L Invoiced Placements</span>
-                    </div>
-                    <span class="mockup-stage-badge bg-purple-950/80 text-purple-300 border border-purple-800/50">💼 Billing Synced</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <!-- PART 6: EMPIRICAL ANALYTICS & INTERACTIVE CHARTS -->
-          <section class="rwms-cs-section">
-            <div class="rwms-cs-sec-header">
-              <span class="rwms-cs-tag">[ PART 6 · EMPIRICAL ANALYTICS & INTERACTIVE CHARTS ]</span>
-              <h2 class="rwms-cs-sec-title">Candidate Throughput & Measured Operational Gains</h2>
-            </div>
-
-            <!-- Visual Kanban Stage Stepper -->
-            <div class="rwms-cs-kanban-grid mb-3">
-              <div class="kanban-col">
-                <span class="kanban-col-title">SOURCING</span>
-                <span class="kanban-count-badge bg-zinc-800 text-zinc-200 border border-zinc-700">420 Recs</span>
-              </div>
-              <div class="kanban-col">
-                <span class="kanban-col-title">SCREENING</span>
-                <span class="kanban-count-badge bg-blue-950/60 text-blue-400 border border-blue-800/40">280 Pass</span>
-              </div>
-              <div class="kanban-col">
-                <span class="kanban-col-title">SHORTLIST</span>
-                <span class="kanban-count-badge bg-emerald-950/60 text-emerald-400 border border-emerald-800/40">160 Select</span>
-              </div>
-              <div class="kanban-col">
-                <span class="kanban-col-title">INTERVIEW</span>
-                <span class="kanban-count-badge bg-amber-950/60 text-amber-400 border border-amber-800/40">85 Sched</span>
-              </div>
-              <div class="kanban-col">
-                <span class="kanban-col-title">OFFER</span>
-                <span class="kanban-count-badge bg-purple-950/60 text-purple-400 border border-purple-800/40">36 Issued</span>
-              </div>
-              <div class="kanban-col">
-                <span class="kanban-col-title">ONBOARDED</span>
-                <span class="kanban-count-badge bg-emerald-900/60 text-emerald-300 border border-emerald-600/40">28 Hired</span>
-              </div>
-            </div>
-
-            <!-- CHART 1: RECRUITMENT PIPELINE FUNNEL CHART -->
-            <div class="rwms-cs-chart-box">
-              <div class="flex items-center justify-between mb-2">
-                <span class="font-mono text-xs font-bold text-emerald-400 flex items-center gap-1.5">
-                  <i data-lucide="bar-chart-2" class="w-4 h-4"></i> CHART 1: CANDIDATE PIPELINE FUNNEL & THROUGHPUT
-                </span>
-                <span class="font-mono text-[10px] text-dim font-bold">400+ Candidates Handled</span>
-              </div>
-              <div class="rwms-chart-wrap">
-                <canvas id="rwms-funnel-chart-canvas"></canvas>
-              </div>
-            </div>
-
-            <!-- CHART 2: OPERATIONAL IMPACT COMPARISON -->
-            <div class="rwms-cs-chart-box my-4">
-              <div class="flex items-center justify-between mb-2">
-                <span class="font-mono text-xs font-bold text-emerald-400 flex items-center gap-1.5">
-                  <i data-lucide="trending-up" class="w-4 h-4"></i> CHART 2: SPREADSHEET SYSTEM VS. RWMS APPSHEET ECOSYSTEM
-                </span>
-                <span class="font-mono text-[10px] text-dim font-bold">Empirical Results</span>
-              </div>
-              <div class="rwms-chart-wrap">
-                <canvas id="rwms-impact-chart-canvas"></canvas>
-              </div>
-            </div>
-
-            <!-- 10 Core Monitored Management KPIs Matrix Grid -->
-            <div class="rwms-cs-sec-header mt-6 mb-2">
-              <span class="rwms-cs-tag">[ MANAGERIAL DASHBOARD MATRIX ]</span>
-              <h2 class="rwms-cs-sec-title">10 Core Monitored Operational Metrics</h2>
-            </div>
-            <div class="rwms-cs-kpi-matrix-grid">
-              <div class="kpi-matrix-card">
-                <div class="kpi-glow-dot"></div>
-                <span class="kpi-matrix-name">1. Active Candidates</span>
-                <span class="kpi-matrix-val">420</span>
-                <span class="kpi-trend-tag">↑ Live Sync</span>
-              </div>
-              <div class="kpi-matrix-card">
-                <div class="kpi-glow-dot"></div>
-                <span class="kpi-matrix-name">2. Stage Duration</span>
-                <span class="kpi-matrix-val">2.4 Days</span>
-                <span class="kpi-trend-tag">↓ -45% Lag</span>
-              </div>
-              <div class="kpi-matrix-card">
-                <div class="kpi-glow-dot"></div>
-                <span class="kpi-matrix-name">3. Drop-off Rate</span>
-                <span class="kpi-matrix-val">14%</span>
-                <span class="kpi-trend-tag">↓ Improved</span>
-              </div>
-              <div class="kpi-matrix-card">
-                <div class="kpi-glow-dot"></div>
-                <span class="kpi-matrix-name">4. Daily Submissions</span>
-                <span class="kpi-matrix-val">18 / day</span>
-                <span class="kpi-trend-tag">↑ +35% Volume</span>
-              </div>
-              <div class="kpi-matrix-card">
-                <div class="kpi-glow-dot"></div>
-                <span class="kpi-matrix-name">5. Attendance Rate</span>
-                <span class="kpi-matrix-val">92%</span>
-                <span class="kpi-trend-tag">↑ +18% Sched</span>
-              </div>
-              <div class="kpi-matrix-card">
-                <div class="kpi-glow-dot"></div>
-                <span class="kpi-matrix-name">6. Offer Acceptance</span>
-                <span class="kpi-matrix-val">84%</span>
-                <span class="kpi-trend-tag">↑ >80% Target</span>
-              </div>
-              <div class="kpi-matrix-card">
-                <div class="kpi-glow-dot"></div>
-                <span class="kpi-matrix-name">7. Time to Fill</span>
-                <span class="kpi-matrix-val">14 Days</span>
-                <span class="kpi-trend-tag">↓ -40% Time</span>
-              </div>
-              <div class="kpi-matrix-card">
-                <div class="kpi-glow-dot"></div>
-                <span class="kpi-matrix-name">8. Recruiter Activity</span>
-                <span class="kpi-matrix-val">96 / 100</span>
-                <span class="kpi-trend-tag">⚡ Optimal</span>
-              </div>
-              <div class="kpi-matrix-card">
-                <div class="kpi-glow-dot"></div>
-                <span class="kpi-matrix-name">9. Client SLA</span>
-                <span class="kpi-matrix-val">94%</span>
-                <span class="kpi-trend-tag">✓ Passed</span>
-              </div>
-              <div class="kpi-matrix-card">
-                <div class="kpi-glow-dot"></div>
-                <span class="kpi-matrix-name">10. Report Turnaround</span>
-                <span class="kpi-matrix-val">Real-Time</span>
-                <span class="kpi-trend-tag">⚡ &lt;1 Min</span>
-              </div>
-            </div>
-          </section>
-
-          <!-- PART 7: BUSINESS IMPACT & CAPACITY RECOVERY -->
-          <section class="rwms-cs-section">
-            <div class="rwms-cs-sec-header">
-              <span class="rwms-cs-tag">[ PART 7 · BUSINESS IMPACT & CAPACITY RECOVERY ]</span>
-              <h2 class="rwms-cs-sec-title">Annualized Capacity Recovery & Client Protection</h2>
-            </div>
-
-            <!-- Highlight Impact Card -->
-            <div class="rwms-cs-impact-highlight mb-4">
-              <i data-lucide="zap" class="w-5 h-5 text-emerald-400 flex-shrink-0"></i>
-              <span><strong>Key Leadership Impact:</strong> ~1.5 hours / day of manual report compilation eliminated for the Founder = 420–450 hours/year of strategic leadership capacity recovered for high-value client acquisition.</span>
-            </div>
-
-            <div class="rwms-cs-impact-split">
-              <div class="impact-side-box">
-                <span class="impact-side-title before-title">LEGACY OPERATIONAL COSTS</span>
-                <div class="impact-bullets">
-                  <div class="impact-bullet">🔴 ~1.5 hours/day wasted in manual report compilation</div>
-                  <div class="impact-bullet">🔴 1–1.5 hours/day lost per recruiter in admin work</div>
-                  <div class="impact-bullet">🔴 Duplicate profile submissions on client calls</div>
-                  <div class="impact-bullet">🔴 High risk of client attrition due to missed follow-ups</div>
-                </div>
-              </div>
-              <div class="impact-side-box">
-                <span class="impact-side-title after-title">RWMS OPERATIONAL REVENUE IMPACT</span>
-                <div class="impact-bullets">
-                  <div class="impact-bullet">⚡ &lt; 1 minute daily report generation via AppSheet</div>
-                  <div class="impact-bullet">⚡ Zero duplicate candidate submissions</div>
-                  <div class="impact-bullet">⚡ ~450 hrs/yr Founder time reallocated to client BD</div>
-                  <div class="impact-bullet">⚡ ₹0 extra licensing cost on Google Workspace</div>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <!-- CASE STUDY TAGS -->
-          <div class="case-study-tags my-4">${item.tags.map(tag => `<span>${tag}</span>`).join('')}</div>
-
-          <!-- FOOTER ACTIONS (OPEN CASE ARTIFACT + CLOSE BUTTON) -->
-          <div class="case-study-actions">
-            <a href="${item.link}" target="_blank" rel="noopener noreferrer" class="btn-solid case-study-primary">
-              OPEN CASE ARTIFACT <i data-lucide="external-link"></i>
-            </a>
-            <button onclick="closeCaseModal()" class="btn-outline case-study-secondary">
-              CLOSE
-            </button>
+        <!-- 2-Column Problem & Solution Grid -->
+        <div class="case-study-content">
+          <div class="case-study-section">
+            <span class="section-tag">[ PROBLEM & CONTEXT ]</span>
+            <p>${item.problem}</p>
+          </div>
+          <div class="case-study-section">
+            <span class="section-tag">[ SOLUTION & METHODOLOGY ]</span>
+            <p>${item.solution}</p>
           </div>
         </div>
-      `;
-    } else {
-      body.classList.remove('modal-dialog-wide');
-      body.innerHTML = `
-        <div class="case-study">
-          <header class="case-study-header">
-            <div class="case-study-heading">
-              <div class="case-study-kicker"><span>${item.num} / ${totalProjects}</span><span>${item.type}</span></div>
-              <h2 class="case-study-title">${item.title}</h2>
-              <p class="case-study-role">${item.role}</p>
-            </div>
-            ${item.image ? `
-              <div class="case-study-image">
-                <img src="${item.image}" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=900&auto=format&fit=crop&q=80';" alt="${item.title}" />
-              </div>
-            ` : ''}
-            <button onclick="closeCaseModal()" class="case-study-close" aria-label="Close case study">&times;</button>
-          </header>
 
-          <div class="case-study-stats">
-            <div><span>ROLE</span><strong>${item.role}</strong></div>
-            <div><span>TOOLS</span><strong>${item.tags.slice(0, 2).join(' · ')}</strong></div>
-            <div><span>RESULT</span><strong>${item.impact}</strong></div>
-          </div>
-
-          <div class="case-study-content">
-            <div class="case-study-section">
-              <span class="section-tag">01 / PROBLEM</span>
-              <p>${item.problem}</p>
-            </div>
-            <div class="case-study-section">
-              <span class="section-tag">02 / APPROACH</span>
-              <p>${item.solution}</p>
-            </div>
-          </div>
-
-          <div class="case-study-tags">${item.tags.map(tag => `<span>${tag}</span>`).join('')}</div>
-
-          <div class="case-study-actions">
-            ${item.link && item.link !== '#' ? `
-              <a href="${item.link}" target="_blank" rel="noopener noreferrer" class="btn-solid case-study-primary">
-                OPEN CASE ARTIFACT <i data-lucide="external-link"></i>
-              </a>
-            ` : ''}
-            <button onclick="closeCaseModal()" class="btn-outline case-study-secondary">
-              CLOSE
-            </button>
-          </div>
+        <!-- Tags -->
+        <div class="case-study-tags">
+          ${(item.tags || []).map(t => `<span>${t}</span>`).join('')}
         </div>
-      `;
-    }
 
-    modal.classList.remove('hidden');
-    document.body.style.overflow = 'hidden';
+        <!-- Action Link -->
+        <div class="case-study-actions">
+          <a href="${item.link}" target="_blank" class="case-study-primary btn-solid">
+            <span>EXPLORE ARTIFACT / CODE</span>
+            <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+          </a>
+        </div>
+      </div>
+    `;
+
     if (typeof lucide !== 'undefined') lucide.createIcons();
 
-    // Trigger smooth zoom-in & float-up spring animation
-    requestAnimationFrame(() => {
-      modal.classList.add('is-open');
-      if (id === 'ecommerce-performance-analytics') {
-        setTimeout(initEcomLineChart, 100);
-      } else if (id === 'avionic-crm-product') {
-        setTimeout(initRwmsCharts, 120);
-      }
-    });
+    modal.classList.remove('hidden');
+    modal.classList.add('flex', 'is-open');
   };
 
   window.closeCaseModal = () => {
     const modal = document.getElementById('case-modal');
-    const body = document.getElementById('case-modal-body');
-    if (ecomChartInstance) {
-      ecomChartInstance.destroy();
-      ecomChartInstance = null;
-    }
-    if (rwmsChart1Instance) {
-      rwmsChart1Instance.destroy();
-      rwmsChart1Instance = null;
-    }
-    if (rwmsChart2Instance) {
-      rwmsChart2Instance.destroy();
-      rwmsChart2Instance = null;
-    }
-    if (modal) {
-      modal.classList.remove('is-open');
-      document.body.style.overflow = '';
-      setTimeout(() => {
-        modal.classList.add('hidden');
-        if (body) body.classList.remove('modal-dialog-wide');
-      }, 350);
-    }
+    if (!modal) return;
+    modal.classList.remove('is-open');
+    setTimeout(() => {
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }, 200);
   };
 
-  const modal = document.getElementById('case-modal');
-  if (modal) {
-    modal.addEventListener('click', (e) => {
-      if (e.target === modal) window.closeCaseModal();
-    });
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        window.closeCaseModal();
-        window.closeImageLightbox();
-      }
-    });
-  }
+  const caseModal = document.getElementById('case-modal');
+  caseModal?.addEventListener('click', (e) => {
+    if (e.target === caseModal) closeCaseModal();
+  });
 
   // -------------------------------------------------------------
-  // Render Experience Timeline
+  // Render Experience & Leadership Timeline
   // -------------------------------------------------------------
   function renderTimeline() {
     const container = document.getElementById('timeline-container');
     if (!container) return;
 
-    container.innerHTML = data.experiences.map(e => `
-      <div class="border-l-2 border-zinc-700/80 pl-6 py-2 relative reveal-on-scroll">
-        <div class="absolute -left-[5px] top-3 w-2.5 h-2.5 rounded-full bg-zinc-100 border-2 border-zinc-900"></div>
-        <div class="font-mono text-xs text-dim font-bold mb-1">${e.period}</div>
-        <h3 class="text-xl font-black text-main">${e.role}</h3>
-        <p class="text-xs font-mono text-sub font-bold mb-3">${e.organization}</p>
-        <ul class="space-y-2 text-xs md:text-sm text-sub font-medium list-disc list-inside">
-          ${e.bullets.map(b => `<li>${b}</li>`).join('')}
+    container.innerHTML = data.experiences.map((exp, idx) => `
+      <div class="relative pl-6 border-l-2 border-zinc-800/80 space-y-2 reveal-on-scroll">
+        <div class="absolute -left-[7px] top-1.5 w-3 h-3 rounded-full bg-emerald-400 border-2 border-[var(--bg)]"></div>
+        <div class="font-mono text-xs text-dim">${exp.period}</div>
+        <h3 class="text-base font-bold text-main">${exp.role}</h3>
+        <div class="font-mono text-xs text-emerald-400 font-semibold">${exp.organization}</div>
+        <ul class="list-disc list-inside space-y-1.5 text-xs text-sub pt-1 leading-relaxed">
+          ${exp.bullets.map(b => `<li>${b}</li>`).join('')}
         </ul>
       </div>
     `).join('');
@@ -2062,64 +873,55 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (eduGrid) {
       eduGrid.innerHTML = data.education.map(e => `
-        <div class="minimal-card p-5 reveal-on-scroll">
-          <div class="flex justify-between font-mono text-xs text-dim mb-2 font-bold">
-            <span>${e.year}</span>
-            <span class="text-main">${e.score}</span>
-          </div>
-          <h4 class="font-black text-main text-sm md:text-base">${e.degree}</h4>
-          <p class="text-xs text-sub font-mono font-bold mt-1">${e.detail}</p>
-          <p class="text-xs text-dim font-medium mt-2">${e.institution}</p>
+        <div class="p-4 rounded-xl bg-[var(--bg-card)] border border-[var(--border)] space-y-1 reveal-on-scroll">
+          <div class="font-mono text-[11px] text-dim">${e.year}</div>
+          <h4 class="font-bold text-xs text-main">${e.degree}</h4>
+          <div class="font-mono text-[11px] text-sub">${e.detail}</div>
+          <div class="font-mono text-[11px] text-dim">${e.institution}</div>
+          <div class="font-mono text-[11px] text-emerald-400 font-bold pt-1">Score: ${e.score}</div>
         </div>
       `).join('');
     }
 
     if (certGrid) {
       certGrid.innerHTML = data.certifications.map(c => `
-        <a href="${c.link}" target="_blank" rel="noopener noreferrer" 
-           class="minimal-card cert-card p-5 flex items-center justify-between group hover:border-zinc-400 transition-all reveal-on-scroll">
+        <a href="${c.link}" target="_blank" class="p-4 rounded-xl bg-[var(--bg-card)] border border-[var(--border)] hover:border-emerald-500/60 transition-all flex flex-col justify-between group reveal-on-scroll">
           <div>
-            <h4 class="font-extrabold text-main text-xs md:text-sm group-hover:underline underline-offset-4">${c.title}</h4>
-            <span class="text-xs font-mono text-sub font-semibold block mt-1">${c.issuer}</span>
-            <span class="font-mono text-[11px] text-dim font-bold block mt-1">Credential ID: <span class="text-main">${c.id}</span></span>
+            <div class="flex items-center justify-between text-xs font-mono text-dim mb-2">
+              <span>${c.issuer}</span>
+              <i data-lucide="external-link" class="w-3.5 h-3.5 group-hover:text-emerald-400 transition-colors"></i>
+            </div>
+            <h4 class="font-bold text-xs text-main group-hover:text-emerald-400 transition-colors leading-snug">
+              ${c.title}
+            </h4>
           </div>
-          <div class="p-2.5 rounded bg-zinc-800/40 text-sub group-hover:text-main group-hover:scale-110 transition-transform">
-            <i data-lucide="external-link" class="w-4 h-4"></i>
+          <div class="pt-3 font-mono text-[10px] text-dim border-t border-[var(--border)] mt-3 flex justify-between">
+            <span>ID: ${c.id}</span>
+            <span class="text-emerald-400 font-bold">VERIFY CERTIFICATE ↗</span>
           </div>
         </a>
       `).join('');
-      if (typeof lucide !== 'undefined') lucide.createIcons();
     }
+
+    if (typeof lucide !== 'undefined') lucide.createIcons();
   }
 
   // -------------------------------------------------------------
-  // Scroll Reveal Animations & Stats Counter Observer
+  // Scroll Reveal Animations
   // -------------------------------------------------------------
   function initScrollAnimations() {
-    const elements = document.querySelectorAll('.reveal-on-scroll');
-    if (elements.length) {
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('is-visible');
-          }
-        });
-      }, { threshold: 0.1 });
+    const elements = document.querySelectorAll('.reveal-on-scroll:not(.is-visible)');
+    if (!elements.length) return;
 
-      elements.forEach(el => observer.observe(el));
-    }
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
 
-    const statsGrid = document.getElementById('hero-stats-grid');
-    if (statsGrid) {
-      const statsObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            triggerStatsCounter();
-          }
-        });
-      }, { threshold: 0.2 });
-
-      statsObserver.observe(statsGrid);
-    }
+    elements.forEach(el => observer.observe(el));
   }
 });
