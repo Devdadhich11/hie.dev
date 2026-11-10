@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Dev Dadhich — Aspiring Associate Product Manager & Business Analyst Portfolio. PGDM (IT & Marketing) + BCA student with Founder's Office internship experience in PRDs, workflow automation, Power BI analytics, and process optimization." />
-  <title>Dev Dadhich — Aspiring Associate Product Manager & Business Analyst</title>
+  <meta name="description" content="Dev Dadhich — Business Analyst & Marketing Strategist Portfolio. Specializing in Power BI analytics, SQL data modeling, brand positioning, and operations automation." />
+  <title>Dev Dadhich — Business Analyst & Marketing Strategist</title>
 
   <!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -22,23 +22,118 @@
 
   <!-- Minimalist Custom CSS -->
   <link rel="stylesheet" href="custom.css">
+
+  <!-- Immediate Pre-Paint View Restore & Zero-Flash Preloader Activation Script -->
+  <script>
+    (function() {
+      try {
+        const theme = localStorage.getItem('theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', theme);
+        const role = localStorage.getItem('portfolio_persona') || 'ba';
+        document.documentElement.setAttribute('data-role', role);
+        if (sessionStorage.getItem('run_loader_on_load') === 'true') {
+          document.documentElement.classList.add('is-reloading-view');
+        }
+      } catch (e) {}
+    })();
+  </script>
 </head>
-<body class="min-h-screen antialiased selection:bg-zinc-800 selection:text-white">
+<body class="min-h-screen antialiased selection:bg-zinc-800 selection:text-white relative">
+
+  <!-- Ambient Floating Orange Glow Orbs (Glassmorphism Background) -->
+  <div class="ambient-orbs-container" aria-hidden="true">
+    <div class="ambient-orb orb-1"></div>
+    <div class="ambient-orb orb-2"></div>
+    <div class="ambient-orb orb-3"></div>
+    <div class="ambient-orb orb-4"></div>
+    <div class="ambient-orb orb-5"></div>
+  </div>
+
+  <!-- Perspective Chooser Screen ("Who's viewing?") — Loaded FIRST -->
+  <div id="persona-modal" class="fixed inset-0 z-[99999] flex items-center justify-center p-4 sm:p-6 transition-all duration-300">
+    <div class="relative z-10 max-w-2xl w-full text-center space-y-6 p-4 sm:p-8">
+      
+      <!-- Minimalist Header -->
+      <div class="space-y-2">
+        <div class="font-mono text-xs uppercase tracking-widest text-emerald-400 font-bold">[ SELECT PERSPECTIVE ]</div>
+        <h1 class="text-3xl sm:text-4xl font-extrabold text-main tracking-tight">Who's viewing?</h1>
+        <p class="text-sub text-xs sm:text-sm font-mono max-w-md mx-auto">
+          Choose a tailored profile to explore Dev Dadhich's experience.
+        </p>
+      </div>
+
+      <!-- Minimalist Perspective Cards Grid (ONLY 2 Options: Business Analyst & Marketing/Branding) -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-xl mx-auto pt-2">
+        
+        <!-- Persona 1: Business Analyst -->
+        <button id="persona-card-ba" class="persona-card text-left p-6 rounded-2xl flex flex-col justify-between group transition-all">
+          <div class="space-y-4">
+            <div class="flex items-center justify-between">
+              <div class="w-12 h-12 rounded-xl persona-icon-box flex items-center justify-center text-emerald-400 border transition-all">
+                <i data-lucide="bar-chart-3" class="w-6 h-6"></i>
+              </div>
+              <span class="font-mono text-[10px] uppercase font-bold tracking-wider px-2.5 py-1 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
+                01 / DATA & OPS
+              </span>
+            </div>
+            <div>
+              <h2 class="text-xl font-extrabold text-main transition-colors">Business Analyst</h2>
+              <p class="text-xs font-mono text-sub font-semibold mt-1">Data Modeling · Process Re-Engineering · Power BI · SQL</p>
+            </div>
+            <p class="text-xs text-sub font-medium leading-relaxed">
+              Explore enterprise dashboards, relational data schemas, As-Is/To-Be operational workflows, and the RWMS AppSheet ecosystem.
+            </p>
+          </div>
+          <div class="mt-6 pt-4 border-t border-[var(--border)] flex items-center justify-between font-mono text-xs font-bold text-emerald-400 group-hover:translate-x-1 transition-transform">
+            <span>EXPLORE AS BUSINESS ANALYST</span>
+            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+          </div>
+        </button>
+
+        <!-- Persona 2: Marketing & Branding -->
+        <button id="persona-card-marketing" class="persona-card text-left p-6 rounded-2xl flex flex-col justify-between group transition-all">
+          <div class="space-y-4">
+            <div class="flex items-center justify-between">
+              <div class="w-12 h-12 rounded-xl persona-icon-box flex items-center justify-center text-purple-400 border transition-all">
+                <i data-lucide="sparkles" class="w-6 h-6"></i>
+              </div>
+              <span class="font-mono text-[10px] uppercase font-bold tracking-wider px-2.5 py-1 rounded-full bg-purple-500/15 text-purple-400 border border-purple-500/30">
+                02 / GROWTH & BRAND
+              </span>
+            </div>
+            <div>
+              <h2 class="text-xl font-extrabold text-main transition-colors">Marketing & Branding</h2>
+              <p class="text-xs font-mono text-sub font-semibold mt-1">Brand Strategy · Consumer Psychology · Funnels · GTM</p>
+            </div>
+            <p class="text-xs text-sub font-medium leading-relaxed">
+              Explore direct-to-consumer brand positioning (Vyndo), qualitative field studies (Ravivari Bazaar), and digital conversion funnels.
+            </p>
+          </div>
+          <div class="mt-6 pt-4 border-t border-[var(--border)] flex items-center justify-between font-mono text-xs font-bold text-purple-400 group-hover:translate-x-1 transition-transform">
+            <span>EXPLORE AS MARKETING & BRANDING</span>
+            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+          </div>
+        </button>
+
+      </div>
+
+    </div>
+  </div>
 
   <!-- Preloader Screen (DD expanding to Dev Dadhich) -->
-  <div id="preloader">
+  <div id="preloader" class="hidden">
     <div class="preloader-initials">DD</div>
     <div class="preloader-name">DEV DADHICH</div>
   </div>
 
-  <!-- Minimal Navigation without Numerics -->
+  <!-- Minimal Navigation -->
   <nav class="nav-minimal fixed top-0 w-full z-50 py-4 px-6">
     <div class="max-w-6xl mx-auto flex justify-between items-center">
       
       <!-- Brand Name -->
       <a href="#home" class="font-mono text-xs font-bold tracking-wider text-main flex items-center gap-2">
         <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
-        DEV DADHICH <span class="text-dim">// ASPIRING APM & BA</span>
+        DEV DADHICH <span id="nav-role-badge" class="text-dim">// BUSINESS ANALYST</span>
       </a>
 
       <!-- Desktop navigation links -->
@@ -52,16 +147,23 @@
         <a href="#contact" data-section="contact" class="hover:text-main transition-colors">CONTACT</a>
       </div>
 
-      <!-- Theme & High Contrast Action Buttons -->
+      <!-- Theme & Action Buttons -->
       <div class="flex items-center gap-3">
         <button id="mobile-menu-toggle" class="mobile-menu-toggle md:hidden" aria-label="Open navigation menu" aria-expanded="false">
           <i data-lucide="menu"></i>
         </button>
+
+        <!-- Persona Chooser Trigger Button -->
+        <button id="open-persona-btn" class="px-3 py-1.5 rounded border border-zinc-700/80 text-sub hover:text-main font-mono text-xs flex items-center gap-1.5 transition-colors" title="Switch Perspective Profile">
+          <i data-lucide="users" class="w-3.5 h-3.5"></i>
+          <span class="hidden sm:inline">SWITCH VIEW</span>
+        </button>
+
         <button id="theme-toggle" class="p-2 rounded border border-zinc-700/80 text-sub hover:text-main transition-colors" aria-label="Toggle Theme">
           <i id="theme-icon" data-lucide="sun" class="w-4 h-4"></i>
         </button>
 
-        <a href="https://drive.google.com/file/d/1h-o8LdrCJTQ7p1FVh4FZr0kULfCPsBN6/view?usp=sharing" download class="hidden sm:inline-flex px-4 py-2 rounded font-mono text-xs font-extrabold btn-solid shadow-sm transition-all">
+        <a href="https://drive.google.com/file/d/1h-o8LdrCJTQ7p1FVh4FZr0kULfCPsBN6/view?usp=sharing" target="_blank" class="hidden sm:inline-flex px-4 py-2 rounded font-mono text-xs font-extrabold btn-solid shadow-sm transition-all">
           GET CV .PDF
         </a>
       </div>
@@ -75,6 +177,15 @@
         <a href="#experience" data-section="experience">05 / TRACK</a>
         <a href="#education" data-section="education">06 / EDUCATION</a>
         <a href="#contact" data-section="contact">07 / CONTACT</a>
+        
+        <!-- Mobile Perspective Switcher -->
+        <div class="pt-3 mt-2 border-t border-zinc-800 flex flex-col gap-2">
+          <span class="font-mono text-[10px] text-dim uppercase tracking-wider font-bold">SWITCH PERSPECTIVE VIEW</span>
+          <div class="grid grid-cols-2 gap-2">
+            <button id="mobile-role-btn-ba" onclick="window.switchViewWithReload('ba', window.location.hash)" class="py-2 px-3 rounded font-mono text-[11px] font-bold border border-zinc-700 text-sub hover:text-main text-center">BUSINESS ANALYST</button>
+            <button id="mobile-role-btn-marketing" onclick="window.switchViewWithReload('marketing', window.location.hash)" class="py-2 px-3 rounded font-mono text-[11px] font-bold border border-zinc-700 text-sub hover:text-main text-center">MARKETING</button>
+          </div>
+        </div>
       </div>
     </div>
   </nav>
@@ -85,8 +196,8 @@
     <!-- Minimalist Role Perspective Switcher -->
     <div class="mb-10 reveal-on-scroll">
       <div class="role-switcher-container">
-        <button id="role-btn-apm" class="role-switcher-btn active font-mono">APM MODE</button>
-        <button id="role-btn-ba" class="role-switcher-btn font-mono">BUSINESS ANALYST MODE</button>
+        <button id="role-btn-ba" class="role-switcher-btn active font-mono">BUSINESS ANALYST</button>
+        <button id="role-btn-marketing" class="role-switcher-btn font-mono">MARKETING & BRANDING</button>
       </div>
     </div>
 
@@ -94,15 +205,15 @@
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center border-b border-zinc-800/80 pb-12">
       
       <div class="lg:col-span-8 space-y-4 reveal-on-scroll">
-        <div class="section-tag">[ TARGETING APM & BUSINESS ANALYST ROLES ]</div>
+        <div id="hero-role-tag" class="section-tag">[ TARGETING BUSINESS ANALYST & DATA ROLES ]</div>
         <h1 class="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-main">
           Dev Dadhich
         </h1>
         <h2 id="hero-role-title" class="text-xl sm:text-2xl md:text-3xl font-bold text-sub">
-          Aspiring Associate Product Manager
+          Aspiring Business Analyst
         </h2>
         <p id="hero-role-tagline" class="font-mono text-xs md:text-sm text-sub font-semibold max-w-2xl leading-relaxed">
-          Targeting APM roles: Bridging product strategy, technical requirements (PRDs), and workflow automation.
+          Targeting Business Analyst roles: Translating complex operational workflows and multi-source raw data into structured models, SQL schemas, and interactive Power BI KPI ecosystems.
         </p>
 
         <div class="pt-2 flex flex-wrap gap-3">
@@ -140,9 +251,9 @@
         <span class="section-tag">[ CREDENTIALS & BACKGROUND ]</span>
         <div class="space-y-2 text-xs font-mono text-sub">
           <div><strong class="text-main">Degree:</strong> PGDM (IT & Marketing)</div>
-          <div><strong class="text-main">Undergrad:</strong> BCA (Computer Application)</div>
+          <div><strong class="text-main">Undergrad:</strong> BCA (Computer Applications)</div>
           <div><strong class="text-main">Experience:</strong> Ex-Founder's Office Intern @ Avionic Consulting</div>
-          <div><strong class="text-main">Focus:</strong> PRDs, Power BI, AppSheet, SQL</div>
+          <div id="credentials-focus"><strong class="text-main">Focus:</strong> Power BI, SQL, Process Re-Engineering, AppSheet</div>
         </div>
       </div>
 
@@ -174,7 +285,7 @@
   <section id="competencies" class="py-16 px-6 max-w-6xl mx-auto">
     <div class="mb-10 space-y-2 reveal-on-scroll">
       <span class="section-tag">[ COMPETENCY PILLARS ]</span>
-      <h2 class="text-2xl md:text-3xl font-extrabold text-main">Core Strategy & Technical Foundation</h2>
+      <h2 id="competency-heading" class="text-2xl md:text-3xl font-extrabold text-main">Core Strategy & Technical Foundation</h2>
     </div>
 
     <div id="competencies-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
@@ -192,7 +303,7 @@
     <div class="mb-10 space-y-2 reveal-on-scroll">
       <span class="section-tag">[ INTERACTIVE LAB ]</span>
       <h2 class="text-2xl md:text-3xl font-extrabold text-main">PRD Architecture & Analytics Simulation</h2>
-      <p class="text-xs md:text-sm font-semibold text-sub">Sample Product Requirement Specification document and live Power BI energy chart.</p>
+      <p class="text-xs md:text-sm font-semibold text-sub">Sample Product Requirement Specification document and live recruitment operations pipeline chart.</p>
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
@@ -246,32 +357,26 @@
     </div>
   </section>
 
-  <!-- Featured Case Studies & Documentation (Peak Minimalist Editorial Index Layout) -->
+  <!-- Featured Case Studies & Documentation (Clean Iconic Layout) -->
   <section id="projects" class="py-16 px-6 max-w-6xl mx-auto border-t border-zinc-800/80">
     
     <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4 reveal-on-scroll">
       <div>
         <span class="section-tag">[ SELECTED CASE STUDIES ]</span>
-        <h2 class="text-2xl md:text-3xl font-extrabold text-main mt-1"> Featured Work & Documentation</h2>
-        <p class="text-xs md:text-sm font-semibold text-sub mt-1 max-w-xl">A clear archive of product, analytics, strategy, and build work. Each project follows the same path: context, decisions, and outcomes.</p>
+        <h2 id="projects-section-title" class="text-2xl md:text-3xl font-extrabold text-main mt-1">Featured Work & Documentation</h2>
+        <p id="projects-section-desc" class="text-xs md:text-sm font-semibold text-sub mt-1 max-w-xl">A structured archive of data analytics, process re-engineering, and brand growth projects.</p>
       </div>
 
       <!-- Filter Pills -->
       <div class="projects-filters flex flex-wrap gap-2 font-mono text-xs">
         <button class="filter-pill px-3 py-1 rounded bg-zinc-800 text-white font-bold" data-filter="all">ALL</button>
-        <button class="filter-pill px-3 py-1 rounded text-dim hover:text-main font-bold" data-filter="product">PRODUCT / PRD</button>
         <button class="filter-pill px-3 py-1 rounded text-dim hover:text-main font-bold" data-filter="analytics">ANALYTICS</button>
-        <button class="filter-pill px-3 py-1 rounded text-dim hover:text-main font-bold" data-filter="strategy">STRATEGY</button>
+        <button class="filter-pill px-3 py-1 rounded text-dim hover:text-main font-bold" data-filter="brand">BRAND / GTM</button>
+        <button class="filter-pill px-3 py-1 rounded text-dim hover:text-main font-bold" data-filter="operations">OPERATIONS</button>
       </div>
     </div>
 
-    <div class="projects-summary reveal-on-scroll">
-      <div><span class="projects-summary-value">09</span><span class="projects-summary-label">PROJECTS SHIPPED</span></div>
-      <div><span class="projects-summary-value">04</span><span class="projects-summary-label">WORK MODES</span></div>
-      <div><span class="projects-summary-value">01</span><span class="projects-summary-label">OPERATING PRINCIPLE</span><span class="projects-summary-note">Make the complex useful.</span></div>
-    </div>
-
-    <!-- Organized Project Grid -->
+    <!-- Organized Project Grid (Clean Minimalist Graphic Cards) -->
     <div id="projects-grid" class="projects-grid">
       <!-- Populated via JS -->
     </div>
@@ -319,17 +424,20 @@
     <div class="space-y-6 text-center max-w-2xl mx-auto reveal-on-scroll">
       <span class="section-tag">[ CONTACT ]</span>
       <h2 class="text-3xl md:text-5xl font-extrabold text-main">Let's Build Impact</h2>
-      <p class="text-xs md:text-sm font-semibold text-sub font-mono">
-        Seeking Associate Product Manager (APM), Business Analyst, and Product Operations opportunities.
+      <p id="contact-seeking-text" class="text-xs md:text-sm font-semibold text-sub font-mono">
+        Seeking Business Analyst, Data Analytics, and Brand Marketing opportunities.
       </p>
 
-      <!-- High Contrast Contact Buttons in Both Light & Dark Modes -->
+      <!-- Contact Buttons -->
       <div class="pt-4 flex flex-wrap justify-center gap-4">
         <a href="mailto:dadhich2004dev@gmail.com" class="px-6 py-3.5 rounded font-mono font-extrabold text-xs btn-solid shadow-sm transition-all flex items-center gap-2">
           <i data-lucide="mail" class="w-4 h-4"></i> EMAIL: DADHICH2004DEV@GMAIL.COM
         </a>
         <a href="https://linkedin.com/in/devdadhich/" target="_blank" class="px-6 py-3.5 rounded font-mono font-extrabold text-xs btn-outline transition-all flex items-center gap-2">
-          <i data-lucide="linkedin" class="w-4 h-4"></i> LINKEDIN PROFILE
+          <svg class="w-4 h-4 fill-current flex-shrink-0" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.2V10.9H6.46M7.83 6.64a1.63 1.63 0 1 0 0 3.26 1.63 1.63 0 0 0 0-3.26Z"/>
+          </svg>
+          <span>LINKEDIN PROFILE</span>
         </a>
       </div>
 
@@ -343,12 +451,12 @@
   </section>
 
   <footer class="py-8 border-t border-zinc-800/80 text-center font-mono text-xs text-dim font-semibold">
-    Dev Dadhich © 2026 • Designed for APM & Business Analyst Excellence
+    Dev Dadhich © 2026 • Designed for Business Analysis & Brand Strategy Excellence
   </footer>
 
-  <!-- Case Study Modal with Spring Scale Animation & Blurred Backdrop -->
+  <!-- Case Study Modal for other projects -->
   <div id="case-modal" class="fixed inset-0 z-50 hidden modal-minimal-overlay flex items-center justify-center p-4">
-    <div class="minimal-card modal-dialog-content max-w-2xl w-full p-6 md:p-8 max-h-[85vh] overflow-y-auto shadow-2xl" id="case-modal-body">
+    <div class="modal-dialog-content w-full shadow-2xl" id="case-modal-body">
       <!-- Populated dynamically via app.js -->
     </div>
   </div>
