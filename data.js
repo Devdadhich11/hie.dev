@@ -272,7 +272,7 @@ const PORTFOLIO_DATA = {
    
     {
       id: "avionic-crm-product",
-      num: "06",
+      num: "04",
       title: "RWMS — Employer Brand Consistency & Operational Trust",
       type: "Internal Brand & Operations",
       role: "Founder's Office Lead",
@@ -289,7 +289,7 @@ const PORTFOLIO_DATA = {
    
     {
       id: "bookstore-sql-project",
-      num: "09",
+      num: "05",
       title: "PageTurner Bookstore — Customer Retention & Loyalty Analysis",
       type: "Marketing Analytics",
       role: "Marketing & Data Analyst",
