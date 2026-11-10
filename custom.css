@@ -108,21 +108,34 @@ body {
 
 /* Preloader Screen */
 #preloader {
-  position: fixed;
-  inset: 0;
-  background-color: var(--bg);
-  z-index: 9999;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.6s ease;
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  background-color: var(--bg) !important;
+  z-index: 999999 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.5s ease;
+}
+
+#preloader.hidden {
+  display: none !important;
+}
+
+html.is-reloading-view #preloader {
+  display: flex !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  z-index: 999999 !important;
 }
 
 #preloader.fade-out {
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
 }
 
 .preloader-initials {
@@ -3649,4 +3662,604 @@ body {
   font-size: 0.65rem;
   color: var(--text-muted);
   line-height: 1.35;
+}
+
+
+/* ==========================================================================
+   MINIMALIST PERSPECTIVE CHOOSER & GRAPHIC PROJECT SYSTEM (HIGH CONTRAST)
+   ========================================================================== */
+
+/* Perspective Chooser Screen ("Who's viewing?") — Focused & Opaque Full-Screen */
+#persona-modal {
+  display: flex !important;
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  z-index: 99999 !important;
+  align-items: center !important;
+  justify-content: center !important;
+  opacity: 1;
+  visibility: visible;
+  background-color: var(--bg) !important;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  overflow-y: auto !important;
+}
+
+#persona-modal.is-hidden {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  display: none !important;
+}
+
+.persona-modal-backdrop {
+  display: none;
+}
+
+.persona-card {
+  position: relative;
+  background: #141417;
+  border: 1px solid #27272a;
+  border-radius: 18px;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+}
+
+[data-theme="light"] .persona-card {
+  background: #ffffff !important;
+  border: 1px solid #e4e4e7 !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+}
+
+.persona-card:hover {
+  transform: translateY(-4px) scale(1.015);
+}
+
+#persona-card-ba:hover {
+  border-color: rgba(52, 211, 153, 0.8) !important;
+  box-shadow: 0 20px 40px -10px rgba(16, 185, 129, 0.25);
+}
+
+#persona-card-marketing:hover {
+  border-color: rgba(168, 85, 247, 0.8) !important;
+  box-shadow: 0 20px 40px -10px rgba(168, 85, 247, 0.25);
+}
+
+.persona-icon-box {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="light"] .persona-icon-box {
+  background: rgba(0, 0, 0, 0.04);
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+/* Graphic Project Cards & Equal Rhythm Grid (Restored from previous version) */
+.projects-grid {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)) !important;
+  gap: 1.5rem !important;
+  align-items: stretch !important;
+}
+
+@media (min-width: 1024px) {
+  .projects-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  }
+}
+
+.projects-grid .project-card,
+.project-card {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+  grid-column: auto !important;
+  height: auto !important;
+  min-height: 25.5rem !important;
+  margin-top: 0 !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 14px !important;
+  background: var(--bg-card) !important;
+  overflow: hidden !important;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease, box-shadow 0.3s ease !important;
+}
+
+.projects-grid .project-card:hover,
+.project-card:hover {
+  transform: translateY(-4px) !important;
+  border-color: var(--border-strong) !important;
+  box-shadow: 0 20px 35px -10px rgba(0, 0, 0, 0.35) !important;
+}
+
+[data-theme="light"] .projects-grid .project-card:hover,
+[data-theme="light"] .project-card:hover {
+  box-shadow: 0 20px 35px -10px rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Remove separate header section completely — integrated inside gradient */
+.project-card-top {
+  display: none !important;
+}
+
+/* Iconic Graphic Visual Header with Integrated Headings & Badges */
+.project-card-visual {
+  position: relative !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+  box-sizing: border-box !important;
+  flex: 0 0 165px !important;
+  height: 165px !important;
+  min-height: 165px !important;
+  overflow: hidden !important;
+  padding: 1rem 1.15rem !important;
+  border-top-left-radius: 13px !important;
+  border-top-right-radius: 13px !important;
+  background:
+    linear-gradient(135deg, var(--bg-card-hover), var(--bg-card)),
+    repeating-linear-gradient(90deg, transparent 0, transparent 38px, var(--border) 39px, transparent 40px) !important;
+  border-bottom: 1px solid var(--border) !important;
+}
+
+/* Top Integrated Row: Number + Heading Label Pill + Expand Arrow */
+.project-visual-top {
+  position: relative !important;
+  z-index: 5 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  width: 100% !important;
+  gap: 0.5rem !important;
+}
+
+.project-visual-tags {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.45rem !important;
+  flex-wrap: wrap !important;
+}
+
+.visual-badge-num {
+  font-family: 'JetBrains Mono', monospace !important;
+  font-size: 0.78rem !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.05em !important;
+  color: #ffffff !important;
+  line-height: 1 !important;
+  background: rgba(9, 9, 11, 0.72) !important;
+  border: 1px solid rgba(255, 255, 255, 0.24) !important;
+  border-radius: 6px !important;
+  padding: 0.28rem 0.55rem !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3) !important;
+}
+
+[data-theme="light"] .visual-badge-num {
+  background: rgba(255, 255, 255, 0.95) !important;
+  color: #09090b !important;
+  border-color: rgba(0, 0, 0, 0.16) !important;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08) !important;
+}
+
+.visual-heading-pill {
+  font-family: 'JetBrains Mono', monospace !important;
+  font-size: 0.62rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.06em !important;
+  text-transform: uppercase !important;
+  padding: 0.28rem 0.65rem !important;
+  border-radius: 9999px !important;
+  background: rgba(9, 9, 11, 0.65) !important;
+  color: rgba(255, 255, 255, 0.92) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25) !important;
+}
+
+[data-theme="light"] .visual-heading-pill {
+  background: rgba(255, 255, 255, 0.92) !important;
+  color: #18181b !important;
+  border-color: rgba(0, 0, 0, 0.14) !important;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.06) !important;
+}
+
+.visual-heading-pill.is-dedicated {
+  background: rgba(16, 185, 129, 0.24) !important;
+  color: #34d399 !important;
+  border: 1px solid rgba(52, 211, 153, 0.45) !important;
+  font-weight: 800 !important;
+}
+
+[data-theme="light"] .visual-heading-pill.is-dedicated {
+  background: rgba(16, 185, 129, 0.18) !important;
+  color: #059669 !important;
+  border-color: rgba(16, 185, 129, 0.35) !important;
+}
+
+.visual-arrow-btn {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 1.85rem !important;
+  height: 1.85rem !important;
+  border-radius: 50% !important;
+  background: rgba(9, 9, 11, 0.55) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  color: rgba(255, 255, 255, 0.85) !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), background 0.2s ease, border-color 0.2s ease, color 0.2s ease !important;
+}
+
+.visual-arrow-btn svg {
+  width: 0.85rem !important;
+  height: 0.85rem !important;
+}
+
+.project-card:hover .visual-arrow-btn {
+  transform: translate(2px, -2px) !important;
+  background: rgba(16, 185, 129, 0.28) !important;
+  border-color: rgba(52, 211, 153, 0.6) !important;
+  color: #34d399 !important;
+}
+
+[data-theme="light"] .visual-arrow-btn {
+  background: rgba(255, 255, 255, 0.9) !important;
+  border-color: rgba(0, 0, 0, 0.14) !important;
+  color: #27272a !important;
+}
+
+[data-theme="light"] .project-card:hover .visual-arrow-btn {
+  background: rgba(16, 185, 129, 0.18) !important;
+  border-color: rgba(16, 185, 129, 0.4) !important;
+  color: #059669 !important;
+}
+
+/* Bottom Integrated Row: Case Label + Circular Mark */
+.project-visual-bottom {
+  position: relative !important;
+  z-index: 5 !important;
+  display: flex !important;
+  align-items: flex-end !important;
+  justify-content: space-between !important;
+  width: 100% !important;
+}
+
+.project-visual-label {
+  position: relative !important;
+  z-index: 1 !important;
+  color: var(--text-muted) !important;
+  font-family: 'JetBrains Mono', monospace !important;
+  font-size: 0.68rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.08em !important;
+}
+
+.project-visual-mark {
+  position: relative !important;
+  z-index: 1 !important;
+  display: flex !important;
+  width: 2.35rem !important;
+  height: 2.35rem !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 9999px !important;
+  background: rgba(9, 9, 11, 0.5) !important;
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
+  color: var(--text-primary) !important;
+  backdrop-filter: blur(8px) !important;
+}
+
+[data-theme="light"] .project-visual-mark {
+  background: rgba(255, 255, 255, 0.88) !important;
+  border-color: rgba(0, 0, 0, 0.12) !important;
+  color: var(--text-primary) !important;
+}
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 9999px !important;
+  background: rgba(9, 9, 11, 0.45) !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  color: var(--text-primary) !important;
+  backdrop-filter: blur(8px) !important;
+}
+
+[data-theme="light"] .project-visual-mark {
+  background: rgba(255, 255, 255, 0.85) !important;
+  border-color: rgba(0, 0, 0, 0.1) !important;
+  color: var(--text-primary) !important;
+}
+
+.project-visual-initial {
+  position: absolute !important;
+  top: -0.85rem !important;
+  right: 0.85rem !important;
+  color: var(--text-primary) !important;
+  font-family: 'JetBrains Mono', monospace !important;
+  font-size: 6rem !important;
+  font-weight: 900 !important;
+  line-height: 1 !important;
+  opacity: 0.07 !important;
+  pointer-events: none !important;
+  user-select: none !important;
+}
+
+.project-visual-line {
+  position: absolute !important;
+  right: 1rem !important;
+  bottom: 0.85rem !important;
+  left: 1rem !important;
+  height: 1px !important;
+  background: var(--border-strong) !important;
+  opacity: 0.6 !important;
+}
+
+.project-card-content {
+  padding: 1.15rem 1rem 0.75rem !important;
+  display: flex !important;
+  flex-direction: column !important;
+  flex: 1 !important;
+  justify-content: space-between !important;
+}
+
+.project-card-meta {
+  font-family: 'JetBrains Mono', monospace !important;
+  font-size: 0.68rem !important;
+  color: var(--text-muted) !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  margin-bottom: 0.45rem !important;
+}
+
+.project-card-content h3 {
+  font-size: 1.05rem !important;
+  font-weight: 800 !important;
+  color: var(--text-primary) !important;
+  line-height: 1.35 !important;
+  margin-bottom: 0.45rem !important;
+}
+
+.project-card-content p {
+  font-size: 0.75rem !important;
+  color: var(--text-secondary) !important;
+  line-height: 1.6 !important;
+  font-weight: 500 !important;
+}
+
+.project-card-bottom {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 0.85rem 1rem !important;
+  border-top: 1px solid var(--border) !important;
+  background: var(--bg-card) !important;
+  font-family: 'JetBrains Mono', monospace !important;
+  font-size: 0.65rem !important;
+}
+
+.project-tags {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 0.35rem !important;
+}
+
+.project-tags span {
+  padding: 0.2rem 0.5rem !important;
+  border-radius: 9999px !important;
+  background: var(--bg) !important;
+  border: 1px solid var(--border) !important;
+  color: var(--text-muted) !important;
+  font-weight: 600 !important;
+  font-size: 0.6rem !important;
+}
+
+.project-view {
+  color: #34d399 !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.05em !important;
+  flex-shrink: 0 !important;
+}
+
+
+
+/* ==========================================================================
+   AMBIENT GLOWING ORBS (WARM ORANGE / AMBER GLASSMORPHISM BACKGROUND)
+   ========================================================================== */
+
+.ambient-orbs-container {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.ambient-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  -webkit-filter: blur(90px);
+  opacity: 0.7;
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
+}
+
+/* Light Mode: Warm Apricot, Golden Amber & Tangerine Soft Glows */
+[data-theme="light"] .ambient-orb {
+  opacity: 0.55;
+  filter: blur(85px);
+  -webkit-filter: blur(85px);
+}
+
+.ambient-orb.orb-1 {
+  width: 520px;
+  height: 520px;
+  top: -100px;
+  left: -80px;
+  background: radial-gradient(circle, rgba(251, 146, 60, 0.42) 0%, rgba(249, 115, 22, 0.22) 55%, transparent 72%);
+  animation: orb-drift-1 26s infinite ease-in-out alternate;
+}
+
+.ambient-orb.orb-2 {
+  width: 480px;
+  height: 480px;
+  top: 35%;
+  right: -100px;
+  background: radial-gradient(circle, rgba(249, 115, 22, 0.38) 0%, rgba(234, 88, 12, 0.18) 55%, transparent 72%);
+  animation: orb-drift-2 30s infinite ease-in-out alternate;
+}
+
+.ambient-orb.orb-3 {
+  width: 420px;
+  height: 420px;
+  bottom: 10%;
+  left: 15%;
+  background: radial-gradient(circle, rgba(251, 191, 36, 0.36) 0%, rgba(245, 158, 11, 0.18) 55%, transparent 72%);
+  animation: orb-drift-3 24s infinite ease-in-out alternate;
+}
+
+.ambient-orb.orb-4 {
+  width: 380px;
+  height: 380px;
+  top: 70%;
+  right: 25%;
+  background: radial-gradient(circle, rgba(254, 215, 170, 0.45) 0%, rgba(251, 146, 60, 0.22) 55%, transparent 72%);
+  animation: orb-drift-4 28s infinite ease-in-out alternate;
+}
+
+.ambient-orb.orb-5 {
+  width: 320px;
+  height: 320px;
+  top: 18%;
+  left: 45%;
+  background: radial-gradient(circle, rgba(253, 186, 116, 0.35) 0%, rgba(249, 115, 22, 0.15) 55%, transparent 72%);
+  animation: orb-drift-5 32s infinite ease-in-out alternate;
+}
+
+@keyframes orb-drift-1 {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(80px, 120px) scale(1.12); }
+  100% { transform: translate(-40px, 70px) scale(0.95); }
+}
+
+@keyframes orb-drift-2 {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-100px, -80px) scale(1.15); }
+  100% { transform: translate(-50px, 90px) scale(0.92); }
+}
+
+@keyframes orb-drift-3 {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(110px, -60px) scale(1.08); }
+  100% { transform: translate(-70px, -90px) scale(0.96); }
+}
+
+@keyframes orb-drift-4 {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-90px, 80px) scale(1.1); }
+  100% { transform: translate(60px, -50px) scale(0.94); }
+}
+
+@keyframes orb-drift-5 {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(60px, 90px) scale(1.06); }
+  100% { transform: translate(-80px, 40px) scale(0.98); }
+}
+
+/* Ensure all content sits above ambient orbs with subtle frosted glass feel */
+nav, section, footer, main {
+  position: relative;
+  z-index: 1;
+}
+
+/* ==========================================================================
+   LUMINOUS MULTI-COLORED GRADIENTS FOR PROJECT CARDS (RESTORED & ELEVATED)
+   ========================================================================== */
+
+/* Distinct luminous gradient background for each card */
+.projects-grid .project-card:nth-child(1) .project-card-visual {
+  background:
+    linear-gradient(135deg, rgba(16, 185, 129, 0.32), rgba(14, 116, 144, 0.18) 58%, var(--bg-card)),
+    repeating-linear-gradient(90deg, transparent 0, transparent 38px, rgba(52, 211, 153, 0.2) 39px, transparent 40px) !important;
+}
+
+.projects-grid .project-card:nth-child(2) .project-card-visual {
+  background:
+    linear-gradient(135deg, rgba(59, 130, 246, 0.32), rgba(99, 102, 241, 0.18) 58%, var(--bg-card)),
+    repeating-linear-gradient(90deg, transparent 0, transparent 38px, rgba(96, 165, 250, 0.2) 39px, transparent 40px) !important;
+}
+
+.projects-grid .project-card:nth-child(3) .project-card-visual {
+  background:
+    linear-gradient(135deg, rgba(245, 158, 11, 0.32), rgba(234, 88, 12, 0.18) 58%, var(--bg-card)),
+    repeating-linear-gradient(90deg, transparent 0, transparent 38px, rgba(251, 191, 36, 0.2) 39px, transparent 40px) !important;
+}
+
+.projects-grid .project-card:nth-child(4) .project-card-visual {
+  background:
+    linear-gradient(135deg, rgba(168, 85, 247, 0.32), rgba(219, 39, 119, 0.18) 58%, var(--bg-card)),
+    repeating-linear-gradient(90deg, transparent 0, transparent 38px, rgba(192, 132, 252, 0.2) 39px, transparent 40px) !important;
+}
+
+.projects-grid .project-card:nth-child(5) .project-card-visual {
+  background:
+    linear-gradient(135deg, rgba(236, 72, 153, 0.32), rgba(190, 24, 93, 0.18) 58%, var(--bg-card)),
+    repeating-linear-gradient(90deg, transparent 0, transparent 38px, rgba(244, 114, 182, 0.2) 39px, transparent 40px) !important;
+}
+
+.projects-grid .project-card:nth-child(6) .project-card-visual {
+  background:
+    linear-gradient(135deg, rgba(6, 182, 212, 0.32), rgba(2, 132, 199, 0.18) 58%, var(--bg-card)),
+    repeating-linear-gradient(90deg, transparent 0, transparent 38px, rgba(34, 211, 238, 0.2) 39px, transparent 40px) !important;
+}
+
+.projects-grid .project-card:nth-child(7) .project-card-visual {
+  background:
+    linear-gradient(135deg, rgba(132, 204, 22, 0.32), rgba(22, 163, 74, 0.18) 58%, var(--bg-card)),
+    repeating-linear-gradient(90deg, transparent 0, transparent 38px, rgba(163, 230, 53, 0.2) 39px, transparent 40px) !important;
+}
+
+.projects-grid .project-card:nth-child(8) .project-card-visual {
+  background:
+    linear-gradient(135deg, rgba(244, 63, 94, 0.32), rgba(220, 38, 38, 0.18) 58%, var(--bg-card)),
+    repeating-linear-gradient(90deg, transparent 0, transparent 38px, rgba(251, 113, 133, 0.2) 39px, transparent 40px) !important;
+}
+
+.projects-grid .project-card:nth-child(9) .project-card-visual {
+  background:
+    linear-gradient(135deg, rgba(251, 146, 60, 0.32), rgba(217, 119, 6, 0.18) 58%, var(--bg-card)),
+    repeating-linear-gradient(90deg, transparent 0, transparent 38px, rgba(251, 146, 60, 0.2) 39px, transparent 40px) !important;
+}
+
+/* Glowing Radial Accents behind Initial & Lines */
+.project-card-visual::before,
+.project-card-visual::after {
+  position: absolute;
+  width: 9rem;
+  height: 9rem;
+  border-radius: 50%;
+  content: '';
+  pointer-events: none;
+}
+
+.project-card-visual::before {
+  top: -4.5rem;
+  right: -2rem;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.22) 0%, transparent 68%);
+}
+
+.project-card-visual::after {
+  bottom: -4.5rem;
+  left: -2rem;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.16) 0%, transparent 68%);
+}
+
+[data-theme="light"] .project-card-visual::before {
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.75) 0%, transparent 68%);
 }
