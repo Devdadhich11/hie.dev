@@ -218,48 +218,8 @@ const PORTFOLIO_DATA = {
       link: "https://drive.google.com/file/d/1Y5dEzqyxh8Ao3HK9DANXdjOgp2AwM8J9/view?usp=sharing",
       tags: ["GTM Strategy", "Market Research", "Positioning"]
     },
-    {
-      id: "drishti-brand-web",
-      num: "07",
-      title: "Drishti — Visual Storytelling Studio Web App",
-      type: "Web Development",
-      role: "Web Developer & UI Designer",
-      image: "drishti.png",
-      summary: "Minimalist brand web platform for Drishti creative production studio showcasing visual film portfolios.",
-      problem: "Studio required a sleek, narrative-driven digital showcase to convert potential brand clients.",
-      solution: "Designed high-performance web layout with smooth visual transitions, video carousels, and responsive typography.",
-      impact: "Elevated brand credibility and streamlined incoming client inquiries.",
-      link: "https://devdadhich11.github.io/Drishti/",
-      tags: ["HTML/CSS", "JavaScript", "UI Design"]
-    },
-    {
-      id: "eventsphere-app",
-      num: "08",
-      title: "EventSphere — Campus Event Management Platform",
-      type: "Web Application",
-      role: "Frontend Developer",
-      image: "event.png",
-      summary: "Web platform designed to streamline event discovery, schedule tracking, and user registration.",
-      problem: "Campus events lacked a single digital location for real-time updates and schedule tracking.",
-      solution: "Built clean modular UI components with filterable category views and clean mobile-first navigation.",
-      impact: "Delivered intuitive event discovery user interface.",
-      link: "https://devdadhich11.github.io/EventSPHERE/",
-      tags: ["Web App", "Event Tech", "Responsive Design"]
-    },
-    {
-      id: "pinkcity-parichay",
-      num: "09",
-      title: "Pink City Parichay — Jaipur Tourism Portal",
-      type: "Web Application",
-      role: "Product Developer",
-      image: "pinkcity.png",
-      summary: "Interactive tourism platform showcasing Jaipur's culture, heritage, and city maps.",
-      problem: "Static tourist web portals lacked engaging visual storytelling.",
-      solution: "Combined narrative cards with landmark maps and pink-themed UI aesthetics.",
-      impact: "Enhanced city tourism exploration experience.",
-      link: "https://devdadhich11.github.io/pinkcity-parichay/index.html",
-      tags: ["Tourism Platform", "UI/UX", "JavaScript"]
-    }
+
+
   ],
 
   projectsMarketing: [
@@ -309,34 +269,7 @@ const PORTFOLIO_DATA = {
       link: "https://drive.google.com/file/d/1Y5dEzqyxh8Ao3HK9DANXdjOgp2AwM8J9/view?usp=sharing",
       tags: ["Consumer Psychology", "Field Ethnography", "Pricing Tactics", "Trust Architecture", "Market Insights"]
     },
-    {
-      id: "drishti-brand-web",
-      num: "04",
-      title: "Drishti — Visual Storytelling Studio & Brand Identity Portal",
-      type: "Brand Identity & Digital Showcase",
-      role: "Brand Identity Designer & Web Producer",
-      image: "drishti.png",
-      summary: "Cinematic brand positioning and high-conversion visual portfolio portal for Drishti creative production studio.",
-      problem: "Creative visual agency needed an executive digital identity that conveys artistic prestige and converts high-ticket commercial brand clients.",
-      solution: "Crafted dark cinematic design language, fluid video embeds, curated narrative case studies, and clear inquiry booking workflows.",
-      impact: "Transformed studio brand perception and established an authoritative digital presence for commercial enterprise pitches.",
-      link: "https://devdadhich11.github.io/Drishti/",
-      tags: ["Brand Identity", "Visual Storytelling", "UI/UX", "Creative Direction"]
-    },
-    {
-      id: "student-media-lead",
-      num: "05",
-      title: "Student Media Team — High-Impact Digital Growth & Event Campaigns",
-      type: "Campaign Marketing & Content",
-      role: "Head of Social Media",
-      image: "event.png",
-      summary: "Spearheaded digital content creation, video campaigns, and social media promotion driving record event attendance and engagement.",
-      problem: "Campus events and student initiatives suffered from fragmented communication and low organic digital engagement.",
-      solution: "Led a creative content team, directed video production (DaVinci Resolve), established content calendars, and ran targeted promotional pushes.",
-      impact: "Generated 45,000+ organic impressions, grew social following by 40%, and achieved 100% capacity attendance across flagship events.",
-      link: "https://www.instagram.com/hie.dev/",
-      tags: ["Social Media Marketing", "Content Strategy", "Video Production", "Campaign Direction"]
-    },
+   
     {
       id: "avionic-crm-product",
       num: "06",
@@ -353,34 +286,7 @@ const PORTFOLIO_DATA = {
       link: "rwms.html",
       tags: ["Operational Trust", "Employer Branding", "SLA Governance", "Client Relations"]
     },
-    {
-      id: "pinkcity-parichay",
-      num: "07",
-      title: "Pink City Parichay — Destination Branding & Cultural Heritage",
-      type: "Destination Marketing",
-      role: "Creative Concept & Product Lead",
-      image: "pinkcity.png",
-      summary: "Experiential destination marketing portal promoting Jaipur's rich heritage, artisan craft culture, and hidden city landmarks.",
-      problem: "Standard travel portals treated Jaipur generically, lacking cultural depth, curated visual narratives, and local craft storytelling.",
-      solution: "Curated interactive heritage discovery cards, landmark guides, and artisanal craft spotlights with royal Rajasthan color aesthetics.",
-      impact: "Delivered an engaging digital cultural gateway celebrating Jaipur's authentic heritage and local artisan economy.",
-      link: "https://devdadhich11.github.io/pinkcity-parichay/index.html",
-      tags: ["Destination Branding", "Cultural Narrative", "Visual Design", "Tourism"]
-    },
-    {
-      id: "eventsphere-app",
-      num: "08",
-      title: "EventSphere — Community Engagement & Event Marketing Platform",
-      type: "Community Growth & Tech",
-      role: "Product & Growth Designer",
-      image: "event.png",
-      summary: "Digital community engagement platform built to centralize event discovery, attendee registration, and interest-based networking.",
-      problem: "Community event organizers struggled with low attendance visibility, fragmented sign-ups, and lack of attendee segmentation.",
-      solution: "Built intuitive mobile-first registration flows, category-based event exploration, and clear event value proposition highlights.",
-      impact: "Streamlined event promotion and reduced friction in attendee discovery and ticketing.",
-      link: "https://devdadhich11.github.io/EventSPHERE/",
-      tags: ["Community Growth", "Event Marketing", "User Acquisition", "Mobile Web"]
-    },
+   
     {
       id: "bookstore-sql-project",
       num: "09",
