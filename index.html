@@ -154,7 +154,8 @@
         </button>
 
         <!-- Persona Chooser Trigger Button -->
-        <button id="open-persona-btn" class="px-3 py-1.5 rounded border border-zinc-700/80 text-sub hover:text-main font-mono text-xs flex items-center gap-1.5 transition-colors" title="Switch Perspective Profile">
+        <button id="open-persona-btn" class="px-3 py-1.5 rounded border border-zinc-700/80 text-sub hover:text-main font-mono text-xs flex items-center gap-1.5 transition-colors cursor-pointer" title="Switch Perspective Profile" aria-label="Switch Perspective Profile" data-active-role="ba">
+          <span class="nav-role-indicator-dot" aria-hidden="true"></span>
           <i data-lucide="users" class="w-3.5 h-3.5"></i>
           <span class="hidden sm:inline">SWITCH VIEW</span>
         </button>
@@ -163,7 +164,7 @@
           <i id="theme-icon" data-lucide="sun" class="w-4 h-4"></i>
         </button>
 
-        <a href="https://drive.google.com/file/d/1h-o8LdrCJTQ7p1FVh4FZr0kULfCPsBN6/view?usp=sharing" target="_blank" class="hidden sm:inline-flex px-4 py-2 rounded font-mono text-xs font-extrabold btn-solid shadow-sm transition-all">
+        <a href="https://drive.google.com/file/d/1rrjePFZku7kJnmqR25umfb6zX3B901c9/view?usp=sharing" target="_blank" class="hidden sm:inline-flex px-4 py-2 rounded font-mono text-xs font-extrabold btn-solid shadow-sm transition-all">
           GET CV .PDF
         </a>
       </div>
@@ -182,8 +183,8 @@
         <div class="pt-3 mt-2 border-t border-zinc-800 flex flex-col gap-2">
           <span class="font-mono text-[10px] text-dim uppercase tracking-wider font-bold">SWITCH PERSPECTIVE VIEW</span>
           <div class="grid grid-cols-2 gap-2">
-            <button id="mobile-role-btn-ba" onclick="window.switchViewWithReload('ba', window.location.hash)" class="py-2 px-3 rounded font-mono text-[11px] font-bold border border-zinc-700 text-sub hover:text-main text-center">BUSINESS ANALYST</button>
-            <button id="mobile-role-btn-marketing" onclick="window.switchViewWithReload('marketing', window.location.hash)" class="py-2 px-3 rounded font-mono text-[11px] font-bold border border-zinc-700 text-sub hover:text-main text-center">MARKETING</button>
+            <button id="mobile-role-btn-ba" onclick="if(window.switchRoleWithAnimation) window.switchRoleWithAnimation('ba'); const mm = document.getElementById('mobile-menu'); if(mm) mm.classList.remove('is-active');" class="py-2 px-3 rounded font-mono text-[11px] font-bold border border-zinc-700 text-sub hover:text-main text-center">BUSINESS ANALYST</button>
+            <button id="mobile-role-btn-marketing" onclick="if(window.switchRoleWithAnimation) window.switchRoleWithAnimation('marketing'); const mm = document.getElementById('mobile-menu'); if(mm) mm.classList.remove('is-active');" class="py-2 px-3 rounded font-mono text-[11px] font-bold border border-zinc-700 text-sub hover:text-main text-center">MARKETING</button>
           </div>
         </div>
       </div>
@@ -193,96 +194,102 @@
   <!-- Hero Section -->
   <section id="home" class="pt-32 pb-16 px-6 max-w-6xl mx-auto">
     
-    <!-- Minimalist Role Perspective Switcher -->
+    <!-- Minimalist Role Perspective Switcher (Segmented Control Slider) -->
     <div class="mb-10 reveal-on-scroll">
-      <div class="role-switcher-container">
-        <button id="role-btn-ba" class="role-switcher-btn active font-mono">BUSINESS ANALYST</button>
-        <button id="role-btn-marketing" class="role-switcher-btn font-mono">MARKETING & BRANDING</button>
+      <div class="role-switcher-container" role="tablist" aria-label="Perspective profile selection">
+        <div id="role-switcher-pill" class="role-switcher-pill" aria-hidden="true"></div>
+        <button id="role-btn-ba" role="tab" aria-selected="true" class="role-switcher-btn active font-mono">BUSINESS ANALYST</button>
+        <button id="role-btn-marketing" role="tab" aria-selected="false" class="role-switcher-btn font-mono">MARKETING & BRANDING</button>
       </div>
     </div>
 
-    <!-- Editorial Header Grid with Profile Photograph -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center border-b border-zinc-800/80 pb-12">
-      
-      <div class="lg:col-span-8 space-y-4 reveal-on-scroll">
-        <div id="hero-role-tag" class="section-tag">[ TARGETING BUSINESS ANALYST & DATA ROLES ]</div>
-        <h1 class="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-main">
-          Dev Dadhich
-        </h1>
-        <h2 id="hero-role-title" class="text-xl sm:text-2xl md:text-3xl font-bold text-sub">
-          Aspiring Business Analyst
-        </h2>
-        <p id="hero-role-tagline" class="font-mono text-xs md:text-sm text-sub font-semibold max-w-2xl leading-relaxed">
-          Targeting Business Analyst roles: Translating complex operational workflows and multi-source raw data into structured models, SQL schemas, and interactive Power BI KPI ecosystems.
-        </p>
+    <!-- Dynamic Hero Content Container (Smooth Crossfade on Perspective Switch) -->
+    <div id="hero-dynamic-content" class="profile-transition-content">
 
-        <div class="pt-2 flex flex-wrap gap-3">
-          <a href="#contact" class="px-5 py-2.5 rounded btn-solid font-mono text-xs font-extrabold shadow-sm">
-            LET'S CONNECT
-          </a>
-          <a href="#projects" class="px-5 py-2.5 rounded btn-outline font-mono text-xs font-extrabold">
-            EXPLORE CASES/PROJECTS
-          </a>
-        </div>
-      </div>
+      <!-- Editorial Header Grid with Profile Photograph -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center border-b border-zinc-800/80 pb-12">
+        
+        <div class="lg:col-span-8 space-y-4 reveal-on-scroll">
+          <div id="hero-role-tag" class="section-tag">[ TARGETING BUSINESS ANALYST & DATA ROLES ]</div>
+          <h1 class="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-main">
+            Dev Dadhich
+          </h1>
+          <h2 id="hero-role-title" class="text-xl sm:text-2xl md:text-3xl font-bold text-sub">
+            Aspiring Business Analyst
+          </h2>
+          <p id="hero-role-tagline" class="font-mono text-xs md:text-sm text-sub font-semibold max-w-2xl leading-relaxed">
+            Targeting Business Analyst roles: Translating complex operational workflows and multi-source raw data into structured models, SQL schemas, and interactive Power BI KPI ecosystems.
+          </p>
 
-      <!-- Profile Photo Card -->
-      <div class="lg:col-span-4 reveal-on-scroll">
-        <div class="hero-photo-frame p-2 max-w-xs mx-auto lg:ml-auto">
-          <div class="h-72 w-full rounded-xl overflow-hidden bg-zinc-900">
-            <img src="dev.png" 
-                 onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&auto=format&fit=crop&q=80';"
-                 alt="Dev Dadhich" 
-                 class="w-full h-full object-cover" />
-          </div>
-          <div class="p-3 text-center">
-            <div class="font-bold text-xs text-main">Dev Dadhich</div>
-            <div class="font-mono text-[11px] text-dim font-medium">PGDM (IT & Marketing) • BCA</div>
+          <div class="pt-2 flex flex-wrap gap-3">
+            <a href="#contact" class="px-5 py-2.5 rounded btn-solid font-mono text-xs font-extrabold shadow-sm">
+              LET'S CONNECT
+            </a>
+            <a href="#projects" class="px-5 py-2.5 rounded btn-outline font-mono text-xs font-extrabold">
+              EXPLORE CASES/PROJECTS
+            </a>
           </div>
         </div>
-      </div>
 
-    </div>
-
-    <!-- Overview Grid -->
-    <div id="about" class="grid grid-cols-1 md:grid-cols-12 gap-8 py-12 border-b border-zinc-800/80">
-      
-      <div class="md:col-span-4 space-y-4 reveal-on-scroll">
-        <span class="section-tag">[ CREDENTIALS & BACKGROUND ]</span>
-        <div class="space-y-2 text-xs font-mono text-sub">
-          <div><strong class="text-main">Degree:</strong> PGDM (IT & Marketing)</div>
-          <div><strong class="text-main">Undergrad:</strong> BCA (Computer Applications)</div>
-          <div><strong class="text-main">Experience:</strong> Ex-Founder's Office Intern @ Avionic Consulting</div>
-          <div id="credentials-focus"><strong class="text-main">Focus:</strong> Power BI, SQL, Process Re-Engineering, AppSheet</div>
+        <!-- Profile Photo Card -->
+        <div class="lg:col-span-4 reveal-on-scroll">
+          <div class="hero-photo-frame p-2 max-w-xs mx-auto lg:ml-auto">
+            <div class="h-72 w-full rounded-xl overflow-hidden bg-zinc-900">
+              <img src="dev.png" 
+                   onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&auto=format&fit=crop&q=80';"
+                   alt="Dev Dadhich" 
+                   class="w-full h-full object-cover" />
+            </div>
+            <div class="p-3 text-center">
+              <div class="font-bold text-xs text-main">Dev Dadhich</div>
+              <div class="font-mono text-[11px] text-dim font-medium">PGDM (IT & Marketing) • BCA</div>
+            </div>
+          </div>
         </div>
+
       </div>
 
-      <div class="md:col-span-8 space-y-6 reveal-on-scroll">
-        <span class="section-tag">[ EXECUTIVE SUMMARY ]</span>
-        <p id="hero-bio-text" class="text-sm md:text-base text-sub leading-relaxed font-semibold">
-          <!-- Populated from data.js -->
-        </p>
+      <!-- Overview Grid -->
+      <div id="about" class="grid grid-cols-1 md:grid-cols-12 gap-8 py-12 border-b border-zinc-800/80">
+        
+        <div class="md:col-span-4 space-y-4 reveal-on-scroll">
+          <span class="section-tag">[ CREDENTIALS & BACKGROUND ]</span>
+          <div class="space-y-2 text-xs font-mono text-sub">
+            <div><strong class="text-main">Degree:</strong> PGDM (IT & Marketing)</div>
+            <div><strong class="text-main">Undergrad:</strong> BCA (Computer Applications)</div>
+            <div><strong class="text-main">Experience:</strong> Ex-Founder's Office Intern @ Avionic Consulting</div>
+            <div id="credentials-focus"><strong class="text-main">Focus:</strong> Power BI, SQL, Process Re-Engineering, AppSheet</div>
+          </div>
+        </div>
 
-        <!-- Focus Bullets -->
-        <div class="space-y-2 pt-2">
-          <span class="section-tag">CORE COMPETENCIES FOCUS</span>
-          <div id="role-focus-bullets" class="space-y-1">
+        <div class="md:col-span-8 space-y-6 reveal-on-scroll">
+          <span class="section-tag">[ EXECUTIVE SUMMARY ]</span>
+          <p id="hero-bio-text" class="text-sm md:text-base text-sub leading-relaxed font-semibold">
             <!-- Populated from data.js -->
+          </p>
+
+          <!-- Focus Bullets -->
+          <div class="space-y-2 pt-2">
+            <span class="section-tag">CORE COMPETENCIES FOCUS</span>
+            <div id="role-focus-bullets" class="space-y-1">
+              <!-- Populated from data.js -->
+            </div>
           </div>
         </div>
+
       </div>
 
-    </div>
+      <!-- Hero Stats Strip with Scroll-Triggered Animated Number Counter -->
+      <div id="hero-stats-grid" class="grid grid-cols-2 md:grid-cols-4 gap-4 py-8 border-b border-zinc-800/80 reveal-on-scroll">
+        <!-- Populated via JS -->
+      </div>
 
-    <!-- Hero Stats Strip with Scroll-Triggered Animated Number Counter -->
-    <div id="hero-stats-grid" class="grid grid-cols-2 md:grid-cols-4 gap-4 py-8 border-b border-zinc-800/80 reveal-on-scroll">
-      <!-- Populated via JS -->
     </div>
 
   </section>
 
   <!-- Competency Pillars Section -->
-  <section id="competencies" class="py-16 px-6 max-w-6xl mx-auto">
+  <section id="competencies" class="py-16 px-6 max-w-6xl mx-auto profile-transition-content">
     <div class="mb-10 space-y-2 reveal-on-scroll">
       <span class="section-tag">[ COMPETENCY PILLARS ]</span>
       <h2 id="competency-heading" class="text-2xl md:text-3xl font-extrabold text-main">Core Strategy & Technical Foundation</h2>
@@ -358,7 +365,7 @@
   </section>
 
   <!-- Featured Case Studies & Documentation (Clean Iconic Layout) -->
-  <section id="projects" class="py-16 px-6 max-w-6xl mx-auto border-t border-zinc-800/80">
+  <section id="projects" class="py-16 px-6 max-w-6xl mx-auto border-t border-zinc-800/80 profile-transition-content">
     
     <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4 reveal-on-scroll">
       <div>
@@ -420,7 +427,7 @@
   </section>
 
   <!-- Contact & Footer -->
-  <section id="contact" class="py-20 px-6 max-w-6xl mx-auto border-t border-zinc-800/80">
+  <section id="contact" class="py-20 px-6 max-w-6xl mx-auto border-t border-zinc-800/80 profile-transition-content">
     <div class="space-y-6 text-center max-w-2xl mx-auto reveal-on-scroll">
       <span class="section-tag">[ CONTACT ]</span>
       <h2 class="text-3xl md:text-5xl font-extrabold text-main">Let's Build Impact</h2>
