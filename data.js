@@ -191,18 +191,20 @@ const PORTFOLIO_DATA = {
       tags: ["SQL", "MySQL", "Relational Schemas", "Data Analysis"]
     },
     {
-      id: "ravivari-retail-study",
+      id: "mood-comfy-brand",
       num: "05",
-      title: "Marketing Strategies in Unorganized Markets",
-      type: "Business Research",
-      role: "Business Analyst Track",
-      image: "unrecognised.png",
-      summary: "Field-based qualitative study of informal retail operational tactics at Ahmedabad's historic Ravivari Bazaar market.",
-      problem: "Analyzing how unorganized traditional vendors sustain margins and customer retention against modern organized retail chains.",
-      solution: "Interviewed 50+ vendors, analyzed footfall-to-location dynamics, and structured comparative informal retail frameworks.",
-      impact: "Formulated trust-building, customer psychology, and low-overhead operational tactics in a comprehensive study report.",
-      link: "https://drive.google.com/file/d/1Y5dEzqyxh8Ao3HK9DANXdjOgp2AwM8J9/view?usp=sharing",
-      tags: ["Field Analysis", "Retail Strategy", "Qualitative Analytics"]
+      title: "MOOD COMFY — Brand Strategy & Commercial Unit Economics",
+      type: "Brand Strategy & Economics",
+      role: "Brand Strategy & Commercial Modeling",
+      image: "Mood Comfy Gift Box Display.png",
+      dedicatedPage: "mood-comfy.html",
+      badge: "DEDICATED CASE STUDY",
+      summary: "End-to-end brand building, consumer survey analysis, sub-₹700 whitespace positioning, and Blinkit quick-commerce unit economics modeling.",
+      problem: "Period wellness category lacked an affordable-premium comfort gift, while competitors charged ₹1,500–₹3,500+ with slow multi-day courier delivery.",
+      solution: "Synthesized 23-question primary survey, engineered 9-item box architecture, modeled Blinkit waterfall economics (12.9% gross margin), and launched D2C web prototype.",
+      impact: "Delivered full brand manual, packaging design, unit economics model, and occasion-driven launch campaign roadmap.",
+      link: "mood-comfy.html",
+      tags: ["Brand Strategy", "Unit Economics", "Consumer Survey", "Pricing Modeling", "Quick Commerce"]
     },
     {
       id: "vyndo-market-strategy",
@@ -218,14 +220,42 @@ const PORTFOLIO_DATA = {
       link: "https://drive.google.com/file/d/1Y5dEzqyxh8Ao3HK9DANXdjOgp2AwM8J9/view?usp=sharing",
       tags: ["GTM Strategy", "Market Research", "Positioning"]
     },
-
-
+    {
+      id: "ravivari-retail-study",
+      num: "07",
+      title: "Marketing Strategies in Unorganized Markets",
+      type: "Business Research",
+      role: "Business Analyst Track",
+      image: "unrecognised.png",
+      summary: "Field-based qualitative study of informal retail operational tactics at Ahmedabad's historic Ravivari Bazaar market.",
+      problem: "Analyzing how unorganized traditional vendors sustain margins and customer retention against modern organized retail chains.",
+      solution: "Interviewed 50+ vendors, analyzed footfall-to-location dynamics, and structured comparative informal retail frameworks.",
+      impact: "Formulated trust-building, customer psychology, and low-overhead operational tactics in a comprehensive study report.",
+      link: "https://drive.google.com/file/d/1Y5dEzqyxh8Ao3HK9DANXdjOgp2AwM8J9/view?usp=sharing",
+      tags: ["Field Analysis", "Retail Strategy", "Qualitative Analytics"]
+    }
   ],
 
   projectsMarketing: [
     {
-      id: "vyndo-market-strategy",
+      id: "mood-comfy-brand",
       num: "01",
+      title: "MOOD COMFY — Brand Building, Branding & Marketing Strategy",
+      type: "Branding & Marketing",
+      role: "Brand Strategy, Consumer Research & Creative Direction",
+      image: "Mood Comfy Gift Box Display.png",
+      dedicatedPage: "mood-comfy.html",
+      badge: "DEDICATED CASE STUDY",
+      summary: "End-to-end brand building, consumer research, brand positioning, visual identity, and marketing strategy for a period wellness and gifting product.",
+      problem: "Women experience period discomfort, cravings, and mood shifts but lack a thoughtful comfort product combining treats and self-care in one giftable box, while gift buyers lack an easy, caring way to send support.",
+      solution: "Executed 23-question consumer research, identified sub-₹700 whitespace, engineered 9-item box architecture, crafted burgundy-and-cream visual identity with orbital monogram, and built Blinkit quick-commerce GTM model.",
+      impact: "Delivered full brand manual, packaging concept mockups, unit economics model (₹90 gross contribution/box), live D2C brand website prototype, and 25-page strategic case study.",
+      link: "mood-comfy.html",
+      tags: ["Brand Strategy", "Consumer Research", "Visual Identity", "Packaging Design", "Quick Commerce GTM"]
+    },
+    {
+      id: "vyndo-market-strategy",
+      num: "02",
       title: "Vyndo — Direct-to-Consumer Brand Development & GTM Strategy",
       type: "Brand Strategy & GTM",
       role: "Brand Strategist & Marketing Lead",
@@ -239,8 +269,37 @@ const PORTFOLIO_DATA = {
       tags: ["Brand Architecture", "GTM Strategy", "Audience Personas", "Value Proposition", "DTC Marketing"]
     },
     {
+      id: "student-media-lead",
+      num: "03",
+      title: "Student Media Team — High-Impact Digital Growth & Event Campaigns",
+      type: "Campaign Marketing & Content",
+      role: "Head of Social Media",
+      image: "event.png",
+      summary: "Spearheaded digital content creation, video campaigns, and social media promotion driving record event attendance and engagement.",
+      problem: "Campus events and student initiatives suffered from fragmented communication and low organic digital engagement.",
+      solution: "Led a creative content team, directed video production (DaVinci Resolve), established content calendars, and ran targeted promotional pushes.",
+      impact: "Generated 45,000+ organic impressions, grew social following by 40%, and achieved 100% capacity attendance across flagship events.",
+      link: "https://www.instagram.com/hie.dev/",
+      tags: ["Social Media Marketing", "Content Strategy", "Video Production", "Campaign Direction"]
+    },
+    {
+      id: "ravivari-retail-study",
+      num: "04",
+      title: "Marketing Strategies in Unorganized Markets (Ravivari Bazaar)",
+      type: "Field Ethnography & Behavioral Study",
+      role: "Lead Field Researcher & Consumer Analyst",
+      image: "unrecognised.png",
+      badge: "CONSUMER RESEARCH",
+      summary: "Extensive on-ground field research evaluating consumer buying psychology, trust signals, and pricing tactics at Ahmedabad's 600-year-old market.",
+      problem: "Understanding how informal micro-retailers maintain loyalty, volume, and pricing power in direct competition with modern organized retail.",
+      solution: "Interviewed 50+ vendors and 100+ shoppers, documented non-verbal negotiation tactics, spatial footfall dynamics, and community trust networks.",
+      impact: "Published an in-depth marketing research monograph translating informal retail tactics into actionable principles for modern brands.",
+      link: "https://drive.google.com/file/d/1Y5dEzqyxh8Ao3HK9DANXdjOgp2AwM8J9/view?usp=sharing",
+      tags: ["Consumer Psychology", "Field Ethnography", "Pricing Tactics", "Trust Architecture", "Market Insights"]
+    },
+    {
       id: "ecommerce-performance-analytics",
-      num: "02",
+      num: "05",
       title: "E-Commerce Funnel & Consumer Brand Behavior Analysis",
       type: "Growth & Conversion",
       role: "Marketing Analyst & Strategist",
@@ -255,24 +314,8 @@ const PORTFOLIO_DATA = {
       tags: ["Conversion Rate (CRO)", "Customer Journey", "Funnel Analytics", "Merchandising", "Consumer Insights"]
     },
     {
-      id: "ravivari-retail-study",
-      num: "03",
-      title: "Marketing Strategies in Unorganized Markets (Ravivari Bazaar)",
-      type: "Field Ethnography & Behavioral Study",
-      role: "Lead Field Researcher & Consumer Analyst",
-      image: "unrecognised.png",
-      badge: "CONSUMER RESEARCH",
-      summary: "Extensive on-ground field research evaluating consumer buying psychology, trust signals, and pricing tactics at Ahmedabad's 600-year-old market.",
-      problem: "Understanding how informal micro-retailers maintain loyalty, volume, and pricing power in direct competition with modern organized retail.",
-      solution: "Interviewed 50+ vendors and 100+ shoppers, documented non-verbal negotiation tactics, spatial footfall dynamics, and community trust networks.",
-      impact: "Published an in-depth marketing research monograph translating informal retail tactics into actionable principles for modern brands.",
-      link: "https://drive.google.com/file/d/1Y5dEzqyxh8Ao3HK9DANXdjOgp2AwM8J9/view?usp=sharing",
-      tags: ["Consumer Psychology", "Field Ethnography", "Pricing Tactics", "Trust Architecture", "Market Insights"]
-    },
-   
-    {
       id: "avionic-crm-product",
-      num: "04",
+      num: "06",
       title: "RWMS — Employer Brand Consistency & Operational Trust",
       type: "Internal Brand & Operations",
       role: "Founder's Office Lead",
@@ -286,10 +329,9 @@ const PORTFOLIO_DATA = {
       link: "rwms.html",
       tags: ["Operational Trust", "Employer Branding", "SLA Governance", "Client Relations"]
     },
-   
     {
       id: "bookstore-sql-project",
-      num: "05",
+      num: "07",
       title: "PageTurner Bookstore — Customer Retention & Loyalty Analysis",
       type: "Marketing Analytics",
       role: "Marketing & Data Analyst",
