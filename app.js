@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // -------------------------------------------------------------
-  // Perspective Chooser & View Switching with Proper Reload
+  // Perspective Chooser & View Switching
   // -------------------------------------------------------------
   window.switchViewWithReload = function(role, destination) {
     localStorage.setItem('portfolio_persona', role);
@@ -102,7 +102,22 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   function handleSelectPersona(role) {
-    window.switchViewWithReload(role, window.location.hash);
+    currentRole = role;
+    localStorage.setItem('portfolio_persona', role);
+    sessionStorage.setItem('persona_selected', 'true');
+
+    closePersonaModalImmediate();
+    setRole(role);
+    renderPRDDoc();
+    initChart();
+    renderTimeline();
+    renderEducation();
+    initScrollAnimations();
+    hasCompletedInitialLoad = true;
+
+    runPreloaderAnimation(() => {
+      positionRoleSwitcherPill(role, false);
+    });
   }
 
   function initPersonaModal() {
@@ -111,16 +126,31 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnOpen = document.getElementById('open-persona-btn');
 
     if (btnBA) {
-      btnBA.addEventListener('click', () => handleSelectPersona('ba'));
+      btnBA.addEventListener('click', () => {
+        if (!hasCompletedInitialLoad) {
+          handleSelectPersona('ba');
+        } else {
+          closePersonaModal();
+          window.switchRoleWithAnimation('ba');
+        }
+      });
     }
 
     if (btnMarketing) {
-      btnMarketing.addEventListener('click', () => handleSelectPersona('marketing'));
+      btnMarketing.addEventListener('click', () => {
+        if (!hasCompletedInitialLoad) {
+          handleSelectPersona('marketing');
+        } else {
+          closePersonaModal();
+          window.switchRoleWithAnimation('marketing');
+        }
+      });
     }
 
     if (btnOpen) {
       btnOpen.addEventListener('click', () => {
-        openPersonaModal();
+        const nextRole = currentRole === 'ba' ? 'marketing' : 'ba';
+        window.switchRoleWithAnimation(nextRole);
       });
     }
   }
@@ -255,7 +285,118 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // -------------------------------------------------------------
   // Dual-Role Switcher ("Business Analyst" vs "Marketing & Branding")
+  // Native Mobile Segmented Control Interaction with Sliding Selection Pill
   // -------------------------------------------------------------
+  function positionRoleSwitcherPill(role, animate = true) {
+    const container = document.querySelector('.role-switcher-container');
+    const pill = document.getElementById('role-switcher-pill');
+    if (!container || !pill) return;
+
+    const targetBtn = role === 'ba'
+      ? document.getElementById('role-btn-ba')
+      : document.getElementById('role-btn-marketing');
+    if (!targetBtn) return;
+
+    const left = targetBtn.offsetLeft;
+    const width = targetBtn.offsetWidth;
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (!animate || prefersReducedMotion) {
+      const prevTransition = pill.style.transition;
+      pill.style.transition = 'none';
+      pill.style.transform = `translate3d(${left}px, 0, 0)`;
+      pill.style.width = `${width}px`;
+      void pill.offsetWidth;
+      pill.style.transition = prevTransition;
+    } else {
+      pill.style.transform = `translate3d(${left}px, 0, 0)`;
+      pill.style.width = `${width}px`;
+    }
+  }
+
+  function updateRoleSwitcherUI(role, animatePill = true) {
+    const baBtn = document.getElementById('role-btn-ba');
+    const marketingBtn = document.getElementById('role-btn-marketing');
+    const navBtn = document.getElementById('open-persona-btn');
+    const navBadge = document.getElementById('nav-role-badge');
+
+    if (role === 'ba') {
+      if (baBtn) {
+        baBtn.classList.add('active');
+        baBtn.setAttribute('aria-selected', 'true');
+      }
+      if (marketingBtn) {
+        marketingBtn.classList.remove('active');
+        marketingBtn.setAttribute('aria-selected', 'false');
+      }
+      if (navBadge) {
+        navBadge.textContent = "// BUSINESS ANALYST";
+        navBadge.className = "text-dim text-emerald-400 font-bold transition-colors";
+      }
+      if (navBtn) {
+        navBtn.setAttribute('data-active-role', 'ba');
+        navBtn.setAttribute('title', 'Switch to Marketing & Branding View');
+        navBtn.setAttribute('aria-label', 'Switch to Marketing & Branding View');
+      }
+    } else {
+      if (marketingBtn) {
+        marketingBtn.classList.add('active');
+        marketingBtn.setAttribute('aria-selected', 'true');
+      }
+      if (baBtn) {
+        baBtn.classList.remove('active');
+        baBtn.setAttribute('aria-selected', 'false');
+      }
+      if (navBadge) {
+        navBadge.textContent = "// MARKETING & BRANDING";
+        navBadge.className = "text-dim text-purple-400 font-bold transition-colors";
+      }
+      if (navBtn) {
+        navBtn.setAttribute('data-active-role', 'marketing');
+        navBtn.setAttribute('title', 'Switch to Business Analyst View');
+        navBtn.setAttribute('aria-label', 'Switch to Business Analyst View');
+      }
+    }
+
+    positionRoleSwitcherPill(role, animatePill);
+  }
+
+  let isRoleSwitching = false;
+
+  window.switchRoleWithAnimation = function(newRole) {
+    if (newRole === currentRole || isRoleSwitching) return;
+    isRoleSwitching = true;
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // 1. Immediately trigger the active black selection pill sliding animation & button state
+    updateRoleSwitcherUI(newRole, !prefersReducedMotion);
+
+    if (prefersReducedMotion) {
+      setRole(newRole, { skipPill: true });
+      isRoleSwitching = false;
+      return;
+    }
+
+    // 2. Smoothly fade out existing portfolio content (duration: 180ms)
+    document.body.classList.add('profile-fading-out');
+
+    // 3. At 190ms (content is fully transparent), load newly selected profile
+    setTimeout(() => {
+      setRole(newRole, { skipPill: true });
+
+      // 4. Smoothly fade in newly loaded profile content (duration: 220ms)
+      requestAnimationFrame(() => {
+        document.body.classList.remove('profile-fading-out');
+
+        // Total transition completes in ~410ms (strictly within 300ms–500ms range)
+        setTimeout(() => {
+          isRoleSwitching = false;
+        }, 220);
+      });
+    }, 190);
+  };
+
   function initRoleSwitcher() {
     const baBtn = document.getElementById('role-btn-ba');
     const marketingBtn = document.getElementById('role-btn-marketing');
@@ -263,7 +404,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (baBtn) {
       baBtn.addEventListener('click', () => {
         if (currentRole !== 'ba') {
-          handleSelectPersona('ba');
+          window.switchRoleWithAnimation('ba');
         }
       });
     }
@@ -271,19 +412,31 @@ document.addEventListener('DOMContentLoaded', () => {
     if (marketingBtn) {
       marketingBtn.addEventListener('click', () => {
         if (currentRole !== 'marketing') {
-          handleSelectPersona('marketing');
+          window.switchRoleWithAnimation('marketing');
         }
+      });
+    }
+
+    // Maintain alignment on window resize and font load
+    window.addEventListener('resize', () => {
+      positionRoleSwitcherPill(currentRole, false);
+    });
+
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(() => {
+        positionRoleSwitcherPill(currentRole, false);
       });
     }
   }
 
-  function setRole(role) {
+  function setRole(role, options = {}) {
     currentRole = role;
     localStorage.setItem('portfolio_persona', role);
 
     const baBtn = document.getElementById('role-btn-ba');
     const marketingBtn = document.getElementById('role-btn-marketing');
     const navBadge = document.getElementById('nav-role-badge');
+    const navBtn = document.getElementById('open-persona-btn');
     const heroTag = document.getElementById('hero-role-tag');
     const heroTitle = document.getElementById('hero-role-title');
     const heroTagline = document.getElementById('hero-role-tagline');
@@ -296,9 +449,23 @@ document.addEventListener('DOMContentLoaded', () => {
     const roleData = data.roles[role];
 
     if (role === 'ba') {
-      if (baBtn) baBtn.classList.add('active');
-      if (marketingBtn) marketingBtn.classList.remove('active');
-      if (navBadge) navBadge.textContent = "// BUSINESS ANALYST";
+      if (baBtn) {
+        baBtn.classList.add('active');
+        baBtn.setAttribute('aria-selected', 'true');
+      }
+      if (marketingBtn) {
+        marketingBtn.classList.remove('active');
+        marketingBtn.setAttribute('aria-selected', 'false');
+      }
+      if (navBadge) {
+        navBadge.textContent = "// BUSINESS ANALYST";
+        navBadge.className = "text-dim text-emerald-400 font-bold transition-colors";
+      }
+      if (navBtn) {
+        navBtn.setAttribute('data-active-role', 'ba');
+        navBtn.setAttribute('title', 'Switch to Marketing & Branding View');
+        navBtn.setAttribute('aria-label', 'Switch to Marketing & Branding View');
+      }
       if (heroTag) heroTag.textContent = roleData.heroTag;
       if (heroTitle) heroTitle.textContent = roleData.heroTitle;
       if (heroTagline) heroTagline.textContent = roleData.heroTagline;
@@ -309,9 +476,23 @@ document.addEventListener('DOMContentLoaded', () => {
       if (projDesc) projDesc.textContent = "A structured archive of data analytics, process re-engineering, and operational systems.";
       updateFocusBullets(roleData.focus);
     } else {
-      if (marketingBtn) marketingBtn.classList.add('active');
-      if (baBtn) baBtn.classList.remove('active');
-      if (navBadge) navBadge.textContent = "// MARKETING & BRANDING";
+      if (marketingBtn) {
+        marketingBtn.classList.add('active');
+        marketingBtn.setAttribute('aria-selected', 'true');
+      }
+      if (baBtn) {
+        baBtn.classList.remove('active');
+        baBtn.setAttribute('aria-selected', 'false');
+      }
+      if (navBadge) {
+        navBadge.textContent = "// MARKETING & BRANDING";
+        navBadge.className = "text-dim text-purple-400 font-bold transition-colors";
+      }
+      if (navBtn) {
+        navBtn.setAttribute('data-active-role', 'marketing');
+        navBtn.setAttribute('title', 'Switch to Business Analyst View');
+        navBtn.setAttribute('aria-label', 'Switch to Business Analyst View');
+      }
       if (heroTag) heroTag.textContent = roleData.heroTag;
       if (heroTitle) heroTitle.textContent = roleData.heroTitle;
       if (heroTagline) heroTagline.textContent = roleData.heroTagline;
@@ -333,6 +514,10 @@ document.addEventListener('DOMContentLoaded', () => {
         mobMktBtn.className = "py-2 px-3 rounded font-mono text-[11px] font-bold border border-purple-500/50 bg-purple-500/20 text-purple-400 text-center";
         mobBaBtn.className = "py-2 px-3 rounded font-mono text-[11px] font-bold border border-zinc-700 text-sub hover:text-main text-center";
       }
+    }
+
+    if (!options.skipPill) {
+      positionRoleSwitcherPill(role, false);
     }
 
     renderHeroStats();
@@ -650,16 +835,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const projectIcons = {
+      'mood-comfy-brand': 'sparkles',
       'avionic-crm-product': 'workflow',
       'ecommerce-performance-analytics': 'bar-chart-3',
       'power-plant-analytics': 'activity',
       'bookstore-sql-project': 'database',
       'vyndo-market-strategy': 'megaphone',
       'ravivari-retail-study': 'store',
-      'drishti-brand-web': 'clapperboard',
-      'student-media-lead': 'film',
-      'eventsphere-app': 'calendar-days',
-      'pinkcity-parichay': 'map'
+      'student-media-lead': 'film'
     };
 
     grid.innerHTML = items.map(p => {
