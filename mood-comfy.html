@@ -1,0 +1,1339 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="MOOD COMFY — End-to-End Brand Building, Consumer Research, Visual Identity & Marketing Strategy Case Study by Dev Dadhich and Palak Singhal." />
+  <title>MOOD COMFY — Brand Building & Marketing Strategy | Dev Dadhich</title>
+
+  <!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;0,900;1,600&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Main Custom CSS -->
+  <link rel="stylesheet" href="custom.css">
+
+  <style>
+    .case-container {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+    .mood-serif {
+      font-family: 'Playfair Display', Georgia, serif;
+    }
+    .cs-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .cs-card:hover {
+      border-color: var(--border-strong);
+    }
+    .cs-card-sub {
+      background: var(--bg-card-hover);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      transition: border-color 0.25s ease, transform 0.25s ease;
+    }
+    .cs-card-sub:hover {
+      border-color: var(--border-strong);
+    }
+    .mood-pill-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.375rem;
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.6875rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      background: rgba(112, 30, 40, 0.15);
+      border: 1px solid rgba(112, 30, 40, 0.35);
+      color: #e07a86;
+    }
+    [data-theme="light"] .mood-pill-badge {
+      background: rgba(112, 30, 40, 0.08);
+      border-color: rgba(112, 30, 40, 0.25);
+      color: #8c2331;
+    }
+    .swatch-chip {
+      height: 48px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: flex-end;
+      padding: 6px 8px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      font-weight: 700;
+    }
+    .zoom-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.4);
+      opacity: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.25s ease;
+    }
+    .group:hover .zoom-overlay {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body class="min-h-screen antialiased selection:bg-[#701E28] selection:text-white relative">
+
+  <!-- Ambient Floating Glow Orbs (Subtle Warm Burgundy & Apricot Glassmorphism Glow) -->
+  <div class="ambient-orbs-container" aria-hidden="true">
+    <div class="ambient-orb orb-1" style="background: radial-gradient(circle, rgba(112, 30, 40, 0.35) 0%, rgba(81, 20, 28, 0.18) 55%, transparent 70%);"></div>
+    <div class="ambient-orb orb-2"></div>
+    <div class="ambient-orb orb-3"></div>
+    <div class="ambient-orb orb-4"></div>
+    <div class="ambient-orb orb-5"></div>
+  </div>
+
+  <!-- Sticky Top Navigation -->
+  <header class="fixed top-0 left-0 right-0 z-50 py-3.5 px-6 bg-[var(--bg)]/85 backdrop-blur-md border-b border-[var(--border)]">
+    <div class="max-w-6xl mx-auto flex items-center justify-between">
+      
+      <!-- Back to Portfolio Link -->
+      <a href="index.html#projects" class="font-mono text-xs font-bold text-sub hover:text-main flex items-center gap-2 group transition-colors">
+        <i data-lucide="arrow-left" class="w-4 h-4 group-hover:-translate-x-1 transition-transform"></i>
+        <span>BACK TO PORTFOLIO</span>
+      </a>
+
+      <!-- Case Identifier Badge -->
+      <div class="hidden sm:flex items-center gap-2 font-mono text-xs font-bold">
+        <span class="w-2.5 h-2.5 rounded-full bg-[#e07a86] animate-pulse"></span>
+        <span class="text-main">MOOD COMFY</span>
+        <span class="text-dim">// BRANDING & MARKETING CASE</span>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="flex items-center gap-2.5">
+        <button id="theme-toggle" class="p-2 rounded border border-[var(--border)] text-sub hover:text-main transition-colors" aria-label="Toggle Theme">
+          <i id="theme-icon" data-lucide="sun" class="w-4 h-4"></i>
+        </button>
+
+        <a href="https://drive.google.com/file/d/1L77j5f2mPMeNKIOTErIfJBHK-2QVYlb3/view?usp=sharing" target="_blank" class="hidden md:inline-flex px-3.5 py-1.5 rounded font-mono text-xs font-bold border border-[var(--border)] hover:border-[var(--border-strong)] text-sub hover:text-main items-center gap-1.5 transition-colors">
+          <span>VISIT WEBSITE</span>
+          <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+        </a>
+
+        <a href="https://drive.google.com/file/d/1L77j5f2mPMeNKIOTErIfJBHK-2QVYlb3/view?usp=sharing" target="_blank" class="px-4 py-1.5 rounded font-mono text-xs font-extrabold btn-solid flex items-center gap-1.5 shadow-sm" title="View Complete 25-Page Case Study">
+          <span>CASE STUDY ↗</span>
+        </a>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- Main Content Wrap -->
+  <main class="pt-28 pb-24 space-y-16">
+    
+    <!-- =========================================================================
+         SECTION A: Hero Section — Project Introduction & Editorial Visual
+         ========================================================================= -->
+    <section class="case-container space-y-8 pb-10 border-b border-[var(--border)]">
+      
+      <div class="space-y-4">
+        <!-- Badges & Category Tracking -->
+        <div class="flex flex-wrap items-center gap-2">
+          <span class="mood-pill-badge">
+            <i data-lucide="sparkles" class="w-3.5 h-3.5"></i> BRAND BUILDING & MARKETING STRATEGY
+          </span>
+          <span class="font-mono text-xs text-dim">Period Wellness & Gifting</span>
+          <span class="font-mono text-xs text-dim">• FMCG Personal Care</span>
+        </div>
+
+        <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-main leading-[1.12]">
+          MOOD COMFY — Brand Building, Branding & Marketing Strategy
+        </h1>
+
+        <p class="text-base sm:text-xl text-sub font-medium leading-relaxed max-w-4xl">
+          From market and consumer research to brand naming, visual identity, packaging architecture, commercial unit economics, and digital launch. Transforming period days from a clinical problem into a thoughtful moment of care.
+        </p>
+
+        <!-- Contributors & Scope Callout -->
+        <div class="flex flex-wrap items-center gap-y-2 gap-x-6 pt-2 font-mono text-xs text-sub border-t border-[var(--border)] pt-4">
+          <div><strong class="text-main">Contributors:</strong> Dev Dadhich & Palak Singhal</div>
+          <div><strong class="text-main">Role:</strong> Brand Strategy, Consumer Research, Marketing & Creative Direction</div>
+          <div><strong class="text-main">Market:</strong> India (Quick Commerce, Marketplaces & D2C)</div>
+        </div>
+      </div>
+
+      <!-- Hero Visual: Mood Comfy Gift Box on Stone Podium -->
+      <div class="relative rounded-2xl overflow-hidden cs-card border border-[var(--border)] group cursor-pointer" onclick="openLightbox('Mood Comfy Gift Box Display.png', 'MOOD COMFY Hero Packaging Display — Rigid Box on Architectural Stone Podium with Burgundy Velvet Drape')">
+        <div class="aspect-[16/10] sm:aspect-[21/10] w-full bg-zinc-950 overflow-hidden">
+          <img src="Mood Comfy Gift Box Display.png" 
+               alt="MOOD COMFY Premium Period Wellness Gift Box Hero Display" 
+               class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+        </div>
+        <div class="zoom-overlay">
+          <div class="px-3.5 py-1.5 rounded-lg bg-black/85 backdrop-blur-md border border-white/20 text-white font-mono text-xs font-bold flex items-center gap-1.5 shadow-xl">
+            <i data-lucide="zoom-in" class="w-3.5 h-3.5 text-[#e07a86]"></i>
+            <span>CLICK TO INSPECT FULL RESOLUTION (1536 × 1024)</span>
+          </div>
+        </div>
+        <div class="p-3.5 bg-[var(--bg-card)] border-t border-[var(--border)] flex flex-wrap items-center justify-between gap-2 font-mono text-xs">
+          <span class="text-main font-bold">FIGURE 01: Final Brand Identity & Hero Packaging Presentation</span>
+          <span class="text-dim">Concept renders & packaging mockups developed for launch</span>
+        </div>
+      </div>
+
+      <!-- Quick Action Gateway Cards -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div class="p-4 rounded-xl cs-card flex flex-col justify-between group hover:border-[#701E28] transition-all space-y-3">
+          <div class="space-y-1">
+            <div class="font-mono text-xs text-[#8c2331] dark:text-[#e07a86] font-bold flex items-center gap-1.5">
+              <i data-lucide="file-text" class="w-4 h-4"></i> DOCUMENTED CASE STUDY PDF
+            </div>
+            <div class="text-sm font-bold text-main">Complete 25-Page Strategic Case Study</div>
+            <p class="text-xs text-sub font-mono">Detailed methodology, charts, surveys, and unit economics.</p>
+          </div>
+          <div class="flex items-center gap-2 pt-1">
+            <a href="https://drive.google.com/file/d/1L77j5f2mPMeNKIOTErIfJBHK-2QVYlb3/view?usp=sharing" target="_blank" class="px-3.5 py-1.5 rounded font-mono text-xs font-bold btn-solid flex items-center gap-1.5 shadow-sm">
+              <span>VIEW ONLINE (DRIVE) ↗</span>
+            </a>
+            <a href="mood-comfy-case-study.pdf" target="_blank" class="px-3 py-1.5 rounded font-mono text-xs font-bold border border-[var(--border)] text-sub hover:text-main flex items-center gap-1 transition-colors">
+              <span>DIRECT PDF ↓</span>
+            </a>
+          </div>
+        </div>
+
+        <a href="https://drive.google.com/file/d/1L77j5f2mPMeNKIOTErIfJBHK-2QVYlb3/view?usp=sharing" target="_blank" class="p-4 rounded-xl cs-card flex items-center justify-between group hover:border-[#701E28] transition-all">
+          <div class="space-y-1">
+            <div class="font-mono text-xs text-emerald-600 dark:text-emerald-400 font-bold flex items-center gap-1.5">
+              <i data-lucide="globe" class="w-4 h-4"></i> LIVE BRAND PLATFORM & PROTOTYPE
+            </div>
+            <div class="text-sm font-bold text-main">Visit MOOD Brand Website</div>
+            <p class="text-xs text-sub font-mono">D2C digital experience, packaging story & customer journeys.</p>
+          </div>
+          <div class="w-9 h-9 rounded-full bg-[var(--border)] group-hover:bg-[#701E28] text-main group-hover:text-white flex items-center justify-center transition-all flex-shrink-0 ml-3">
+            <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+          </div>
+        </a>
+      </div>
+
+      <!-- Core Executive Summary Banner -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 p-5 rounded-xl cs-card">
+        <div class="space-y-1.5 border-b md:border-b-0 md:border-r border-[var(--border)] pb-4 md:pb-0 md:pr-4">
+          <div class="font-mono text-xs text-amber-400 font-bold flex items-center gap-1.5">
+            <i data-lucide="alert-circle" class="w-3.5 h-3.5"></i> THE STRATEGIC CHALLENGE
+          </div>
+          <p class="text-xs sm:text-sm text-sub font-medium leading-relaxed">
+            Women endure cramps, mood shifts, and food cravings during menstrual cycles, but the market only offered clinical hygiene supplies or expensive luxury hampers (₹1,500–₹3,500+). Meanwhile, partners and friends wanted to express care but suffered from "What do I send?" friction without clinical awkwardness.
+          </p>
+        </div>
+
+        <div class="space-y-1.5 md:pl-2">
+          <div class="font-mono text-xs text-emerald-400 font-bold flex items-center gap-1.5">
+            <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> THE STRATEGIC SOLUTION
+          </div>
+          <p class="text-xs sm:text-sm text-sub font-medium leading-relaxed">
+            Reframed the entire product category from functional hygiene to emotional comfort gifting. Created MOOD COMFY: a curated 9-item box of mood-lifting snacks, thermal comfort, self-care keepsakes, and a personal note—priced in the open ₹599–₹699 whitespace and optimized for 10–30 minute quick-commerce delivery.
+          </p>
+        </div>
+      </div>
+
+      <!-- Key Snapshot Metrics -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 font-mono text-xs">
+        <div class="p-3.5 rounded-lg cs-card">
+          <div class="text-dim">CONCEPT APPEAL</div>
+          <div class="text-main font-bold text-base mt-0.5">82% Rated 4-5★</div>
+        </div>
+        <div class="p-3.5 rounded-lg cs-card">
+          <div class="text-dim">PRICE ACCEPTANCE</div>
+          <div class="text-[#e07a86] font-bold text-base mt-0.5">91% &lt; ₹700</div>
+        </div>
+        <div class="p-3.5 rounded-lg cs-card">
+          <div class="text-dim">TARGET PRICING</div>
+          <div class="text-emerald-400 font-bold text-base mt-0.5">₹599 / ₹699</div>
+        </div>
+        <div class="p-3.5 rounded-lg cs-card">
+          <div class="text-dim">BLINKIT GROSS CONTRIB.</div>
+          <div class="text-main font-bold text-base mt-0.5">₹90 / Box (12.9%)</div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- =========================================================================
+         SECTION B: The Opportunity & Market Framing
+         ========================================================================= -->
+    <section class="case-container space-y-6 pt-2">
+      
+      <div class="space-y-2">
+        <span class="font-mono text-xs text-[#e07a86] font-bold uppercase tracking-wider">[ 01 · MARKET OPPORTUNITY ]</span>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-main">Category Reframing: Moving from Hygiene to Comfort Gifting</h2>
+        <p class="text-sm text-sub leading-relaxed max-w-3xl">
+          The decisive strategic breakthrough in this project was a fundamental change of frame. The period sector is almost universally sized through hygiene products (pads, tampons, cups). Reframing the problem around gifting unlocked a sharp, emotional whitespace where competitors were either overpricing or completely misaligned with user intent.
+        </p>
+      </div>
+
+      <!-- Market Sizing 3-Pillar Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="p-5 rounded-xl cs-card space-y-2">
+          <span class="font-mono text-[10px] text-dim uppercase tracking-wider">HYGIENE CONTEXT</span>
+          <div class="text-2xl font-extrabold text-main">USD 1.26 bn</div>
+          <div class="font-mono text-xs text-sub font-semibold">India Feminine Hygiene (2026P)</div>
+          <p class="text-xs text-sub leading-relaxed pt-1">
+            Dominated by medical commodity supplies (pads, liners). Sizing through hygiene targets a crowded, commoditized market that COMFY consciously avoids.
+          </p>
+        </div>
+
+        <div class="p-5 rounded-xl cs-card space-y-2 border-[#701E28]/40 bg-[#701E28]/5">
+          <span class="font-mono text-[10px] text-[#e07a86] uppercase tracking-wider font-bold">RELEVANT STRATEGIC FRAME</span>
+          <div class="text-2xl font-extrabold text-main">USD 816.3 mn</div>
+          <div class="font-mono text-xs text-[#e07a86] font-semibold">India Gifting Market (2025P)</div>
+          <p class="text-xs text-sub leading-relaxed pt-1">
+            Personal gifting represents 63.8% of market purpose. Gifting allows an emotional proposition built on affection, care, and personal connection.
+          </p>
+        </div>
+
+        <div class="p-5 rounded-xl cs-card space-y-2">
+          <span class="font-mono text-[10px] text-emerald-400 uppercase tracking-wider font-bold">DELIVERY CHANNEL ACCELERATOR</span>
+          <div class="text-2xl font-extrabold text-main">≈ ₹64,000 cr</div>
+          <div class="font-mono text-xs text-emerald-400 font-semibold">Quick Commerce Market (FY25)</div>
+          <p class="text-xs text-sub leading-relaxed pt-1">
+            Impulse and festive gifting on Blinkit, Zepto, and Instamart surged 40–50% YoY, enabling 10–30 minute delivery for immediate cycle needs.
+          </p>
+        </div>
+      </div>
+
+      <!-- The 6 Identified Market Gaps -->
+      <div class="space-y-3 pt-2">
+        <h3 class="font-mono text-xs uppercase tracking-wider text-main font-bold">6 Documented Market Gaps Identified</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 font-mono text-xs">
+          
+          <div class="p-4 rounded-xl cs-card space-y-1.5">
+            <div class="text-[#e07a86] font-bold">01 · PRICE BARRIER</div>
+            <div class="text-main font-bold">Sub-₹700 Open Band</div>
+            <p class="text-sub font-sans text-xs">Most visible period gift boxes cost ₹1,499–₹3,499 (up to ₹6,794). ₹599–₹699 stood as an empty, high-velocity entry band.</p>
+          </div>
+
+          <div class="p-4 rounded-xl cs-card space-y-1.5">
+            <div class="text-[#e07a86] font-bold">02 · CONTENT MISMATCH</div>
+            <div class="text-main font-bold">Removing Risky Hygiene</div>
+            <p class="text-sub font-sans text-xs">5 of 6 competitor boxes bundle pads or menstrual cups, risking recipient size/brand mismatch. COMFY focuses on universal comfort.</p>
+          </div>
+
+          <div class="p-4 rounded-xl cs-card space-y-1.5">
+            <div class="text-[#e07a86] font-bold">03 · SENDER EXPERIENCE</div>
+            <div class="text-main font-bold">Personal Note Omission</div>
+            <p class="text-sub font-sans text-xs">Only 2 of 6 competitor boxes offered a card or message, despite 73% of consumers demanding a handwritten note to feel cared for.</p>
+          </div>
+
+          <div class="p-4 rounded-xl cs-card space-y-1.5">
+            <div class="text-[#e07a86] font-bold">04 · TIGHT ASSORTMENT</div>
+            <div class="text-main font-bold">Intentional 9-Item Mix</div>
+            <p class="text-sub font-sans text-xs">Competitors diluted perceived value across 12+ random fillers. COMFY opted for 9 curated, high-touch emotional and edible items.</p>
+          </div>
+
+          <div class="p-4 rounded-xl cs-card space-y-1.5">
+            <div class="text-[#e07a86] font-bold">05 · NARRATIVE EMPATHY</div>
+            <div class="text-main font-bold">Zero Period Narrative</div>
+            <p class="text-sub font-sans text-xs">Generic chocolate boxes lack cycle empathy, while pharmacy kits feel clinical. COMFY bridges emotional care with relatable warmth.</p>
+          </div>
+
+          <div class="p-4 rounded-xl cs-card space-y-1.5">
+            <div class="text-[#e07a86] font-bold">06 · SPEED TO DOOR</div>
+            <div class="text-main font-bold">Quick-Commerce Ready</div>
+            <p class="text-sub font-sans text-xs">Traditional gifting takes 3–5 shipping days—too late for day-one cramps. COMFY is engineered for Blinkit dark store fulfilment.</p>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Competitor Landscape Comparison -->
+      <div class="p-5 rounded-xl cs-card space-y-3 font-mono text-xs">
+        <div class="flex items-center justify-between border-b border-[var(--border)] pb-2 flex-wrap gap-2">
+          <span class="text-main font-bold uppercase">Competitive Landscape Matrix (10 Reviewed Offerings)</span>
+          <span class="text-[#e07a86]">COMFY Price Position: ₹599 – ₹699</span>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse">
+            <thead>
+              <tr class="border-b border-[var(--border)] text-dim text-[11px]">
+                <th class="py-2 pr-4">BRAND / OFFERING</th>
+                <th class="py-2 px-3">PRICE BAND</th>
+                <th class="py-2 px-3">HEAT ITEM</th>
+                <th class="py-2 px-3">SNACKS</th>
+                <th class="py-2 px-3">HYGIENE</th>
+                <th class="py-2 px-3">CARD</th>
+                <th class="py-2 pl-3">RECORDED LIMITATIONS</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-[var(--border)] text-sub text-[11px]">
+              <tr>
+                <td class="py-2.5 pr-4 text-main font-bold">BoxUp Gifting</td>
+                <td class="py-2.5 px-3">₹3,360</td>
+                <td class="py-2.5 px-3">Hot Water Bag</td>
+                <td class="py-2.5 px-3">Included</td>
+                <td class="py-2.5 px-3 text-amber-400">Pads Included</td>
+                <td class="py-2.5 px-3 text-emerald-400">Yes</td>
+                <td class="py-2.5 pl-3">Severe price barrier; slow shipping</td>
+              </tr>
+              <tr>
+                <td class="py-2.5 pr-4 text-main font-bold">Fluorescent Studios</td>
+                <td class="py-2.5 px-3">₹2,799</td>
+                <td class="py-2.5 px-3">Heat Patch</td>
+                <td class="py-2.5 px-3">Included</td>
+                <td class="py-2.5 px-3 text-amber-400">Pads Included</td>
+                <td class="py-2.5 px-3 text-emerald-400">Yes</td>
+                <td class="py-2.5 pl-3">High price; generic gift positioning</td>
+              </tr>
+              <tr>
+                <td class="py-2.5 pr-4 text-main font-bold">Urban India Healthcare</td>
+                <td class="py-2.5 px-3">₹1,499</td>
+                <td class="py-2.5 px-3">Heat Patches</td>
+                <td class="py-2.5 px-3">Included</td>
+                <td class="py-2.5 px-3 text-amber-400">Pads Included</td>
+                <td class="py-2.5 px-3 text-red-400">No</td>
+                <td class="py-2.5 pl-3">Clinical tone; utility-led; no gift note</td>
+              </tr>
+              <tr>
+                <td class="py-2.5 pr-4 text-main font-bold">Snackmagic</td>
+                <td class="py-2.5 px-3">₹2,350–₹4,500</td>
+                <td class="py-2.5 px-3">Hot Water Bag</td>
+                <td class="py-2.5 px-3">Included</td>
+                <td class="py-2.5 px-3 text-amber-400">Pads Included</td>
+                <td class="py-2.5 px-3 text-red-400">No</td>
+                <td class="py-2.5 pl-3">Expensive corporate snack hamper</td>
+              </tr>
+              <tr class="bg-[#701E28]/10 font-bold text-main">
+                <td class="py-2.5 pr-4 text-[#e07a86] flex items-center gap-1.5">
+                  <i data-lucide="check" class="w-3.5 h-3.5"></i> MOOD COMFY (Target)
+                </td>
+                <td class="py-2.5 px-3 text-emerald-400">₹599 / ₹699</td>
+                <td class="py-2.5 px-3">Heat Patch</td>
+                <td class="py-2.5 px-3">4 Craving Items</td>
+                <td class="py-2.5 px-3 text-emerald-400">Excluded (No Mismatch)</td>
+                <td class="py-2.5 px-3 text-emerald-400">Included + QR</td>
+                <td class="py-2.5 pl-3 text-[#e07a86]">Affordable, emotional, 10–30 min quick delivery</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- =========================================================================
+         SECTION C: Consumer Research & Target Audience
+         ========================================================================= -->
+    <section class="case-container space-y-6 pt-6 border-t border-[var(--border)]">
+      
+      <div class="space-y-2">
+        <span class="font-mono text-xs text-[#e07a86] font-bold uppercase tracking-wider">[ 02 · CONSUMER RESEARCH ]</span>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-main">Research-Backed Decision Making: 23-Question Survey Analysis</h2>
+        <p class="text-sm text-sub leading-relaxed max-w-3xl">
+          To ground the brand in verifiable customer behavior, we designed and deployed a 23-question primary consumer survey. We specifically used the survey to test our initial desk hypotheses, identify deal-breakers, and uncover unexpected purchase drivers.
+        </p>
+      </div>
+
+      <!-- Survey Key Insights Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        
+        <div class="p-5 rounded-xl cs-card space-y-2">
+          <div class="text-3xl font-extrabold text-main">82%</div>
+          <div class="font-mono text-xs text-[#e07a86] font-bold uppercase">Concept Resonance</div>
+          <p class="text-xs text-sub leading-relaxed">
+            Rated the curated period comfort gift box 4 or 5 out of 5 in appeal, validating consumer appetite for an intentional comfort bundle.
+          </p>
+        </div>
+
+        <div class="p-5 rounded-xl cs-card space-y-2">
+          <div class="text-3xl font-extrabold text-[#e07a86]">91%</div>
+          <div class="font-mono text-xs text-main font-bold uppercase">Price Discipline</div>
+          <p class="text-xs text-sub leading-relaxed">
+            Expressed willingness to pay under ₹700 for an 8–10 item box (45% at ₹300–₹499; 36% at ₹500–₹699). Directly cemented our ₹599–₹699 price point.
+          </p>
+        </div>
+
+        <div class="p-5 rounded-xl cs-card space-y-2">
+          <div class="text-3xl font-extrabold text-emerald-400">64%</div>
+          <div class="font-mono text-xs text-main font-bold uppercase">Quick Commerce</div>
+          <p class="text-xs text-sub leading-relaxed">
+            Favored Blinkit or Zepto and required delivery within 10–30 minutes, turning instant delivery from an afterthought into a launch priority.
+          </p>
+        </div>
+
+        <div class="p-5 rounded-xl cs-card space-y-2">
+          <div class="text-3xl font-extrabold text-main">73%</div>
+          <div class="font-mono text-xs text-amber-400 font-bold uppercase">Handwritten Note</div>
+          <p class="text-xs text-sub leading-relaxed">
+            Demanded a personalized note. The emotional value of caring mattered more than expensive packaging bells and whistles.
+          </p>
+        </div>
+
+      </div>
+
+      <!-- Target Personas: The Giver vs. The Receiver -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
+        
+        <!-- Persona 1: The Gift Giver -->
+        <div class="p-6 rounded-xl cs-card space-y-4">
+          <div class="flex items-center justify-between">
+            <span class="font-mono text-xs uppercase font-bold text-[#e07a86] px-2.5 py-0.5 rounded bg-[#701E28]/15 border border-[#701E28]/30">
+              PRIMARY BUYER PERSONA
+            </span>
+            <span class="font-mono text-xs text-dim">The Considerate Giver</span>
+          </div>
+          <div>
+            <h3 class="text-lg font-bold text-main">Boyfriends, Husbands & Best Friends</h3>
+            <p class="text-xs font-mono text-sub mt-0.5">Aged 20–32 · Digitally savvy · Quick commerce users</p>
+          </div>
+          <div class="space-y-2 text-xs text-sub leading-relaxed">
+            <p><strong class="text-main">The Motivation:</strong> Wants to show empathy, warmth, and proactive support during tough period days without needing to ask awkward or intrusive questions.</p>
+            <p><strong class="text-main">The Pain Point:</strong> Completely unsure what to buy ("Do I get chocolate? Which pad brand?"). Fears buying the wrong item or sending something clinical.</p>
+            <p><strong class="text-main">The Solution:</strong> One-click curated box that solves the "What do I send?" friction with zero guesswork and includes a custom message.</p>
+          </div>
+        </div>
+
+        <!-- Persona 2: The End Consumer -->
+        <div class="p-6 rounded-xl cs-card space-y-4">
+          <div class="flex items-center justify-between">
+            <span class="font-mono text-xs uppercase font-bold text-purple-400 px-2.5 py-0.5 rounded bg-purple-500/15 border border-purple-500/30">
+              RECIPIENT & END CONSUMER
+            </span>
+            <span class="font-mono text-xs text-dim">The Cherished Recipient</span>
+          </div>
+          <div>
+            <h3 class="text-lg font-bold text-main">Urban Young Women & Students</h3>
+            <p class="text-xs font-mono text-sub mt-0.5">Aged 18–30 · High daily stress · Values aesthetic warmth</p>
+          </div>
+          <div class="space-y-2 text-xs text-sub leading-relaxed">
+            <p><strong class="text-main">The Motivation:</strong> Yearns for comfort, physical cramp soothing, indulgent treats, and feeling genuinely seen, comforted, and cared for.</p>
+            <p><strong class="text-main">The Pain Point:</strong> Dislikes generic, clinical, or patronizing "period warrior" slogans. Resents having personal hygiene dictated by standard gift packs.</p>
+            <p><strong class="text-main">The Solution:</strong> Soft luxury aesthetic, dark chocolate, spicy-tangy snacks, comforting heat patch, relaxing scented candle, and satin keepsakes.</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Transparent Methodological Reflection: Divergence & Tension -->
+      <div class="p-5 rounded-xl cs-card border-l-4 border-l-amber-500 space-y-2">
+        <div class="font-mono text-xs font-bold text-amber-400 flex items-center gap-2">
+          <i data-lucide="scale" class="w-4 h-4"></i> STRATEGIC TENSION & RESEARCH INTEGRITY
+        </div>
+        <p class="text-xs sm:text-sm text-sub leading-relaxed">
+          <strong>Where survey challenged hypothesis:</strong> While desk research hypothesized romantic partners as the highest-frequency buyers, the primary survey highlighted female best friends and mothers (73% each) as equally prominent intended recipients. Furthermore, consumers strongly favored quick-commerce delivery over standard courier shipping. We honored this finding by designing the product for immediate Blinkit dark-store stocking and adopting an approachable, friendship-centric tone of voice.
+        </p>
+      </div>
+
+    </section>
+
+    <!-- =========================================================================
+         SECTION D: Brand Strategy, Positioning & Naming
+         ========================================================================= -->
+    <section class="case-container space-y-6 pt-6 border-t border-[var(--border)]">
+      
+      <div class="space-y-2">
+        <span class="font-mono text-xs text-[#e07a86] font-bold uppercase tracking-wider">[ 03 · BRAND STRATEGY ]</span>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-main">Brand Architecture & Naming Rationale</h2>
+        <p class="text-sm text-sub leading-relaxed max-w-3xl">
+          Branding is not decoration—it is the strategic crystallization of customer perception. Every naming, positioning, and tonal decision was built to avoid the two extremes of the market: cold clinical sterility and patronizing corporate pink-washing.
+        </p>
+      </div>
+
+      <!-- Formal Positioning Statement Callout Box -->
+      <div class="p-6 rounded-xl cs-card border border-[#701E28]/40 bg-gradient-to-br from-[#701E28]/15 via-transparent to-transparent space-y-3">
+        <span class="font-mono text-xs text-[#e07a86] font-bold uppercase tracking-wider">CORE POSITIONING STATEMENT</span>
+        <blockquote class="text-lg sm:text-xl font-bold text-main leading-relaxed mood-serif italic">
+          "For women experiencing periods and people who want to care for them, MOOD COMFY is a thoughtful gifting solution that makes period days feel more comfortable and special through a curated combination of treats, comfort products, and emotional care. Unlike ordinary gift boxes, it is specifically designed around period cravings, comfort, and thoughtful surprises."
+        </blockquote>
+        <div class="pt-2 flex flex-wrap gap-4 font-mono text-xs text-dim border-t border-[var(--border)]">
+          <span><strong class="text-main">Category:</strong> Period Comfort Gifting</span>
+          <span><strong class="text-main">Tagline:</strong> Your Box Full of Comfort</span>
+          <span><strong class="text-main">Price Point:</strong> ₹599 / ₹699</span>
+        </div>
+      </div>
+
+      <!-- Naming System Architecture: MOOD + COMFY -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        
+        <div class="p-5 rounded-xl cs-card space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-2xl font-black text-main font-mono">MOOD</span>
+            <span class="mood-pill-badge">THE BRAND UMBRELLA</span>
+          </div>
+          <p class="text-xs sm:text-sm text-sub leading-relaxed">
+            <strong>Why "MOOD":</strong> Names the human emotional experience rather than an anatomical or medical category. It immediately communicates empathy, mood shifts, and emotional tenderness while leaving the word "period" off the brand mark. This creates a scalable brand umbrella capable of expanding into broader wellness sub-categories in the future.
+          </p>
+        </div>
+
+        <div class="p-5 rounded-xl cs-card space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-2xl font-black text-[#e07a86] font-mono tracking-widest">COMFY</span>
+            <span class="mood-pill-badge">THE PRODUCT PROMISE</span>
+          </div>
+          <p class="text-xs sm:text-sm text-sub leading-relaxed">
+            <strong>Why "COMFY":</strong> Names the core functional and sensory promise: warmth, soothing textures, delicious comfort food, and physical ease. Confirmed by 55% of survey respondents desiring physical comfort and 73% seeking mood elevation. It reads friendly, soft, unpretentious, and reassuring.
+          </p>
+        </div>
+
+      </div>
+
+      <!-- 4 Personality Pillars -->
+      <div class="space-y-3 pt-2">
+        <h3 class="font-mono text-xs uppercase tracking-wider text-main font-bold">4 Strategic Personality Pillars</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 font-mono text-xs">
+          
+          <div class="p-4 rounded-xl cs-card space-y-1.5">
+            <div class="text-[#e07a86] font-bold">01 · PREMIUM</div>
+            <div class="text-main font-bold">Accessible Luxury</div>
+            <p class="text-sub font-sans text-xs">Delivering high aesthetic standards, rigid box construction, and refined unboxing without charging an exclusionary luxury price.</p>
+          </div>
+
+          <div class="p-4 rounded-xl cs-card space-y-1.5">
+            <div class="text-emerald-400 font-bold">02 · MODERN</div>
+            <div class="text-main font-bold">Social & Creator-Led</div>
+            <p class="text-sub font-sans text-xs">Aesthetic social presence on Instagram with lifestyle imagery, creator unboxing moments, and quick-commerce speed.</p>
+          </div>
+
+          <div class="p-4 rounded-xl cs-card space-y-1.5">
+            <div class="text-amber-400 font-bold">03 · CARING</div>
+            <div class="text-main font-bold">Heartfelt & Attentive</div>
+            <p class="text-sub font-sans text-xs">82% of users are motivated by making the recipient feel cared for. The brand acts like a loving friend paying close attention.</p>
+          </div>
+
+          <div class="p-4 rounded-xl cs-card space-y-1.5">
+            <div class="text-purple-400 font-bold">04 · RELATABLE</div>
+            <div class="text-main font-bold">Zero Medical Jargon</div>
+            <p class="text-sub font-sans text-xs">Avoids clinical tone and condescending stereotypes. Honest conversations about cramps, late-night sweet cravings, and rest.</p>
+          </div>
+
+        </div>
+      </div>
+
+    </section>
+
+    <!-- =========================================================================
+         SECTION E: Visual Identity & Creative Direction (Major Visual Gallery)
+         ========================================================================= -->
+    <section class="case-container space-y-8 pt-6 border-t border-[var(--border)]">
+      
+      <div class="space-y-2">
+        <span class="font-mono text-xs text-[#e07a86] font-bold uppercase tracking-wider">[ 04 · VISUAL IDENTITY & CREATIVE DIRECTION ]</span>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-main">Visual Identity System: Burgundy, Cream & The Interlocking Star</h2>
+        <p class="text-sm text-sub leading-relaxed max-w-3xl">
+          The brand identity balances premium elegance with tactile warmth. Rejecting clinical whites and stereotypical hot pinks, we established an editorial visual system rooted in rich burgundy, gentle cream, high-contrast serif typography, and an interlocking star mark.
+        </p>
+      </div>
+
+      <!-- Primary Brand Identity Assets Gallery -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+        
+        <!-- Asset 1: Primary Wordmark -->
+        <div class="cs-card overflow-hidden group cursor-pointer" onclick="openLightbox('Elegant Burgundy MOOD Wordmark.png', 'Primary MOOD Wordmark — High-Contrast Serif with Interlocking Os and Center Star')">
+          <div class="p-6 bg-[#FDF4E1] flex items-center justify-center min-h-[220px] relative">
+            <img src="Elegant Burgundy MOOD Wordmark.png" alt="Primary MOOD Wordmark on Cream Background" class="max-h-24 w-auto object-contain transition-transform group-hover:scale-105" />
+            <div class="zoom-overlay">
+              <span class="px-2.5 py-1 rounded bg-black/80 text-white font-mono text-[10px] font-bold">INSPECT FULL RES</span>
+            </div>
+          </div>
+          <div class="p-4 font-mono text-xs space-y-1 border-t border-[var(--border)]">
+            <div class="text-main font-bold">PRIMARY WORDMARK</div>
+            <p class="text-sub font-sans text-xs">High-contrast serif with interlocking Os forming a 4-pointed star, symbolizing giver-receiver connection.</p>
+          </div>
+        </div>
+
+        <!-- Asset 2: Reverse Wordmark -->
+        <div class="cs-card overflow-hidden group cursor-pointer" onclick="openLightbox('Gemini_Generated_Image_xwyv6nxwyv6nxwyv.png', 'Reverse MOOD Wordmark — Cream on Deep Burgundy with Corner Star Detail')">
+          <div class="p-6 bg-[#51141C] flex items-center justify-center min-h-[220px] relative">
+            <img src="Gemini_Generated_Image_xwyv6nxwyv6nxwyv.png" alt="Reverse MOOD Wordmark on Deep Burgundy" class="max-h-24 w-auto object-contain transition-transform group-hover:scale-105" />
+            <div class="zoom-overlay">
+              <span class="px-2.5 py-1 rounded bg-black/80 text-white font-mono text-[10px] font-bold">INSPECT FULL RES</span>
+            </div>
+          </div>
+          <div class="p-4 font-mono text-xs space-y-1 border-t border-[var(--border)]">
+            <div class="text-main font-bold">REVERSE WORDMARK</div>
+            <p class="text-sub font-sans text-xs">Cream typography on deep burgundy used on the primary exterior box lid, packaging labels, and digital banners.</p>
+          </div>
+        </div>
+
+        <!-- Asset 3: Orbital M Monogram -->
+        <div class="cs-card overflow-hidden group cursor-pointer" onclick="openLightbox('Burgundy Orbital M Monogram.png', 'Orbital M Monogram — Compact Secondary Mark with Two Orbiting Dots on Arcs')">
+          <div class="p-6 bg-[#FDF4E1] flex items-center justify-center min-h-[220px] relative">
+            <img src="Burgundy Orbital M Monogram.png" alt="Burgundy Orbital M Monogram on Cream" class="max-h-28 w-auto object-contain transition-transform group-hover:scale-105" />
+            <div class="zoom-overlay">
+              <span class="px-2.5 py-1 rounded bg-black/80 text-white font-mono text-[10px] font-bold">INSPECT FULL RES</span>
+            </div>
+          </div>
+          <div class="p-4 font-mono text-xs space-y-1 border-t border-[var(--border)]">
+            <div class="text-main font-bold">ORBITAL M MONOGRAM</div>
+            <p class="text-sub font-sans text-xs">Secondary mark for compact real estate: sticker seals, social avatars, and the golden keychain pendant in the box.</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Color Palette System -->
+      <div class="p-6 rounded-xl cs-card space-y-4">
+        <div class="flex items-center justify-between flex-wrap gap-2">
+          <h3 class="font-mono text-xs uppercase tracking-wider text-main font-bold">Brand Color Palette & Material Architecture</h3>
+          <span class="font-mono text-xs text-dim">Strategic color selection rationale</span>
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <div class="space-y-1.5">
+            <div class="swatch-chip text-white" style="background-color: #51141C;">#51141C</div>
+            <div class="font-mono text-xs font-bold text-main">Deep Burgundy</div>
+            <div class="font-mono text-[11px] text-dim">Outer Box Ground</div>
+          </div>
+          <div class="space-y-1.5">
+            <div class="swatch-chip text-white" style="background-color: #611A25;">#611A25</div>
+            <div class="font-mono text-xs font-bold text-main">Rich Wine</div>
+            <div class="font-mono text-[11px] text-dim">Brand Wordmark & Seals</div>
+          </div>
+          <div class="space-y-1.5">
+            <div class="swatch-chip text-white" style="background-color: #701E28;">#701E28</div>
+            <div class="font-mono text-xs font-bold text-main">Box Burgundy</div>
+            <div class="font-mono text-[11px] text-dim">Packaging Renders</div>
+          </div>
+          <div class="space-y-1.5">
+            <div class="swatch-chip text-[#51141C]" style="background-color: #FDF4E1;">#FDF4E1</div>
+            <div class="font-mono text-xs font-bold text-main">Warm Cream</div>
+            <div class="font-mono text-[11px] text-dim">Inner Tray & Backgrounds</div>
+          </div>
+        </div>
+
+        <p class="text-xs text-sub leading-relaxed pt-2 border-t border-[var(--border)]">
+          <strong>Strategic Color Rationale:</strong> Burgundy signals luxury, emotional depth, and cozy warmth without the aggressive clinical urgency of medical red or the childish stereotypes of bubblegum pink. Cream introduces soft editorial lightness, elevating the unboxing experience into that of a high-end personal care gift.
+        </p>
+      </div>
+
+      <!-- Packaging Architecture & The 9 Curated Items -->
+      <div class="space-y-4 pt-4">
+        <div>
+          <span class="font-mono text-xs text-[#e07a86] font-bold uppercase tracking-wider">PRODUCT CURATION & PACKAGING ARCHITECTURE</span>
+          <h3 class="text-xl sm:text-2xl font-extrabold text-main mt-1">One Box, Nine Intentional Items — Built Around Cravings & Comfort</h3>
+          <p class="text-xs sm:text-sm text-sub leading-relaxed max-w-3xl">
+            Unlike competitor boxes that bundle generic pharmacy pads, COMFY is engineered specifically around verified comfort motivations: mood-lifting chocolate, savory-tangy snacking, heat therapy, and persistent self-care keepsakes.
+          </p>
+        </div>
+
+        <!-- 2 Large Side-by-Side Product Presentation Renders -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+          
+          <!-- Open 9-Compartment Box -->
+          <div class="cs-card overflow-hidden group cursor-pointer" onclick="openLightbox('MOOD COMFY Premium Gift Box Flat Lay.png', 'MOOD COMFY Open Box Architecture — 9 Custom Compartments with Inner Cream Wordmark Lid')">
+            <div class="aspect-[16/11] bg-zinc-950 overflow-hidden relative">
+              <img src="MOOD COMFY Premium Gift Box Flat Lay.png" alt="MOOD COMFY Open 9-Compartment Box Flat Lay" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+              <div class="zoom-overlay">
+                <span class="px-3 py-1.5 rounded bg-black/85 text-white font-mono text-xs font-bold flex items-center gap-1.5">
+                  <i data-lucide="zoom-in" class="w-3.5 h-3.5 text-[#e07a86]"></i> INSPECT OPEN BOX (1536 × 1024)
+                </span>
+              </div>
+            </div>
+            <div class="p-3.5 bg-[var(--bg-card)] border-t border-[var(--border)] font-mono text-xs flex justify-between items-center">
+              <span class="text-main font-bold">FIGURE 02: Open Box Compartment Architecture</span>
+              <span class="text-dim">9 Dedicated Trays</span>
+            </div>
+          </div>
+
+          <!-- Unboxed Flat Lay of all 9 items -->
+          <div class="cs-card overflow-hidden group cursor-pointer" onclick="openLightbox('Luxury Burgundy Comfort Gift Set.png', 'MOOD COMFY Full Product Assortment — 9 Curated Items Knolled Beside Closed Box')">
+            <div class="aspect-[16/11] bg-zinc-950 overflow-hidden relative">
+              <img src="Luxury Burgundy Comfort Gift Set.png" alt="MOOD COMFY Full 9 Items Knolled Beside Box" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+              <div class="zoom-overlay">
+                <span class="px-3 py-1.5 rounded bg-black/85 text-white font-mono text-xs font-bold flex items-center gap-1.5">
+                  <i data-lucide="zoom-in" class="w-3.5 h-3.5 text-[#e07a86]"></i> INSPECT UNBOXED ITEMS (1448 × 1086)
+                </span>
+              </div>
+            </div>
+            <div class="p-3.5 bg-[var(--bg-card)] border-t border-[var(--border)] font-mono text-xs flex justify-between items-center">
+              <span class="text-main font-bold">FIGURE 03: Full 9-Item Assortment & Presentation</span>
+              <span class="text-dim">Edibles + Keepsakes</span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- 9 Items Detailed Inventory Table -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 font-mono text-xs">
+          
+          <div class="p-3.5 rounded-lg cs-card space-y-1">
+            <div class="flex items-center justify-between">
+              <span class="text-main font-bold">01 · Dark Chocolate Bar</span>
+              <span class="text-[#e07a86] font-bold">64% Demand</span>
+            </div>
+            <p class="text-sub font-sans text-xs">Rich dark chocolate for serotonin release, magnesium replenishment, and immediate sweet craving satisfaction.</p>
+          </div>
+
+          <div class="p-3.5 rounded-lg cs-card space-y-1">
+            <div class="flex items-center justify-between">
+              <span class="text-main font-bold">02 · Chocolate Bites</span>
+              <span class="text-[#e07a86] font-bold">45% Demand</span>
+            </div>
+            <p class="text-sub font-sans text-xs">Indulgent bite-sized treats designed for casual desk snacking throughout painful cramps.</p>
+          </div>
+
+          <div class="p-3.5 rounded-lg cs-card space-y-1">
+            <div class="flex items-center justify-between">
+              <span class="text-main font-bold">03 · Peri-Peri Makhana</span>
+              <span class="text-emerald-400 font-bold">Savory Crunch</span>
+            </div>
+            <p class="text-sub font-sans text-xs">Spiced roasted foxnuts addressing sudden salt and spice cravings, popular in Indian snacking habits.</p>
+          </div>
+
+          <div class="p-3.5 rounded-lg cs-card space-y-1">
+            <div class="flex items-center justify-between">
+              <span class="text-main font-bold">04 · Kaccha Aam Candies</span>
+              <span class="text-emerald-400 font-bold">Tangy Craving</span>
+            </div>
+            <p class="text-sub font-sans text-xs">Sour raw mango treats answering the documented sour/tangy craving common during hormonal fluctuations.</p>
+          </div>
+
+          <div class="p-3.5 rounded-lg cs-card space-y-1">
+            <div class="flex items-center justify-between">
+              <span class="text-main font-bold">05 · Thermal Heat Patch</span>
+              <span class="text-amber-400 font-bold">55% Relief Need</span>
+            </div>
+            <p class="text-sub font-sans text-xs">Self-heating abdominal pad delivering 8+ hours of targeted cramp warmth without bulky hot water bottles.</p>
+          </div>
+
+          <div class="p-3.5 rounded-lg cs-card space-y-1">
+            <div class="flex items-center justify-between">
+              <span class="text-main font-bold">06 · Scented Candle</span>
+              <span class="text-purple-400 font-bold">Calming Ritual</span>
+            </div>
+            <p class="text-sub font-sans text-xs">Lavender-vanilla calming aromatics in a branded tin, transforming bedroom space into a relaxation sanctuary.</p>
+          </div>
+
+          <div class="p-3.5 rounded-lg cs-card space-y-1">
+            <div class="flex items-center justify-between">
+              <span class="text-main font-bold">07 · Satin Scrunchie</span>
+              <span class="text-purple-400 font-bold">Daily Keepsake</span>
+            </div>
+            <p class="text-sub font-sans text-xs">Gentle burgundy silk-satin scrunchie for hair comfort during rest days, lasting months beyond the treats.</p>
+          </div>
+
+          <div class="p-3.5 rounded-lg cs-card space-y-1">
+            <div class="flex items-center justify-between">
+              <span class="text-main font-bold">08 · Canvas Zipper Pouch</span>
+              <span class="text-purple-400 font-bold">Reusable Keepsake</span>
+            </div>
+            <p class="text-sub font-sans text-xs">Natural cream linen pouch with gold zipper and MOOD wordmark, perfect for handbags and cosmetics.</p>
+          </div>
+
+          <div class="p-3.5 rounded-lg cs-card space-y-1">
+            <div class="flex items-center justify-between">
+              <span class="text-main font-bold">09 · Gold Orbital M Keychain</span>
+              <span class="text-[#e07a86] font-bold">Brand Artifact</span>
+            </div>
+            <p class="text-sub font-sans text-xs">Solid golden keyring with burgundy enamel Orbital M charm, providing everyday emotional reassurance.</p>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Lifestyle Scene & Emotional Moment -->
+      <div class="p-6 rounded-xl cs-card space-y-4">
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+          <div class="md:col-span-7 rounded-xl overflow-hidden cursor-pointer group" onclick="openLightbox('Cozy MOOD COMFY Box Unboxing.png', 'Lifestyle Photography — Emotional Unboxing Moment in Bed with Cream & Burgundy Cushioning')">
+            <div class="aspect-[16/10] bg-zinc-950 relative overflow-hidden">
+              <img src="Cozy MOOD COMFY Box Unboxing.png" alt="Emotional Unboxing Lifestyle Scene" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+              <div class="zoom-overlay">
+                <span class="px-3 py-1.5 rounded bg-black/85 text-white font-mono text-xs font-bold flex items-center gap-1.5">
+                  <i data-lucide="zoom-in" class="w-3.5 h-3.5 text-[#e07a86]"></i> INSPECT LIFESTYLE SCENE
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="md:col-span-5 space-y-3 font-mono text-xs">
+            <span class="mood-pill-badge">LIFESTYLE DIRECTION</span>
+            <h4 class="text-lg font-bold text-main font-sans">Emotional Unboxing & Social Resonance</h4>
+            <p class="text-sub font-sans text-xs leading-relaxed">
+              Creative direction centered on authentic, cozy intimacy: soft cream blankets, natural morning sunlight, and real emotional delight.
+            </p>
+            <div class="space-y-1.5 pt-2 border-t border-[var(--border)] text-[11px]">
+              <div><strong class="text-main">Setting:</strong> Cozy bedroom, cream knitwear, burgundy bedding</div>
+              <div><strong class="text-main">Lighting:</strong> Warm directional golden-hour daylight</div>
+              <div><strong class="text-main">Purpose:</strong> Primary creative asset for Instagram Reels & unboxing TikToks</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- =========================================================================
+         SECTION F: Marketing & Commercial Strategy (Unit Economics Waterfall)
+         ========================================================================= -->
+    <section class="case-container space-y-6 pt-6 border-t border-[var(--border)]">
+      
+      <div class="space-y-2">
+        <span class="font-mono text-xs text-[#e07a86] font-bold uppercase tracking-wider">[ 05 · COMMERCIAL VIABILITY & GTM ]</span>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-main">Marketing Funnel & Rigorous Quick-Commerce Unit Economics</h2>
+        <p class="text-sm text-sub leading-relaxed max-w-3xl">
+          A great brand identity requires commercial reality. We modeled full unit economics for quick-commerce distribution on Blinkit to understand true net contribution margins, deductions, and break-even scale requirements.
+        </p>
+      </div>
+
+      <!-- Blinkit Per-Box Unit Economics Breakdown Card -->
+      <div class="p-6 rounded-xl cs-card space-y-5">
+        <div class="flex items-center justify-between flex-wrap gap-2 border-b border-[var(--border)] pb-3 font-mono text-xs">
+          <span class="text-main font-bold">ESTIMATED PER-BOX UNIT ECONOMICS ON BLINKIT (MRP ₹699)</span>
+          <span class="text-[#e07a86] font-bold">Gross Contribution: ₹90 (12.9%)</span>
+        </div>
+
+        <!-- Waterfall Bar Visualization -->
+        <div class="grid grid-cols-2 sm:grid-cols-5 gap-3 font-mono text-xs">
+          <div class="p-3 rounded-lg bg-[var(--border)]/40 space-y-1">
+            <div class="text-dim text-[11px]">SELLING PRICE</div>
+            <div class="text-xl font-bold text-main">₹699</div>
+            <div class="text-[10px] text-sub">Blinkit Listed MRP</div>
+          </div>
+
+          <div class="p-3 rounded-lg bg-red-500/10 border border-red-500/20 space-y-1">
+            <div class="text-red-400 text-[11px]">PLATFORM DEDUCTIONS</div>
+            <div class="text-xl font-bold text-red-400">-₹109</div>
+            <div class="text-[10px] text-red-300">15.6% (Fee, GST, Inward)</div>
+          </div>
+
+          <div class="p-3 rounded-lg cs-card-sub space-y-1">
+            <div class="text-dim text-[11px]">NET REALISATION</div>
+            <div class="text-xl font-bold text-main">₹590</div>
+            <div class="text-[10px] text-sub">Received from Blinkit</div>
+          </div>
+
+          <div class="p-3 rounded-lg bg-amber-500/10 border border-amber-500/20 space-y-1">
+            <div class="text-amber-500 dark:text-amber-400 text-[11px]">PRODUCT & PACKAGING</div>
+            <div class="text-xl font-bold text-amber-500 dark:text-amber-400">-₹500</div>
+            <div class="text-[10px] text-amber-600 dark:text-amber-300">COGS ₹380 + Box ₹120</div>
+          </div>
+
+          <div class="p-3 rounded-lg bg-emerald-500/10 border border-emerald-500/30 space-y-1 col-span-2 sm:col-span-1">
+            <div class="text-emerald-600 dark:text-emerald-400 text-[11px]">GROSS CONTRIBUTION</div>
+            <div class="text-xl font-bold text-emerald-600 dark:text-emerald-400">+₹90</div>
+            <div class="text-[10px] text-emerald-700 dark:text-emerald-300">12.9% Net Per Box</div>
+          </div>
+        </div>
+
+        <div class="p-3.5 rounded-lg cs-card-sub font-mono text-xs space-y-1 text-sub">
+          <div class="text-main font-bold flex items-center gap-1.5">
+            <i data-lucide="alert-triangle" class="w-3.5 h-3.5 text-amber-500 dark:text-amber-400"></i> Commercial Reality Analysis:
+          </div>
+          <p class="text-xs font-sans leading-relaxed">
+            While unit contribution is positive at ₹90/box, margins are slim. Strategic viability requires volume scale (1,000+ units/month) and box manufacturing optimization (negotiating packaging down from ₹120 to ~₹70 at scale to boost contribution margin from 12.9% to ~20%).
+          </p>
+        </div>
+      </div>
+
+      <!-- 4-Stage Marketing Funnel & Creator Collaborations -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
+        
+        <!-- The Funnel -->
+        <div class="p-6 rounded-xl cs-card space-y-4 font-mono text-xs">
+          <span class="text-main font-bold uppercase tracking-wider block border-b border-[var(--border)] pb-2">
+            4-Stage Marketing Acquisition Funnel
+          </span>
+          <div class="space-y-3">
+            <div class="flex items-start gap-3">
+              <span class="px-2 py-0.5 rounded bg-blue-500/15 text-blue-400 font-bold border border-blue-500/30">01</span>
+              <div>
+                <strong class="text-main">Awareness (Top of Funnel):</strong>
+                <p class="text-sub font-sans text-xs mt-0.5">Instagram Reels, period humor/cramp empathy storytelling, micro-influencer product reveals.</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-3">
+              <span class="px-2 py-0.5 rounded bg-amber-500/15 text-amber-400 font-bold border border-amber-500/30">02</span>
+              <div>
+                <strong class="text-main">Consideration (Middle of Funnel):</strong>
+                <p class="text-sub font-sans text-xs mt-0.5">Aesthetic product flat lays, sensory unboxing videos, transparent breakdowns of all 9 items.</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-3">
+              <span class="px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-400 font-bold border border-emerald-500/30">03</span>
+              <div>
+                <strong class="text-main">Conversion (Bottom of Funnel):</strong>
+                <p class="text-sub font-sans text-xs mt-0.5">Targeted Meta ads, ₹599 website prepaid offer with 1-hour local dispatch, Blinkit instant 10-min delivery.</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-3">
+              <span class="px-2 py-0.5 rounded bg-purple-500/15 text-purple-400 font-bold border border-purple-500/30">04</span>
+              <div>
+                <strong class="text-main">Advocacy & Retention:</strong>
+                <p class="text-sub font-sans text-xs mt-0.5">Incentivized user-generated unboxing stories, QR card digital experiences, anniversary/Valentine reorder reminders.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Influencer Outreach Roster -->
+        <div class="p-6 rounded-xl cs-card space-y-4 font-mono text-xs">
+          <div class="flex items-center justify-between border-b border-[var(--border)] pb-2">
+            <span class="text-main font-bold uppercase tracking-wider">Shortlisted Creator Outreach (Avg ~156K)</span>
+            <span class="text-dim">Launch Campaign Leads</span>
+          </div>
+          <div class="space-y-2">
+            <div class="flex items-center justify-between p-2 rounded cs-card-sub">
+              <span class="text-main font-bold">Harshita Kasera (@harshitakasera)</span>
+              <span class="text-[#8c2331] dark:text-[#e07a86] font-bold">319K Followers</span>
+            </div>
+            <div class="flex items-center justify-between p-2 rounded cs-card-sub">
+              <span class="text-main font-bold">Hitesh Tekwani (@hitesh__tekwani_)</span>
+              <span class="text-[#8c2331] dark:text-[#e07a86] font-bold">273K Followers</span>
+            </div>
+            <div class="flex items-center justify-between p-2 rounded cs-card-sub">
+              <span class="text-main font-bold">Prashali Singhal (@singhallamya)</span>
+              <span class="text-dim">125K Followers</span>
+            </div>
+            <div class="flex items-center justify-between p-2 rounded cs-card-sub">
+              <span class="text-main font-bold">Shivani Bansal (@s_shivanibansal)</span>
+              <span class="text-dim">94K Followers</span>
+            </div>
+            <div class="flex items-center justify-between p-2 rounded cs-card-sub">
+              <span class="text-main font-bold">Hitesh Ahuja (@hiteshahuja5)</span>
+              <span class="text-dim">72K Followers</span>
+            </div>
+            <div class="flex items-center justify-between p-2 rounded cs-card-sub">
+              <span class="text-main font-bold">Yash Tandon (@yashtandonlifestyle)</span>
+              <span class="text-dim">54K Followers</span>
+            </div>
+          </div>
+          <p class="text-[11px] text-dim font-sans pt-1">
+            Dual angle: female lifestyle creators for self-care advocacy, male creators for boyfriend-gifting narratives.
+          </p>
+        </div>
+
+      </div>
+
+      <!-- 3-Month Target KPIs Grid -->
+      <div class="p-5 rounded-xl cs-card space-y-3 font-mono text-xs">
+        <span class="text-main font-bold uppercase tracking-wider block border-b border-[var(--border)] pb-2">
+          Documented First 3-Month Marketing KPIs (Validation Phase)
+        </span>
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+          <div class="p-3 rounded bg-[var(--border)]/40">
+            <div class="text-dim text-[10px]">AWARENESS</div>
+            <div class="text-main font-bold mt-0.5">2,000+ Followers</div>
+            <div class="text-[10px] text-sub">50K+ Monthly Reach</div>
+          </div>
+          <div class="p-3 rounded bg-[var(--border)]/40">
+            <div class="text-dim text-[10px]">ENGAGEMENT</div>
+            <div class="text-main font-bold mt-0.5">4% – 6%</div>
+            <div class="text-[10px] text-sub">Interaction Rate</div>
+          </div>
+          <div class="p-3 rounded bg-[var(--border)]/40">
+            <div class="text-dim text-[10px]">WEBSITE TRAFFIC</div>
+            <div class="text-main font-bold mt-0.5">3,000+ Visitors</div>
+            <div class="text-[10px] text-sub">2–3% Conversion</div>
+          </div>
+          <div class="p-3 rounded bg-[var(--border)]/40">
+            <div class="text-dim text-[10px]">MONTHLY SALES</div>
+            <div class="text-emerald-400 font-bold mt-0.5">100–150 Boxes</div>
+            <div class="text-[10px] text-sub">Early Validation</div>
+          </div>
+          <div class="p-3 rounded bg-[var(--border)]/40">
+            <div class="text-dim text-[10px]">ACQUISITION (CAC)</div>
+            <div class="text-emerald-400 font-bold mt-0.5">&lt; ₹150</div>
+            <div class="text-[10px] text-sub">Via Meta Ads</div>
+          </div>
+          <div class="p-3 rounded bg-[var(--border)]/40">
+            <div class="text-dim text-[10px]">REPEAT RATE</div>
+            <div class="text-purple-400 font-bold mt-0.5">10% – 15%</div>
+            <div class="text-[10px] text-sub">Occasion-Led Gifting</div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- =========================================================================
+         SECTION G: Digital Experience — Brand Website Prototype
+         ========================================================================= -->
+    <section class="case-container space-y-6 pt-6 border-t border-[var(--border)]">
+      
+      <div class="space-y-2">
+        <span class="font-mono text-xs text-[#8c2331] dark:text-[#e07a86] font-bold uppercase tracking-wider">[ 06 · DIGITAL EXPERIENCE ]</span>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-main">D2C Brand Presence: The MOOD Landing Page</h2>
+        <p class="text-sm text-sub leading-relaxed max-w-3xl">
+          To capture high-margin direct orders and support Meta advertising traffic, we designed and published an interactive D2C landing page prototype.
+        </p>
+      </div>
+
+      <!-- Live Website Interactive Showcase Card -->
+      <div class="p-6 rounded-2xl cs-card space-y-6">
+        
+        <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 border-b border-[var(--border)] pb-4">
+          <div>
+            <div class="flex items-center gap-2 font-mono text-xs">
+              <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"></span>
+              <span class="text-emerald-600 dark:text-emerald-400 font-bold">DIGITAL PLATFORM & PROTOTYPE DEPLOYED</span>
+              <span class="text-dim">devdadhich11.github.io/Mood-/</span>
+            </div>
+            <h3 class="text-xl font-bold text-main mt-1">Direct-to-Consumer Digital Experience</h3>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-3">
+            <a href="https://drive.google.com/file/d/1L77j5f2mPMeNKIOTErIfJBHK-2QVYlb3/view?usp=sharing" target="_blank" class="px-5 py-2.5 rounded font-mono text-xs font-extrabold btn-solid flex items-center gap-2 shadow-lg">
+              <span>VISIT MOOD WEBSITE →</span>
+              <i data-lucide="external-link" class="w-4 h-4"></i>
+            </a>
+            <a href="https://devdadhich11.github.io/Mood-/" target="_blank" class="px-4 py-2.5 rounded font-mono text-xs font-bold border border-[var(--border)] text-main hover:border-[var(--border-strong)] flex items-center gap-2 transition-colors">
+              <span>LIVE GITHUB PROTOTYPE ↗</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 font-mono text-xs">
+          
+          <div class="p-4 rounded-xl cs-card-sub space-y-2">
+            <div class="text-[#8c2331] dark:text-[#e07a86] font-bold flex items-center gap-1.5">
+              <i data-lucide="layout" class="w-4 h-4"></i> LANDING ARCHITECTURE
+            </div>
+            <p class="text-sub font-sans text-xs leading-relaxed">
+              Clean editorial hero leading with the emotional message: <em>"Your Box Full of Comfort"</em>. Immediate visual presentation of all 9 items to establish value before asking for the sale.
+            </p>
+          </div>
+
+          <div class="p-4 rounded-xl cs-card-sub space-y-2">
+            <div class="text-emerald-600 dark:text-emerald-400 font-bold flex items-center gap-1.5">
+              <i data-lucide="shopping-bag" class="w-4 h-4"></i> PREPAID VALUE HOOK
+            </div>
+            <p class="text-sub font-sans text-xs leading-relaxed">
+              Features the ₹599 prepaid promotion (saving ₹100 over the ₹699 quick-commerce rate), bundled with guaranteed 1-hour delivery in primary urban pilot zones.
+            </p>
+          </div>
+
+          <div class="p-4 rounded-xl cs-card-sub space-y-2">
+            <div class="text-purple-600 dark:text-purple-400 font-bold flex items-center gap-1.5">
+              <i data-lucide="mail" class="w-4 h-4"></i> CUSTOM NOTE ENGINE
+            </div>
+            <p class="text-sub font-sans text-xs leading-relaxed">
+              Dedicated field for buyers to type personal messages that are physically handwritten onto the enclosed care card—answering the 73% survey demand.
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- =========================================================================
+         SECTION H: Project Deliverables & Key Learnings
+         ========================================================================= -->
+    <section class="case-container space-y-6 pt-6 border-t border-[var(--border)]">
+      
+      <div class="space-y-2">
+        <span class="font-mono text-xs text-[#e07a86] font-bold uppercase tracking-wider">[ 07 · EXECUTION & REFLECTION ]</span>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-main">Deliverables Completed & Strategic Learnings</h2>
+      </div>
+
+      <!-- Deliverables Completed Checklist -->
+      <div class="p-6 rounded-xl cs-card space-y-4 font-mono text-xs">
+        <span class="text-main font-bold uppercase tracking-wider block border-b border-[var(--border)] pb-2">
+          End-to-End Scope of Work Delivered
+        </span>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div class="flex items-center gap-2 text-sub">
+            <i data-lucide="check-circle" class="w-4 h-4 text-emerald-400 flex-shrink-0"></i>
+            <span>Market Research & Category Whitespace Framing</span>
+          </div>
+          <div class="flex items-center gap-2 text-sub">
+            <i data-lucide="check-circle" class="w-4 h-4 text-emerald-400 flex-shrink-0"></i>
+            <span>23-Question Primary Consumer Survey & Analysis</span>
+          </div>
+          <div class="flex items-center gap-2 text-sub">
+            <i data-lucide="check-circle" class="w-4 h-4 text-emerald-400 flex-shrink-0"></i>
+            <span>Competitor Benchmarking (10 Indian Offerings)</span>
+          </div>
+          <div class="flex items-center gap-2 text-sub">
+            <i data-lucide="check-circle" class="w-4 h-4 text-emerald-400 flex-shrink-0"></i>
+            <span>Brand Positioning, Purpose & Tagline Creation</span>
+          </div>
+          <div class="flex items-center gap-2 text-sub">
+            <i data-lucide="check-circle" class="w-4 h-4 text-emerald-400 flex-shrink-0"></i>
+            <span>Visual Identity System: Primary Wordmark & Monogram</span>
+          </div>
+          <div class="flex items-center gap-2 text-sub">
+            <i data-lucide="check-circle" class="w-4 h-4 text-emerald-400 flex-shrink-0"></i>
+            <span>Packaging Concept Renders (Front, Back & 9 Trays)</span>
+          </div>
+          <div class="flex items-center gap-2 text-sub">
+            <i data-lucide="check-circle" class="w-4 h-4 text-emerald-400 flex-shrink-0"></i>
+            <span>Blinkit Quick-Commerce Unit Economics Waterfall</span>
+          </div>
+          <div class="flex items-center gap-2 text-sub">
+            <i data-lucide="check-circle" class="w-4 h-4 text-emerald-400 flex-shrink-0"></i>
+            <span>Multi-Channel GTM Playbook & Creator Strategy</span>
+          </div>
+          <div class="flex items-center gap-2 text-sub">
+            <i data-lucide="check-circle" class="w-4 h-4 text-emerald-400 flex-shrink-0"></i>
+            <span>Live D2C Brand Website Prototype Deployment</span>
+          </div>
+          <div class="flex items-center gap-2 text-sub">
+            <i data-lucide="check-circle" class="w-4 h-4 text-emerald-400 flex-shrink-0"></i>
+            <span>25-Page Comprehensive PDF Case Study Publication</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Core Strategic Reflections -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 font-mono text-xs">
+        
+        <div class="p-5 rounded-xl cs-card space-y-2">
+          <div class="text-[#e07a86] font-bold">01 · REFRAMING CREATES VALUE</div>
+          <div class="text-main font-bold text-sm">Strategic Framing Dictates Margin</div>
+          <p class="text-sub font-sans text-xs leading-relaxed">
+            Sizing the category through feminine hygiene creates a commoditized pad war. Sizing through emotional gifting creates high perceived value, room for curated storytelling, and customer willingness to pay.
+          </p>
+        </div>
+
+        <div class="p-5 rounded-xl cs-card space-y-2">
+          <div class="text-emerald-400 font-bold">02 · RESEARCH OVER OPINION</div>
+          <div class="text-main font-bold text-sm">Surveys Must Challenge Assumptions</div>
+          <p class="text-sub font-sans text-xs leading-relaxed">
+            Our initial desk hypothesis assumed romantic partners and standard shipping. The primary survey forced us to prioritize 10–30 min quick delivery and acknowledge significant female-to-female gifting demand.
+          </p>
+        </div>
+
+        <div class="p-5 rounded-xl cs-card space-y-2">
+          <div class="text-purple-400 font-bold">03 · COMMERCIAL RIGOR</div>
+          <div class="text-main font-bold text-sm">Design Must Survive Unit Economics</div>
+          <p class="text-sub font-sans text-xs leading-relaxed">
+            Beautiful renders mean nothing without distribution math. Modeling Blinkit's 15.6% deductions proved that packaging costs must scale down to preserve healthy contribution margins over time.
+          </p>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- =========================================================================
+         SECTION I: Project Credits, Documentation Link & Navigation
+         ========================================================================= -->
+    <section class="case-container space-y-8 pt-8 border-t border-[var(--border)]">
+      
+      <!-- Project Credits Box -->
+      <div class="p-6 rounded-xl cs-card flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 font-mono text-xs">
+        <div class="space-y-1">
+          <span class="text-dim uppercase tracking-wider font-bold">PROJECT CONTRIBUTORS</span>
+          <div class="text-base font-bold text-main flex items-center gap-2">
+            <span>Dev Dadhich</span>
+            <span class="text-dim">|</span>
+            <span>Palak Singhal</span>
+          </div>
+          <p class="text-xs text-sub font-sans">
+            Collaborative Brand Building & Marketing Strategy Case Study.
+          </p>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-2">
+          <a href="https://drive.google.com/file/d/1L77j5f2mPMeNKIOTErIfJBHK-2QVYlb3/view?usp=sharing" target="_blank" class="px-5 py-2.5 rounded font-mono font-extrabold text-xs btn-solid shadow-sm flex items-center gap-2">
+            <i data-lucide="file-text" class="w-4 h-4"></i>
+            <span>READ FULL CASE STUDY (25 PAGES) ↗</span>
+          </a>
+          <a href="mood-comfy-case-study.pdf" target="_blank" class="px-3.5 py-2.5 rounded font-mono font-bold text-xs border border-[var(--border)] text-sub hover:text-main flex items-center gap-1 transition-colors">
+            <span>PDF ↓</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Navigation to Next Project & Portfolio Return -->
+      <div class="pt-4 border-t border-[var(--border)] flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-xs">
+        <a href="index.html#projects" class="text-sub hover:text-main flex items-center gap-2 transition-colors">
+          <i data-lucide="arrow-left" class="w-4 h-4"></i> BACK TO ALL CASE STUDIES
+        </a>
+
+        <div class="flex items-center gap-3">
+          <a href="https://drive.google.com/file/d/1L77j5f2mPMeNKIOTErIfJBHK-2QVYlb3/view?usp=sharing" target="_blank" class="px-4 py-2 rounded font-mono font-bold border border-[var(--border)] hover:border-[var(--border-strong)] text-sub hover:text-main flex items-center gap-1.5 transition-colors">
+            <span>VISIT MOOD WEBSITE</span>
+            <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+          </a>
+          <a href="ecommerce-analytics.html" class="px-5 py-2 rounded font-extrabold btn-solid flex items-center gap-2 shadow-sm">
+            <span>VIEW CASE 02: E-COMMERCE ANALYTICS</span>
+            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+          </a>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- Scripts -->
+  <script>
+    if (typeof lucide !== 'undefined') lucide.createIcons();
+
+    // Theme Management synced with main portfolio
+    const currentTheme = localStorage.getItem('theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', currentTheme);
+    updateThemeIcon(currentTheme);
+
+    const themeToggle = document.getElementById('theme-toggle');
+    themeToggle?.addEventListener('click', () => {
+      const active = document.documentElement.getAttribute('data-theme');
+      const next = active === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      updateThemeIcon(next);
+    });
+
+    function updateThemeIcon(theme) {
+      const icon = document.getElementById('theme-icon');
+      if (icon) {
+        icon.setAttribute('data-lucide', theme === 'dark' ? 'sun' : 'moon');
+        if (typeof lucide !== 'undefined') lucide.createIcons();
+      }
+    }
+
+    // Lightbox modal functions
+    function openLightbox(src, title) {
+      const lb = document.getElementById('image-lightbox');
+      const img = document.getElementById('lightbox-img');
+      const cap = document.getElementById('lightbox-caption');
+      if (!lb || !img) return;
+      img.src = src;
+      if (cap) cap.textContent = title || 'MOOD COMFY Asset High Resolution Preview';
+      lb.classList.remove('hidden');
+      lb.classList.add('flex');
+      document.body.style.overflow = 'hidden';
+      if (typeof lucide !== 'undefined') lucide.createIcons();
+    }
+
+    function closeLightbox(e) {
+      const lb = document.getElementById('image-lightbox');
+      if (!lb) return;
+      lb.classList.add('hidden');
+      lb.classList.remove('flex');
+      document.body.style.overflow = '';
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeLightbox();
+    });
+  </script>
+
+  <!-- Lightbox Modal for High-Resolution Asset Inspection -->
+  <div id="image-lightbox" class="fixed inset-0 z-[100] bg-black/90 backdrop-blur-md hidden flex-col items-center justify-center p-4 sm:p-8" onclick="closeLightbox(event)">
+    <div class="max-w-6xl w-full flex items-center justify-between mb-3 text-white font-mono text-xs">
+      <span id="lightbox-caption" class="font-bold text-zinc-300">MOOD COMFY Visual Asset</span>
+      <button onclick="closeLightbox()" class="px-3 py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-white font-bold flex items-center gap-1.5 transition-colors cursor-pointer" aria-label="Close Preview">
+        <i data-lucide="x" class="w-4 h-4"></i>
+        <span>ESC / CLOSE</span>
+      </button>
+    </div>
+    <div class="relative max-w-6xl w-full max-h-[85vh] flex items-center justify-center overflow-auto rounded-xl border border-zinc-700 bg-zinc-950 shadow-2xl p-2" onclick="event.stopPropagation()">
+      <img id="lightbox-img" src="" alt="MOOD COMFY High Resolution Preview" class="max-w-full max-h-[80vh] object-contain rounded-lg" />
+    </div>
+  </div>
+
+</body>
+</html>
